@@ -23,12 +23,11 @@ export type CSPKeys =
 export type CSPPolicy = Partial<{
   [n in CSPKeys]: string[];
 }>;
-export const defaultPolicy: CSPPolicy = {
-  "default-src": ["self"],
-};
 
 export type MyPluginOptions = {
+  hashingMethod: "sha256" | "sha384" | "sha512";
   policy?: CSPPolicy;
+  runOnDev?: boolean;
 };
 
 export type HashCache = {

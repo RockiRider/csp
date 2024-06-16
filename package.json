@@ -4,7 +4,7 @@
   "scripts": {
     "build": "turbo build",
     "csp:build": "turbo build --filter=vite-plugin-content-security-policy",
-    "dev": "turbo dev",
+    "dev": "turbo dev --filter=react",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
