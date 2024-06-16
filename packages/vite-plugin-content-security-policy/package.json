@@ -1,0 +1,24 @@
+{
+  "name": "vite-plugin-content-security-policy",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "tsup src/index.ts --sourcemap --dts --minify --format esm --silent"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "exports": {
+    "import": "./dist/index.js"
+  },
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "type": "module",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@rollup/pluginutils": "^5.1.0",
+    "tsup": "^8.0.1",
+    "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12"
+  }
+}

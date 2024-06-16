@@ -3,22 +3,19 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "csp:build": "turbo build --filter=vite-plugin-content-security-policy",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
+    "@repo/eslint-config": "workspace:^",
+    "@repo/typescript-config": "workspace:^",
     "prettier": "^3.1.1",
     "turbo": "latest"
   },
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "npm@8.19.2",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "packageManager": "pnpm@9.0.3"
 }
