@@ -6,7 +6,6 @@
     "target": "esnext",
     "moduleResolution": "Bundler",
     "strict": true,
-    "declaration": true,
     "noUnusedLocals": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,

@@ -1,4 +1,4 @@
-import { HtmlTagDescriptor, Plugin } from "vite";
+import { HtmlTagDescriptor, Plugin, createFilter } from "vite";
 import { CSPPolicy, MyPluginOptions } from "./types";
 import { handleHashing } from "./handleHashing";
 import { createPolicy } from "./createPolicy";
@@ -8,11 +8,13 @@ import {
   getDefaultDevPolicy,
 } from "./constants";
 
-export default function VitePluginCSP(
+export default function vitePluginCSP(
   options: MyPluginOptions | undefined
 ): Plugin {
   const isRunningOnDev = options?.runOnDev ?? false;
   let devMode = false;
+  const cssFilter = createFilter("**.css");
+
   return {
     name: "vite-plugin-content-security-policy",
     // apply: "build",
@@ -48,6 +50,12 @@ export default function VitePluginCSP(
       const ssrCheck = config.build.ssr;
       if (ssrCheck) {
         throw new Error("Vite CSP Plugin does not work with SSR apps");
+      }
+    },
+    transform(code, id, options) {
+      const isCss = cssFilter(id);
+      if (isCss) {
+        console.log("CSS file detected", code);
       }
     },
     async transformIndexHtml(html, { chunk, server }) {

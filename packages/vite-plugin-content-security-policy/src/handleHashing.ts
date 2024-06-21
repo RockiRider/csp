@@ -27,6 +27,9 @@ export function handleHashing(
     hashData: HashDataCollection,
     element: cheerio.Element
   ) => {
+    if (key === "styleSrcHashes") {
+      console.log(hash, key, hashData, element);
+    }
     if (hash.length) {
       const currentCollection = HASH_COLLECTION[key];
       const createdHash = `${hashData.type}-${hash}`;
@@ -35,6 +38,7 @@ export function handleHashing(
     }
   };
 
+  //TODO: Investigate if we can use the vite chunk instead of the main bundle
   const isMainBundle = (el: cheerio.Element) => {
     const src = el.attribs?.src ?? false;
     const type = el.attribs?.type ?? false;
@@ -86,6 +90,49 @@ export function handleHashing(
     }
   });
 
+  if ($("style").length === 0) {
+    console.warn(
+      "No style elements found. Check if document is fully loaded or if styles are dynamically added."
+    );
+    console.log(html);
+  }
+
+  // $("style").each(function (i, el) {
+  //   // Inline styles
+  //   console.log("Here");
+  //   if (el.childNodes?.[0]?.type === "text") {
+  //     const txt = $.text([el.childNodes?.[0]]);
+  //     if (txt.length) {
+  //       const hash = generateHash(txt);
+  //       addHash(
+  //         hash,
+  //         "styleSrcHashes",
+  //         {
+  //           type: "sha256",
+  //           content: txt,
+  //         },
+  //         el
+  //       );
+  //     }
+  //   }
+  // });
+
+  // $("[style]").each((i, el) => {
+  //   const inlineStyle = el.attribs?.style;
+  //   if (inlineStyle?.length) {
+  //     const hash = generateHash(inlineStyle);
+  //     addHash(
+  //       hash,
+  //       "styleAttrHashes",
+  //       {
+  //         type: "sha256",
+  //         content: inlineStyle,
+  //       },
+  //       el
+  //     );
+  //   }
+  // });
+
   //Log out cheerio html
 
   // All style tags
@@ -123,13 +170,13 @@ export function handleHashing(
   //   });
 
   // Hash inline styles in `style=""` tags if enabled
-  //   if (hashEnabled["style-src-attr"]) {
-  //     $("[style]").each((i, el) => {
-  //       if (el.attribs?.style.length) {
-  //         addHash(hash(hashingMethod, el.attribs.style), "styleAttrHashes");
-  //       }
-  //     });
-  //   }
+  // if (hashEnabled["style-src-attr"]) {
+  //   $("[style]").each((i, el) => {
+  //     if (el.attribs?.style.length) {
+  //       addHash(hash(hashingMethod, el.attribs.style), "styleAttrHashes");
+  //     }
+  //   });
+  // }
 
   // Hash inline scripts in `onSomething=""` tags if enabled
   //   if (hashEnabled["script-src-attr"]) {
