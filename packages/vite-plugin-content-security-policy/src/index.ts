@@ -1,20 +1,10 @@
-import {
-  HtmlTagDescriptor,
-  Plugin,
-  createFilter,
-  IndexHtmlTransformHook,
-} from "vite";
+import { HtmlTagDescriptor, Plugin, IndexHtmlTransformHook } from "vite";
 import { CSPPolicy, MyPluginOptions } from "./types";
 import { handleHTMLHashing } from "./handleHashing";
 import { createPolicy } from "./createPolicy";
 import { DEFAULT_DEV_POLICY, DEFAULT_POLICY } from "./constants";
-import {
-  addHash,
-  collectionToPolicy,
-  createNewCollection,
-  generateHash,
-} from "./core";
-import { cssParser, extractCSSFromVariable } from "./transformers";
+import { collectionToPolicy, createNewCollection } from "./core";
+import { transformHandler } from "./transform";
 
 export default function vitePluginCSP(
   options: MyPluginOptions | undefined = {}
@@ -25,13 +15,6 @@ export default function vitePluginCSP(
 
   const isRunningOnDev = options?.runOnDev ?? false;
   let devMode = false;
-  const cssFilter = createFilter("**.css");
-  const jsTsFilter = createFilter([
-    "**/*.js",
-    "**/*.ts",
-    "**/*.jsx",
-    "**/*.tsx",
-  ]);
 
   const transformIndexHtmlHandler: IndexHtmlTransformHook = async (
     html,
@@ -97,7 +80,6 @@ export default function vitePluginCSP(
 
   return {
     name: "vite-plugin-content-security-policy",
-    // apply: "build",
     enforce: "post",
 
     apply(config, { command }) {
@@ -133,40 +115,10 @@ export default function vitePluginCSP(
         throw new Error("Vite CSP Plugin does not work with SSR apps");
       }
     },
-    transform(code, id, options) {
-      const isCss = cssFilter(id);
-      const isJs = jsTsFilter(id);
-
-      if (isJs) {
-        const hash = generateHash(code, algorithm);
-        addHash({
-          hash,
-          key: "scriptSrcHashes",
-          data: {
-            algorithm,
-            content: code,
-          },
-          collection: CORE_COLLECTION,
-        });
-      }
-
-      if (isCss) {
-        // console.log(JSON.stringify({ code: code }));
-        const cssCode = cssParser(extractCSSFromVariable(code));
-        const hash = generateHash(cssCode, algorithm);
-
-        addHash({
-          hash,
-          key: "styleSrcHashes",
-          data: {
-            algorithm,
-            content: code,
-          },
-          collection: CORE_COLLECTION,
-        });
-      }
-
-      return null;
+    transform: {
+      order: "pre",
+      handler: (code, id, options) =>
+        transformHandler(code, id, algorithm, CORE_COLLECTION),
     },
     transformIndexHtml: { order: "post", handler: transformIndexHtmlHandler },
   };
