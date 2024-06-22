@@ -34,12 +34,17 @@ test("CSS Parser Byte Comparison", () => {
   expect(parsedArray).toEqual(expectedArray);
 });
 
-test("CSS Extraction  ", () => {
+//Test extraction of CSS from whats provided in the rollup transform function
+test("CSS Extraction", () => {
   const indexCSS = cssParser(extractCSSFromVariable(JSON_INDEX_CSS.code));
   const appCSS = cssParser(extractCSSFromVariable(JSON_APP_CSS.code));
-  const hash = generateHash(indexCSS, "sha256");
+
+  //Create hashes for the CSS
+  const indexHash = generateHash(indexCSS, "sha256");
+  const appHash = generateHash(appCSS, "sha256");
 
   expect(appCSS).toEqual(APP_CSS);
   expect(indexCSS).toEqual(INDEX_CSS);
-  expect(hash).toEqual(INDEX_HASH);
+  expect(indexHash).toEqual(INDEX_HASH);
+  expect(appHash).toEqual(APP_HASH);
 });
