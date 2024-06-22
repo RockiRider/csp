@@ -14,7 +14,7 @@ import {
   createNewCollection,
   generateHash,
 } from "./core";
-import { extractCSSFromVariable } from "./transformers";
+import { cssParser, extractCSSFromVariable } from "./transformers";
 
 export default function vitePluginCSP(
   options: MyPluginOptions | undefined = {}
@@ -38,7 +38,6 @@ export default function vitePluginCSP(
     { chunk, server, path, bundle, filename, originalUrl }
   ) => {
     //TODO: Possibly could use the server object to do some transformations?
-    // console.log(server.tra);
 
     //Might have to switch from chunk to bundle, if we start code splitting
     const collection = collectionToPolicy(
@@ -76,7 +75,6 @@ export default function vitePluginCSP(
         ];
       }
     }
-    console.log(finalPolicy);
     // Create the policy string
     const policyString = createPolicy(finalPolicy);
 
@@ -153,7 +151,8 @@ export default function vitePluginCSP(
       }
 
       if (isCss) {
-        const cssCode = extractCSSFromVariable(code);
+        // console.log(JSON.stringify({ code: code }));
+        const cssCode = cssParser(extractCSSFromVariable(code));
         const hash = generateHash(cssCode, algorithm);
 
         addHash({
