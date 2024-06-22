@@ -1,42 +1,27 @@
 import * as cheerio from "cheerio";
-import crypto from "crypto";
-import { HashResults, HashDataCollection } from "./types";
+import { HashAlgorithms, HashCollection } from "./types";
+import { addHash, generateHash } from "./core";
 
-export function handleHashing(
-  html: string,
-  mainBundleCode: string
-): { html: string; hashes: HashResults } {
+type HandleIndexHtmlHashingProps = {
+  html: string;
+  mainBundleCode: string;
+  algorithm: HashAlgorithms;
+  collection: HashCollection;
+};
+
+/**
+ * Looks at the html and scans it for inline scripts, external scripts, inline styles and external styles, so that we can hash these.
+ * @param html
+ * @param mainBundleCode
+ * @returns
+ */
+export function handleHTMLHashing({
+  html,
+  mainBundleCode,
+  algorithm,
+  collection: HASH_COLLECTION,
+}: HandleIndexHtmlHashingProps) {
   const $ = cheerio.load(html);
-
-  const HASH_COLLECTION = {
-    scriptSrcHashes: new Map<string, HashDataCollection>(),
-    scriptAttrHashes: new Map<string, HashDataCollection>(),
-    styleSrcHashes: new Map<string, HashDataCollection>(),
-    styleAttrHashes: new Map<string, HashDataCollection>(),
-  };
-
-  const generateHash = (str: string) => {
-    const hash = crypto.createHash("sha256");
-    hash.update(str);
-    return hash.digest("base64");
-  };
-
-  const addHash = (
-    hash: string,
-    key: keyof typeof HASH_COLLECTION,
-    hashData: HashDataCollection,
-    element: cheerio.Element
-  ) => {
-    if (key === "styleSrcHashes") {
-      console.log(hash, key, hashData, element);
-    }
-    if (hash.length) {
-      const currentCollection = HASH_COLLECTION[key];
-      const createdHash = `${hashData.type}-${hash}`;
-      $(element).attr("integrity", createdHash);
-      currentCollection.set(createdHash, { ...hashData });
-    }
-  };
 
   //TODO: Investigate if we can use the vite chunk instead of the main bundle
   const isMainBundle = (el: cheerio.Element) => {
@@ -52,19 +37,15 @@ export function handleHashing(
     // Imported Scripts
     if (Object.keys(el.attribs).length && el.attribs?.src?.length) {
       try {
-        // const fileId = path.resolve(el.attribs?.src);
         if (isMainBundle(el)) {
           //Main bundle
-          const generatedHash = generateHash(mainBundleCode);
-          addHash(
-            generatedHash,
-            "scriptSrcHashes",
-            {
-              type: "sha256",
-              content: mainBundleCode,
-            },
-            el
-          );
+          const hash = generateHash(mainBundleCode, algorithm);
+          addHash({
+            hash,
+            key: "scriptSrcHashes",
+            data: { algorithm, content: mainBundleCode },
+            collection: HASH_COLLECTION,
+          });
         }
       } catch (e) {
         console.error("Error hashing script src", e);
@@ -76,26 +57,16 @@ export function handleHashing(
       const txt = $.text([el.childNodes?.[0]]);
 
       if (txt.length) {
-        const hash = generateHash(txt);
-        addHash(
+        const hash = generateHash(txt, algorithm);
+        addHash({
           hash,
-          "scriptSrcHashes",
-          {
-            type: "sha256",
-            content: txt,
-          },
-          el
-        );
+          key: "scriptSrcHashes",
+          data: { algorithm, content: txt },
+          collection: HASH_COLLECTION,
+        });
       }
     }
   });
-
-  if ($("style").length === 0) {
-    console.warn(
-      "No style elements found. Check if document is fully loaded or if styles are dynamically added."
-    );
-    console.log(html);
-  }
 
   // $("style").each(function (i, el) {
   //   // Inline styles
@@ -194,14 +165,5 @@ export function handleHashing(
   //           });
   //       });
   //   }
-  const transformedHtml = $.html();
-  return {
-    html: transformedHtml,
-    hashes: {
-      "script-src-attr": HASH_COLLECTION.scriptAttrHashes,
-      "style-src-attr": HASH_COLLECTION.styleAttrHashes,
-      "script-src": HASH_COLLECTION.scriptSrcHashes,
-      "style-src": HASH_COLLECTION.styleSrcHashes,
-    },
-  };
+  return HASH_COLLECTION;
 }

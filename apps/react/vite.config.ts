@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
     csp({
-      hashingMethod: "sha256",
+      algorithm: "sha256",
       runOnDev: true,
     }),
   ],

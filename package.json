@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "csp:build": "turbo build --filter=vite-plugin-content-security-policy",
+    "p:build": "turbo build --filter=vite-plugin-content-security-policy",
+    "p:test": "turbo test --filter=vite-plugin-content-security-policy",
     "dev": "turbo dev --filter=react",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
@@ -12,7 +13,8 @@
     "@repo/eslint-config": "workspace:^",
     "@repo/typescript-config": "workspace:^",
     "prettier": "^3.1.1",
-    "turbo": "^2.0.0"
+    "turbo": "^2.0.0",
+    "typescript": "^5.5.2"
   },
   "engines": {
     "node": ">=18"
