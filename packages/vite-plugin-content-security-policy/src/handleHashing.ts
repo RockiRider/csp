@@ -4,7 +4,6 @@ import { addHash, generateHash } from "./core";
 
 type HandleIndexHtmlHashingProps = {
   html: string;
-  mainBundleCode: string;
   algorithm: HashAlgorithms;
   collection: HashCollection;
 };
@@ -17,36 +16,20 @@ type HandleIndexHtmlHashingProps = {
  */
 export function handleHTMLHashing({
   html,
-  mainBundleCode,
   algorithm,
   collection: HASH_COLLECTION,
 }: HandleIndexHtmlHashingProps) {
   const $ = cheerio.load(html);
-
-  //TODO: Investigate if we can use the vite chunk instead of the main bundle
-  const isMainBundle = (el: cheerio.Element) => {
-    const src = el.attribs?.src ?? false;
-    const type = el.attribs?.type ?? false;
-    if (!src || !type) return false;
-    if (src.includes("/assets/index-") && type === "module") return true;
-    return false;
-  };
 
   // All script tags
   $("script").each(function (i, el) {
     // Imported Scripts
     if (Object.keys(el.attribs).length && el.attribs?.src?.length) {
       try {
-        if (isMainBundle(el)) {
-          //Main bundle
-          const hash = generateHash(mainBundleCode, algorithm);
-          addHash({
-            hash,
-            key: "scriptSrcHashes",
-            data: { algorithm, content: mainBundleCode },
-            collection: HASH_COLLECTION,
-          });
-        }
+        const scriptSrc = el.attribs.src;
+        console.log(scriptSrc);
+        // TODO: We should output a warning if the script src is not inside the policy thats been passed in.
+        // Take a look at core.ts for the isSourceInPolicy function
       } catch (e) {
         console.error("Error hashing script src", e);
       }
@@ -55,7 +38,6 @@ export function handleHTMLHashing({
     // Inline Scripts
     if (el.childNodes?.[0]?.type === "text") {
       const txt = $.text([el.childNodes?.[0]]);
-
       if (txt.length) {
         const hash = generateHash(txt, algorithm);
         addHash({

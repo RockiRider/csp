@@ -38,11 +38,18 @@ type AddHashProps = {
   collection: HashCollection;
 };
 
+/**
+ * Adds the hash to the collection provided
+ * @param
+ */
 export const addHash = ({ hash, key, data, collection }: AddHashProps) => {
   if (hash.length) {
     const currentCollection = collection[key];
     const createdHash = `${data.algorithm}-${hash}`;
-    currentCollection.set(createdHash, { ...data });
+    //Check if we have already stored the hash
+    if (!currentCollection.has(createdHash)) {
+      currentCollection.set(createdHash, { ...data });
+    }
   }
 };
 
@@ -59,3 +66,10 @@ export const collectionToPolicy = (collection: HashCollection) => {
     "style-src": collection.styleSrcHashes,
   };
 };
+
+//TODO: Use function to output warnings for increased DX
+type IsSourceInPolicyProps = {
+  source: string;
+  currentPolicy: HashCollection;
+};
+export const isSourceInPolicy = ({}: IsSourceInPolicyProps) => {};

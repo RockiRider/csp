@@ -26,7 +26,6 @@ export default function vitePluginCSP(
     const collection = collectionToPolicy(
       handleHTMLHashing({
         html,
-        mainBundleCode: chunk?.code ?? "",
         algorithm,
         collection: CORE_COLLECTION,
       })
