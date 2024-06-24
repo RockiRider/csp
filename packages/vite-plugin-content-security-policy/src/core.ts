@@ -3,8 +3,10 @@ import {
   HashCollection,
   HashCollectionKey,
   HashDataCollection,
+  WarnMissingPolicyProps,
 } from "./types";
 import crypto from "crypto";
+import { isExternalSource, isSourceInPolicy } from "./utils";
 
 /**
  * Used for hash data storage
@@ -67,9 +69,15 @@ export const collectionToPolicy = (collection: HashCollection) => {
   };
 };
 
-//TODO: Use function to output warnings for increased DX
-type IsSourceInPolicyProps = {
-  source: string;
-  currentPolicy: HashCollection;
+export const warnMissingPolicy = ({
+  currentPolicy,
+  source,
+  sourceType = "script-src",
+}: WarnMissingPolicyProps) => {
+  if (
+    isExternalSource(source) &&
+    !isSourceInPolicy({ source, currentPolicy })
+  ) {
+    console.warn(`${source} is not in the current CSP policy`);
+  }
 };
-export const isSourceInPolicy = ({}: IsSourceInPolicyProps) => {};

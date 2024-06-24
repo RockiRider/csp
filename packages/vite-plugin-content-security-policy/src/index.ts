@@ -1,7 +1,7 @@
 import { HtmlTagDescriptor, Plugin, IndexHtmlTransformHook } from "vite";
 import { CSPPolicy, MyPluginOptions } from "./types";
-import { handleHTMLHashing } from "./handleHashing";
-import { createPolicy } from "./createPolicy";
+import { handleIndexHtml } from "./handleIndexHtml";
+import { createPolicy } from "./policy/createPolicy";
 import { DEFAULT_DEV_POLICY, DEFAULT_POLICY } from "./constants";
 import { collectionToPolicy, createNewCollection } from "./core";
 import { transformHandler } from "./transform";
@@ -24,10 +24,11 @@ export default function vitePluginCSP(
 
     //Might have to switch from chunk to bundle, if we start code splitting
     const collection = collectionToPolicy(
-      handleHTMLHashing({
+      handleIndexHtml({
         html,
         algorithm,
         collection: CORE_COLLECTION,
+        policy,
       })
     );
 
@@ -79,7 +80,7 @@ export default function vitePluginCSP(
 
   return {
     name: "vite-plugin-content-security-policy",
-    enforce: "post",
+    // enforce: "post",
 
     apply(config, { command }) {
       // If we are in dev mode return true
@@ -120,5 +121,6 @@ export default function vitePluginCSP(
         transformHandler(code, id, algorithm, CORE_COLLECTION),
     },
     transformIndexHtml: { order: "post", handler: transformIndexHtmlHandler },
+    handleHotUpdate: ({ file, timestamp, modules, read, server }) => {},
   };
 }

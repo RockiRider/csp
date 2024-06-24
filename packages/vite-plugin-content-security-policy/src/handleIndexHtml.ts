@@ -1,11 +1,12 @@
 import * as cheerio from "cheerio";
-import { HashAlgorithms, HashCollection } from "./types";
-import { addHash, generateHash } from "./core";
+import { CSPPolicy, HashAlgorithms, HashCollection } from "./types";
+import { addHash, generateHash, warnMissingPolicy } from "./core";
 
-type HandleIndexHtmlHashingProps = {
+type handleIndexHtmlProps = {
   html: string;
   algorithm: HashAlgorithms;
   collection: HashCollection;
+  policy: CSPPolicy;
 };
 
 /**
@@ -14,11 +15,12 @@ type HandleIndexHtmlHashingProps = {
  * @param mainBundleCode
  * @returns
  */
-export function handleHTMLHashing({
+export function handleIndexHtml({
   html,
   algorithm,
   collection: HASH_COLLECTION,
-}: HandleIndexHtmlHashingProps) {
+  policy,
+}: handleIndexHtmlProps) {
   const $ = cheerio.load(html);
 
   // All script tags
@@ -27,9 +29,11 @@ export function handleHTMLHashing({
     if (Object.keys(el.attribs).length && el.attribs?.src?.length) {
       try {
         const scriptSrc = el.attribs.src;
-        console.log(scriptSrc);
-        // TODO: We should output a warning if the script src is not inside the policy thats been passed in.
-        // Take a look at core.ts for the isSourceInPolicy function
+        warnMissingPolicy({
+          source: scriptSrc,
+          currentPolicy: policy["script-src"] ?? [],
+          sourceType: "script-src",
+        });
       } catch (e) {
         console.error("Error hashing script src", e);
       }

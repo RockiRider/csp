@@ -13,5 +13,6 @@
     "lib": ["dom", "esnext"],
     "types": ["node"],
     "noEmitOnError": true,
-  }
+  },
+  "include": ["src/**/*", "tests/**/*", "mocks/**/*"],
 }

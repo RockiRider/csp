@@ -1,4 +1,4 @@
-import { CSPPolicy } from "./types";
+import { CSPPolicy } from "../types";
 
 export const createPolicy = (policy: CSPPolicy): string => {
   return Object.keys(policy).reduce((acc, key) => {

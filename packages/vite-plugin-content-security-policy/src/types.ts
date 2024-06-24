@@ -54,3 +54,9 @@ export type HashCollection = {
 };
 
 export type HashCollectionKey = keyof HashCollection;
+
+export type WarnMissingPolicyProps = {
+  source: string;
+  currentPolicy: string[];
+  sourceType?: CSPKeys;
+};
