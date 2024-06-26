@@ -11,4 +11,10 @@ export default defineConfig({
       runOnDev: true,
     }),
   ],
+  preview: {
+    port: 4000,
+  },
+  server: {
+    port: 3000,
+  },
 });

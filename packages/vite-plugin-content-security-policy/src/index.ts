@@ -1,43 +1,50 @@
-import { HtmlTagDescriptor, Plugin, IndexHtmlTransformHook } from "vite";
+import { Plugin, IndexHtmlTransformHook, ViteDevServer } from "vite";
+import { PluginContext } from "rollup";
 import { CSPPolicy, MyPluginOptions } from "./types";
 import { handleIndexHtml } from "./handleIndexHtml";
-import { createPolicy } from "./policy/createPolicy";
+import { generatePolicyString, policyToTag } from "./policy/createPolicy";
 import { DEFAULT_DEV_POLICY, DEFAULT_POLICY } from "./constants";
-import { collectionToPolicy, createNewCollection } from "./core";
+import { createNewCollection } from "./core";
 import { transformHandler } from "./transform";
 
 export default function vitePluginCSP(
   options: MyPluginOptions | undefined = {}
 ): Plugin {
-  const { algorithm = "sha256", policy = DEFAULT_POLICY } = options;
+  const {
+    algorithm = "sha256",
+    policy = DEFAULT_POLICY,
+    runOnDev = false,
+  } = options;
 
   const CORE_COLLECTION = createNewCollection();
 
-  const isRunningOnDev = options?.runOnDev ?? false;
-  let devMode = false;
+  let isDevMode = false; // This is a flag to check if we are in dev mode
+  const isUserDevOpt = runOnDev; // This is a flag to check if the user wants to run in dev mode
+  const canRunInDevMode = () => isDevMode && isUserDevOpt; // This is a function to check if we can run in dev mode
+  let pluginContext: PluginContext | undefined = undefined; //Needed for logging
 
-  const transformIndexHtmlHandler: IndexHtmlTransformHook = async (
+  let server: ViteDevServer | undefined = undefined;
+
+  const transformIndexHtmlHandler: IndexHtmlTransformHook = (
     html,
     { chunk, server, path, bundle, filename, originalUrl }
   ) => {
     //TODO: Possibly could use the server object to do some transformations?
-
     //Might have to switch from chunk to bundle, if we start code splitting
-    const collection = collectionToPolicy(
-      handleIndexHtml({
-        html,
-        algorithm,
-        collection: CORE_COLLECTION,
-        policy,
-      })
-    );
+
+    const collection = handleIndexHtml({
+      html,
+      algorithm,
+      collection: CORE_COLLECTION,
+      policy,
+      context: pluginContext,
+    });
+
+    // console.log(CORE_COLLECTION);
 
     const finalPolicy = { ...policy };
 
-    if (isRunningOnDev && devMode && server) {
-      // Needed for the dev server
-      // const devPort = server.config.server.port; //Get the port of the dev server TODO: We don't need this??
-
+    if (canRunInDevMode()) {
       const defaultDevPolicy = DEFAULT_DEV_POLICY;
 
       for (const [key, defaultValues] of Object.entries(defaultDevPolicy)) {
@@ -47,30 +54,13 @@ export default function vitePluginCSP(
         );
       }
     }
-    // Generate the final policy
-    for (const [key, value] of Object.entries(collection)) {
-      const currentMap = value;
-      const currentPolicy = finalPolicy[key as keyof CSPPolicy] ?? [];
-      if (currentMap.size > 0) {
-        finalPolicy[key as keyof CSPPolicy] = [
-          ...currentPolicy,
-          ...Array.from(currentMap.keys()),
-        ];
-      }
-    }
-    // Create the policy string
-    const policyString = createPolicy(finalPolicy);
-
-    const InjectedHtmlTags: HtmlTagDescriptor[] = [
-      {
-        tag: "meta",
-        attrs: {
-          "http-equiv": "Content-Security-Policy",
-          content: policyString,
-        },
-        injectTo: "head-prepend",
-      },
-    ];
+    const policyString = generatePolicyString({
+      collection,
+      policy: finalPolicy,
+    });
+    console.log(policyString); // This is correct, however the browser isn't picking up the new index.html, because the first transformIndexHtml runs as soon as the browser opens, and thats the html that gets server to the browser first.
+    // Maybe we need a HMR update for the IndexHtml
+    const InjectedHtmlTags = policyToTag(policyString);
 
     return {
       html,
@@ -80,15 +70,13 @@ export default function vitePluginCSP(
 
   return {
     name: "vite-plugin-content-security-policy",
-    // enforce: "post",
-
+    // enforce: "post", // Not sure yet what to do here
+    buildStart() {
+      pluginContext = this;
+    },
     apply(config, { command }) {
       // If we are in dev mode return true
-      if (
-        command === "serve" &&
-        config.mode === "development" &&
-        isRunningOnDev
-      )
+      if (command === "serve" && config.mode === "development" && isUserDevOpt)
         return true;
       // apply only on build but not for SSR
       return command === "build" && !config.build?.ssr;
@@ -97,14 +85,14 @@ export default function vitePluginCSP(
       const devCommand =
         config.command === "serve" && config.mode === "development";
 
-      if (devCommand && !isRunningOnDev) {
+      if (devCommand && !isUserDevOpt) {
         console.warn(
           "You are running in development mode but runOnDev is set to false. This will not inject the default policy for development mode"
         );
       }
 
       if (devCommand) {
-        devMode = true;
+        isDevMode = true;
       }
 
       if (config.appType !== "spa") {
@@ -117,10 +105,40 @@ export default function vitePluginCSP(
     },
     transform: {
       order: "pre",
-      handler: (code, id, options) =>
-        transformHandler(code, id, algorithm, CORE_COLLECTION),
+      handler: async (code, id, options) => {
+        await transformHandler({
+          code,
+          id,
+          algorithm,
+          CORE_COLLECTION,
+          server,
+        });
+      },
     },
-    transformIndexHtml: { order: "post", handler: transformIndexHtmlHandler },
-    handleHotUpdate: ({ file, timestamp, modules, read, server }) => {},
+    transformIndexHtml: {
+      order: "post",
+      handler: transformIndexHtmlHandler,
+    },
+    handleHotUpdate: ({ file, timestamp, modules, read, server }) => {
+      if (!canRunInDevMode()) return;
+      console.log("Hot Update");
+    },
+    onLog(_level, log) {
+      if (
+        log.plugin === "vite-plugin-content-security-policy" &&
+        log.pluginCode === "WARNING_CODE"
+      ) {
+        this.warn(log);
+      }
+    },
+    buildEnd() {
+      console.log("Build End");
+    },
+    closeBundle() {
+      console.log("Close Bundle");
+    },
+    configureServer(thisServer) {
+      server = thisServer;
+    },
   };
 }

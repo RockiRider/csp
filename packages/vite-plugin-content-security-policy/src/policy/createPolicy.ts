@@ -1,6 +1,7 @@
-import { CSPPolicy } from "../types";
+import { HtmlTagDescriptor } from "vite";
+import { CSPPolicy, HashCollection } from "../types";
 
-export const createPolicy = (policy: CSPPolicy): string => {
+const createPolicy = (policy: CSPPolicy): string => {
   return Object.keys(policy).reduce((acc, key) => {
     const policyValue = policy[key as keyof CSPPolicy];
     if (!policyValue?.length) return acc;
@@ -15,4 +16,44 @@ export const createPolicy = (policy: CSPPolicy): string => {
       .join(" ");
     return `${acc} ${key} ${policyValueStr};`;
   }, "");
+};
+
+type GeneratePolicyProps = {
+  policy: CSPPolicy;
+  collection: HashCollection;
+};
+export const generatePolicyString = ({
+  collection,
+  policy,
+}: GeneratePolicyProps) => {
+  const finalPolicy = { ...policy };
+
+  // Generate the final policy
+  for (const [key, value] of Object.entries(collection)) {
+    const currentMap = value;
+    const currentPolicy = finalPolicy[key as keyof CSPPolicy] ?? [];
+    if (currentMap.size > 0) {
+      finalPolicy[key as keyof CSPPolicy] = [
+        ...currentPolicy,
+        ...Array.from(currentMap.keys()),
+      ];
+    }
+  }
+  // Create the policy string
+  const policyString = createPolicy(finalPolicy);
+
+  return policyString;
+};
+
+export const policyToTag = (policy: string): HtmlTagDescriptor[] => {
+  return [
+    {
+      tag: "meta",
+      attrs: {
+        "http-equiv": "Content-Security-Policy",
+        content: policy,
+      },
+      injectTo: "head-prepend",
+    },
+  ];
 };

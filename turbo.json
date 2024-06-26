@@ -4,7 +4,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -16,6 +16,9 @@
       "cache": false,
       "persistent": true,
       "dependsOn": ["^build"]
+    },
+    "preview": {
+      "dependsOn": ["^build", "build"]
     }
   },
   "ui": "stream"

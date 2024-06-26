@@ -1,12 +1,14 @@
 import * as cheerio from "cheerio";
 import { CSPPolicy, HashAlgorithms, HashCollection } from "./types";
 import { addHash, generateHash, warnMissingPolicy } from "./core";
+import { PluginContext } from "rollup";
 
 type handleIndexHtmlProps = {
   html: string;
   algorithm: HashAlgorithms;
   collection: HashCollection;
   policy: CSPPolicy;
+  context: PluginContext | undefined;
 };
 
 /**
@@ -46,7 +48,7 @@ export function handleIndexHtml({
         const hash = generateHash(txt, algorithm);
         addHash({
           hash,
-          key: "scriptSrcHashes",
+          key: "script-src",
           data: { algorithm, content: txt },
           collection: HASH_COLLECTION,
         });
@@ -56,7 +58,6 @@ export function handleIndexHtml({
 
   // $("style").each(function (i, el) {
   //   // Inline styles
-  //   console.log("Here");
   //   if (el.childNodes?.[0]?.type === "text") {
   //     const txt = $.text([el.childNodes?.[0]]);
   //     if (txt.length) {

@@ -1,3 +1,5 @@
+import { PluginContext } from "rollup";
+
 export type CSPKeys =
   | "default-src"
   | "script-src"
@@ -47,10 +49,10 @@ export type HashDataCollection = {
 };
 
 export type HashCollection = {
-  scriptSrcHashes: Map<string, HashDataCollection>; //External scripts
-  scriptAttrHashes: Map<string, HashDataCollection>; //In line scripts
-  styleSrcHashes: Map<string, HashDataCollection>; //External styles
-  styleAttrHashes: Map<string, HashDataCollection>; //In line styles
+  "script-src-attr": Map<string, HashDataCollection>; //External scripts
+  "style-src-attr": Map<string, HashDataCollection>; //In line scripts
+  "script-src": Map<string, HashDataCollection>; //External styles
+  "style-src": Map<string, HashDataCollection>; //In line styles
 };
 
 export type HashCollectionKey = keyof HashCollection;
@@ -59,4 +61,5 @@ export type WarnMissingPolicyProps = {
   source: string;
   currentPolicy: string[];
   sourceType?: CSPKeys;
+  context?: PluginContext;
 };

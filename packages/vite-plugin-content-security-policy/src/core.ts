@@ -14,10 +14,10 @@ import { isExternalSource, isSourceInPolicy } from "./utils";
  */
 export const createNewCollection = (): HashCollection => {
   return {
-    scriptSrcHashes: new Map<string, HashDataCollection>(), //External scripts
-    scriptAttrHashes: new Map<string, HashDataCollection>(), //In line scripts
-    styleSrcHashes: new Map<string, HashDataCollection>(), //External styles
-    styleAttrHashes: new Map<string, HashDataCollection>(), //In line styles
+    "script-src": new Map<string, HashDataCollection>(), //External scripts
+    "script-src-attr": new Map<string, HashDataCollection>(), //In line scripts
+    "style-src": new Map<string, HashDataCollection>(), //External styles
+    "style-src-attr": new Map<string, HashDataCollection>(), //In line styles
   };
 };
 
@@ -55,29 +55,21 @@ export const addHash = ({ hash, key, data, collection }: AddHashProps) => {
   }
 };
 
-/**
- * Convert a HashCollection to a CSP policy friendly object
- * @param collection
- * @returns
- */
-export const collectionToPolicy = (collection: HashCollection) => {
-  return {
-    "script-src-attr": collection.scriptAttrHashes,
-    "style-src-attr": collection.styleAttrHashes,
-    "script-src": collection.scriptSrcHashes,
-    "style-src": collection.styleSrcHashes,
-  };
-};
-
 export const warnMissingPolicy = ({
   currentPolicy,
   source,
   sourceType = "script-src",
+  context,
 }: WarnMissingPolicyProps) => {
   if (
     isExternalSource(source) &&
     !isSourceInPolicy({ source, currentPolicy })
   ) {
-    console.warn(`${source} is not in the current CSP policy`);
+    context
+      ? context.warn({
+          message: `${source} is not in the current CSP policy`,
+          pluginCode: "SPECIAL_CODE",
+        })
+      : console.warn(`${source} is not in the current CSP policy`);
   }
 };
