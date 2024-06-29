@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "p:build": "turbo build --filter=vite-plugin-content-security-policy",
-    "p:test": "turbo test --filter=vite-plugin-content-security-policy",
+    "p:build": "turbo build --filter=vite-plugin-hash-csp",
+    "p:test": "turbo test --filter=vite-plugin-hash-csp",
     "dev": "turbo dev --filter=react",
     "r:build": "turbo build --filter=react",
     "r:preview": "turbo preview --filter=react",

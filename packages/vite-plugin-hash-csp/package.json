@@ -1,5 +1,5 @@
 {
-  "name": "vite-plugin-content-security-policy",
+  "name": "vite-plugin-hash-csp",
   "version": "0.1.0",
   "scripts": {
     "build": "rollup -c",
@@ -13,6 +13,9 @@
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
   "type": "module",
+  "peerDependencies": {
+    "vite": ">5.x.x"
+  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",

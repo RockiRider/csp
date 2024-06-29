@@ -23,7 +23,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "typescript": "^5.2.2",
-    "vite-plugin-content-security-policy": "workspace:^",
+    "vite-plugin-hash-csp": "workspace:^",
     "vite": "^5.3.1"
   }
 }

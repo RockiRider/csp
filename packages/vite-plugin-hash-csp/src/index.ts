@@ -28,7 +28,7 @@ export default function vitePluginCSP(
   const isTransformationStatusEmpty = () => transformationStatus.size === 0;
 
   return {
-    name: "vite-plugin-content-security-policy",
+    name: "vite-plugin-hash-csp",
     // enforce: "post", // Not sure yet what to do here
     buildStart() {
       pluginContext = this;
@@ -105,7 +105,7 @@ export default function vitePluginCSP(
     },
     onLog(_level, log) {
       if (
-        log.plugin === "vite-plugin-content-security-policy" &&
+        log.plugin === "vite-plugin-hash-csp" &&
         log.pluginCode === "WARNING_CODE"
       ) {
         this.warn(log);
