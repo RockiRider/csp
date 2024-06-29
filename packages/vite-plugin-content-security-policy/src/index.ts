@@ -1,11 +1,9 @@
-import { Plugin, IndexHtmlTransformHook, ViteDevServer } from "vite";
+import { Plugin, ViteDevServer } from "vite";
 import { PluginContext } from "rollup";
-import { CSPPolicy, MyPluginOptions } from "./types";
-import { handleIndexHtml } from "./handleIndexHtml";
-import { generatePolicyString, policyToTag } from "./policy/createPolicy";
-import { DEFAULT_DEV_POLICY, DEFAULT_POLICY } from "./constants";
+import { MyPluginOptions, TransformationStatus } from "./types";
+import { DEFAULT_POLICY } from "./constants";
 import { createNewCollection } from "./core";
-import { transformHandler } from "./transform";
+import { transformHandler, transformIndexHtmlHandler } from "./transform";
 
 export default function vitePluginCSP(
   options: MyPluginOptions | undefined = {}
@@ -25,54 +23,15 @@ export default function vitePluginCSP(
 
   let server: ViteDevServer | undefined = undefined;
 
-  const transformIndexHtmlHandler: IndexHtmlTransformHook = (
-    html,
-    { chunk, server, path, bundle, filename, originalUrl }
-  ) => {
-    //TODO: Possibly could use the server object to do some transformations?
-    //Might have to switch from chunk to bundle, if we start code splitting
-
-    const collection = handleIndexHtml({
-      html,
-      algorithm,
-      collection: CORE_COLLECTION,
-      policy,
-      context: pluginContext,
-    });
-
-    // console.log(CORE_COLLECTION);
-
-    const finalPolicy = { ...policy };
-
-    if (canRunInDevMode()) {
-      const defaultDevPolicy = DEFAULT_DEV_POLICY;
-
-      for (const [key, defaultValues] of Object.entries(defaultDevPolicy)) {
-        const currentPolicy = finalPolicy[key as keyof CSPPolicy] ?? [];
-        finalPolicy[key as keyof CSPPolicy] = Array.from(
-          new Set([...currentPolicy, ...defaultValues])
-        );
-      }
-    }
-    const policyString = generatePolicyString({
-      collection,
-      policy: finalPolicy,
-    });
-    console.log(policyString); // This is correct, however the browser isn't picking up the new index.html, because the first transformIndexHtml runs as soon as the browser opens, and thats the html that gets server to the browser first.
-    // Maybe we need a HMR update for the IndexHtml
-    const InjectedHtmlTags = policyToTag(policyString);
-
-    return {
-      html,
-      tags: InjectedHtmlTags,
-    };
-  };
+  const transformationStatus: TransformationStatus = new Map<string, boolean>();
+  const isTransformationStatusEmpty = transformationStatus.size === 0;
 
   return {
     name: "vite-plugin-content-security-policy",
     // enforce: "post", // Not sure yet what to do here
     buildStart() {
       pluginContext = this;
+      console.log("Build start");
     },
     apply(config, { command }) {
       // If we are in dev mode return true
@@ -103,6 +62,10 @@ export default function vitePluginCSP(
         throw new Error("Vite CSP Plugin does not work with SSR apps");
       }
     },
+    load(id, options) {
+      transformationStatus.set(id, false);
+      return null;
+    },
     transform: {
       order: "pre",
       handler: async (code, id, options) => {
@@ -111,13 +74,26 @@ export default function vitePluginCSP(
           id,
           algorithm,
           CORE_COLLECTION,
+          transformationStatus,
           server,
         });
+        return null;
       },
     },
     transformIndexHtml: {
       order: "post",
-      handler: transformIndexHtmlHandler,
+      handler: async (html, context) => {
+        return transformIndexHtmlHandler({
+          html,
+          context,
+          algorithm,
+          policy,
+          collection: CORE_COLLECTION,
+          pluginContext,
+          canRunInDevMode: canRunInDevMode(),
+          isTransformationStatusEmpty,
+        });
+      },
     },
     handleHotUpdate: ({ file, timestamp, modules, read, server }) => {
       if (!canRunInDevMode()) return;

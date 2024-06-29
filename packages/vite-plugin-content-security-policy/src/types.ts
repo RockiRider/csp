@@ -63,3 +63,5 @@ export type WarnMissingPolicyProps = {
   sourceType?: CSPKeys;
   context?: PluginContext;
 };
+
+export type TransformationStatus = Map<string, boolean>;
