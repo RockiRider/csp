@@ -63,7 +63,7 @@ export default function vitePluginCSP(
         throw new Error("Vite CSP Plugin does not work with SSR apps");
       }
     },
-    load(id, options) {
+    load(id) {
       const isCss = cssFilter(id);
       const isJs = jsTsFilter(id);
       if (isCss || isJs) transformationStatus.set(id, false);
@@ -72,7 +72,7 @@ export default function vitePluginCSP(
     },
     transform: {
       order: "pre",
-      handler: async (code, id, options) => {
+      handler: async (code, id) => {
         await transformHandler({
           code,
           id,
@@ -98,10 +98,6 @@ export default function vitePluginCSP(
           isTransformationStatusEmpty: isTransformationStatusEmpty(),
         });
       },
-    },
-    handleHotUpdate: ({ file, timestamp, modules, read, server }) => {
-      if (!canRunInDevMode()) return;
-      console.log("Hot Update");
     },
     onLog(_level, log) {
       if (
