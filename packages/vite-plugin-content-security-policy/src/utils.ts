@@ -1,3 +1,4 @@
+import { createFilter } from "vite";
 import { WarnMissingPolicyProps } from "./types";
 
 export const extractBaseURL = (url: string): string | false => {
@@ -27,3 +28,12 @@ export const isSourceInPolicy = ({
     return false;
   }
 };
+
+export const cssFilter = createFilter("**.css");
+export const jsTsFilter = createFilter([
+  "**/*.js",
+  "**/*.ts",
+  "**/*.jsx",
+  "**/*.tsx",
+]);
+export const htmlFilter = createFilter("**.html");

@@ -1,4 +1,4 @@
-import { IndexHtmlTransformContext, ViteDevServer, createFilter } from "vite";
+import { IndexHtmlTransformContext, ViteDevServer } from "vite";
 import { addHash, generateHash } from "../core";
 import {
   CSPPolicy,
@@ -10,10 +10,7 @@ import { handleIndexHtml } from "../handleIndexHtml";
 import { PluginContext } from "rollup";
 import { DEFAULT_DEV_POLICY } from "../constants";
 import { generatePolicyString, policyToTag } from "../policy/createPolicy";
-
-const cssFilter = createFilter("**.css");
-const jsTsFilter = createFilter(["**/*.js", "**/*.ts", "**/*.jsx", "**/*.tsx"]);
-const htmlFilter = createFilter("**.html");
+import { cssFilter, jsTsFilter, htmlFilter } from "../utils";
 
 export interface TransformHandlerProps {
   code: string;

@@ -4,6 +4,7 @@ import { MyPluginOptions, TransformationStatus } from "./types";
 import { DEFAULT_POLICY } from "./constants";
 import { createNewCollection } from "./core";
 import { transformHandler, transformIndexHtmlHandler } from "./transform";
+import { cssFilter, jsTsFilter } from "./utils";
 
 export default function vitePluginCSP(
   options: MyPluginOptions | undefined = {}
@@ -24,7 +25,7 @@ export default function vitePluginCSP(
   let server: ViteDevServer | undefined = undefined;
 
   const transformationStatus: TransformationStatus = new Map<string, boolean>();
-  const isTransformationStatusEmpty = transformationStatus.size === 0;
+  const isTransformationStatusEmpty = () => transformationStatus.size === 0;
 
   return {
     name: "vite-plugin-content-security-policy",
@@ -63,7 +64,10 @@ export default function vitePluginCSP(
       }
     },
     load(id, options) {
-      transformationStatus.set(id, false);
+      const isCss = cssFilter(id);
+      const isJs = jsTsFilter(id);
+      if (isCss || isJs) transformationStatus.set(id, false);
+
       return null;
     },
     transform: {
@@ -91,7 +95,7 @@ export default function vitePluginCSP(
           collection: CORE_COLLECTION,
           pluginContext,
           canRunInDevMode: canRunInDevMode(),
-          isTransformationStatusEmpty,
+          isTransformationStatusEmpty: isTransformationStatusEmpty(),
         });
       },
     },
