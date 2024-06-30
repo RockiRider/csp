@@ -9,8 +9,8 @@
     "r:dev": "turbo dev --filter=react",
     "r:build": "turbo build --filter=react",
     "r:preview": "turbo preview --filter=react",
-    "r:test": "turbo test --filter=react",
-    "r:test:ui": "turbo run test:ui --filter=react",
+    "test": "pnpm exec playwright test",
+    "test:ui": "pnpm exec playwright test --ui",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

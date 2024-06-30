@@ -10,11 +10,11 @@ import { defineConfig, devices } from "@playwright/test";
 const APPS = {
   "r:dev": {
     url: "http://localhost:3000",
-    command: `pnpm dev`,
+    command: `pnpm r:dev`,
   },
   "r:preview": {
     url: "http://localhost:4000",
-    command: `pnpm preview`,
+    command: `pnpm r:preview`,
   },
 };
 
@@ -22,7 +22,8 @@ const APPS = {
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: "tests",
+  name: "React Tests",
+  outputDir: "test-results",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -44,19 +45,28 @@ export default defineConfig({
     {
       name: "Base React - Dev",
       use: { ...devices["Desktop Chrome"], baseURL: APPS["r:dev"].url },
+      testDir: "./apps/react/tests",
     },
-    // {
-    //   name: "Base React - Build",
-    //   use: { ...devices["Desktop Chrome"], baseURL: APPS["r:preview"].url },
-    // },
+    {
+      name: "Base React - Build",
+      use: { ...devices["Desktop Chrome"], baseURL: APPS["r:preview"].url },
+      testDir: "./apps/react/tests",
+    },
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: "pnpm dev",
-    url: APPS["r:dev"].url,
-    // Adjusted timeout to a lower value as per requirement
-    timeout: 10 * 1000, // Reduced timeout to 10 seconds
-    reuseExistingServer: !process.env.CI,
-  },
+  webServer: [
+    {
+      command: APPS["r:dev"].command,
+      url: APPS["r:dev"].url,
+      timeout: 60 * 1000, // 60 seconds
+      reuseExistingServer: !process.env.CI,
+    },
+    {
+      command: APPS["r:preview"].command,
+      url: APPS["r:preview"].url,
+      timeout: 60 * 1000, // 60 seconds
+      reuseExistingServer: !process.env.CI,
+    },
+  ],
 });
