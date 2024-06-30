@@ -65,6 +65,7 @@ export default function vitePluginCSP(
       }
     },
     load(id) {
+      // Entry points to files that need to be transformed
       const isCss = cssFilter(id);
       const isJs = jsTsFilter(id);
       if (isCss || isJs) transformationStatus.set(id, false);

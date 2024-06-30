@@ -9,6 +9,14 @@ export default defineConfig({
     csp({
       algorithm: "sha256",
       runOnDev: true,
+      policy: {
+        "style-src-elem": [
+          "'self'",
+          "https://fonts.googleapis.com",
+          // "'unsafe-inline'",
+        ],
+        "font-src": ["'self'", "https://fonts.gstatic.com"],
+      },
     }),
   ],
   preview: {

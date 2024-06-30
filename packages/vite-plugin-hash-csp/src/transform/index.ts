@@ -49,9 +49,7 @@ export const transformHandler = async ({
         collection: CORE_COLLECTION,
       });
       transformationStatus.set(id, true);
-    }
-
-    if (isCss) {
+    } else if (isCss) {
       const hash = generateHash(code, algorithm);
       addHash({
         hash,
@@ -63,14 +61,53 @@ export const transformHandler = async ({
         collection: CORE_COLLECTION,
       });
       transformationStatus.set(id, true);
+    } else {
+      // Do nothing
     }
+  } else {
+    //Files that are deps of the entry points that are loaded in the load() hook
 
-    if (isAllTransformed() && (isCss || isJs)) {
-      await server.transformIndexHtml("/index.html", "", "/");
-      server.ws.send({
-        type: "full-reload",
+    if (isJs) {
+      console.log("JS 2", id);
+
+      //TODO:  Analyze the file to determine if this script contains in line styles
+      //TODO: If it does, we probably need to extract the inline styles, hash them and add them to the style-src-elem
+      //TODO: Handle inline styles here but in a re-usable way, so we can also handle them in the in the if statement above too and inside transformIndexHtmlHandler
+
+      const hash = generateHash(code, algorithm);
+      addHash({
+        hash,
+        key: "script-src-elem",
+        data: {
+          algorithm,
+          content: code,
+        },
+        collection: CORE_COLLECTION,
       });
+      transformationStatus.set(id, true);
+    } else if (isCss) {
+      // console.log("CSS 2", id);
+      const hash = generateHash(code, algorithm);
+      addHash({
+        hash,
+        key: "style-src-elem",
+        data: {
+          algorithm,
+          content: code,
+        },
+        collection: CORE_COLLECTION,
+      });
+      transformationStatus.set(id, true);
+    } else {
+      // Do nothing
     }
+  }
+
+  if (isAllTransformed() && (isCss || isJs)) {
+    await server.transformIndexHtml("/index.html", "", "/");
+    server.ws.send({
+      type: "full-reload",
+    });
   }
 
   return null;

@@ -31,10 +31,10 @@ export const isSourceInPolicy = ({
 
 export const cssFilter = createFilter("**.css");
 export const jsTsFilter = createFilter([
-  "**/*.js",
-  "**/*.ts",
-  "**/*.jsx",
-  "**/*.tsx",
+  "**/*.js?(*)",
+  "**/*.ts?(*)",
+  "**/*.jsx?(*)",
+  "**/*.tsx?(*)",
 ]);
 export const htmlFilter = createFilter("**.html");
 
