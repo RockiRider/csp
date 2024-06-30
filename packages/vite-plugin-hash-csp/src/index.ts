@@ -108,12 +108,6 @@ export default function vitePluginCSP(
         this.warn(log);
       }
     },
-    buildEnd() {
-      console.log("Build End");
-    },
-    closeBundle() {
-      console.log("Close Bundle");
-    },
     configureServer(thisServer) {
       server = thisServer;
     },
