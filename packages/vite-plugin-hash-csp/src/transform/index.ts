@@ -10,7 +10,7 @@ import { handleIndexHtml } from "../handleIndexHtml";
 import { PluginContext } from "rollup";
 import { DEFAULT_DEV_POLICY } from "../constants";
 import { generatePolicyString, policyToTag } from "../policy/createPolicy";
-import { cssFilter, jsTsFilter, htmlFilter } from "../utils";
+import { cssFilter, jsTsFilter } from "../utils";
 
 export interface TransformHandlerProps {
   code: string;
@@ -29,9 +29,9 @@ export const transformHandler = async ({
   transformationStatus,
   server,
 }: TransformHandlerProps) => {
+  if (!server) return null; // Exit early if we are not in dev mode
   const isCss = cssFilter(id);
   const isJs = jsTsFilter(id);
-  const isHtml = htmlFilter(id);
 
   const isAllTransformed = () =>
     Array.from(transformationStatus.values()).every((value) => value === true);
@@ -65,16 +65,12 @@ export const transformHandler = async ({
       transformationStatus.set(id, true);
     }
 
-    if (server && isAllTransformed() && (isCss || isJs)) {
+    if (isAllTransformed() && (isCss || isJs)) {
       await server.transformIndexHtml("/index.html", "", "/");
       server.ws.send({
         type: "full-reload",
       });
     }
-  }
-
-  if (isHtml) {
-    console.log("HTML file found", id);
   }
 
   return null;
@@ -93,7 +89,7 @@ export interface TransformIndexHtmlHandlerProps {
 
 export const transformIndexHtmlHandler = async ({
   html,
-  context: { server, chunk, path, filename },
+  context: { server, bundle, chunk, path, filename },
   algorithm,
   policy,
   collection,
@@ -101,11 +97,53 @@ export const transformIndexHtmlHandler = async ({
   canRunInDevMode,
   isTransformationStatusEmpty,
 }: TransformIndexHtmlHandlerProps) => {
-  //TODO: Possibly could use the server object to do some transformations?
-  //Might have to switch from chunk to bundle, if we start code splitting
-  if (isTransformationStatusEmpty) {
+  if (isTransformationStatusEmpty && server) {
+    //Return early if there are no transformations and we are in dev mode
     return;
   }
+
+  if (bundle) {
+    for (const fileName of Object.keys(bundle)) {
+      const currentFile = bundle[fileName];
+      const isCss = cssFilter(fileName);
+
+      if (currentFile) {
+        if (currentFile.type === "chunk") {
+          const code = currentFile.code;
+
+          if (chunk?.code === code) {
+            console.log("Matching code and chunk!");
+          }
+
+          const hash = generateHash(code, algorithm);
+          addHash({
+            hash,
+            key: "script-src",
+            data: {
+              algorithm,
+              content: code,
+            },
+            collection: collection,
+          });
+        }
+        if (currentFile.type === "asset" && isCss) {
+          const code = currentFile.source as string; // We know this is a string because of the cssFilter
+          const hash = generateHash(code, algorithm);
+          console.log(code);
+          addHash({
+            hash,
+            key: "style-src",
+            data: {
+              algorithm,
+              content: code,
+            },
+            collection: collection,
+          });
+        }
+      }
+    }
+  }
+
   const updatedCollection = handleIndexHtml({
     html,
     algorithm,

@@ -29,7 +29,7 @@ export default function vitePluginCSP(
 
   return {
     name: "vite-plugin-hash-csp",
-    // enforce: "post", // Not sure yet what to do here
+    enforce: "post", // Not sure yet what to do here
     buildStart() {
       pluginContext = this;
       console.log("Build start");

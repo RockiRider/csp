@@ -12,7 +12,7 @@ type handleIndexHtmlProps = {
 };
 
 /**
- * Looks at the html and scans it for inline scripts, external scripts, inline styles and external styles, so that we can hash these.
+ * Looks at the html and scans it for inline scripts, external scripts, inline styles and external styles, so that we can warn the user if they are missing from the policy
  * @param html
  * @param mainBundleCode
  * @returns

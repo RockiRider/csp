@@ -9,6 +9,15 @@ export default defineConfig({
     csp({
       algorithm: "sha256",
       runOnDev: true,
+      policy: {
+        "script-src": ["'self'"],
+        "style-src": ["sha-256-o22LaMaNL7OsoVecyuE7bIOCCdvBjkvxOCg2FJJMm5w="],
+        // "style-src-elem": [
+        // "'self'",
+        // "sha-256-o22LaMaNL7OsoVecyuE7bIOCCdvBjkvxOCg2FJJMm5w=",
+        // "sha-256-7oOY9dTIVN4QElYp+bjo8qcaCyQUVU+xBWXoR2jywFQ=",
+        // ],
+      },
     }),
   ],
   preview: {
