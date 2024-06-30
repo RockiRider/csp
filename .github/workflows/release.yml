@@ -12,8 +12,8 @@ jobs:
       - uses: actions/setup-node@v4
         with: 
           node-version: "20"
-          cache: pnpm
       - run: corepack enable
+      - run: pnpm install
       - name: Build Vite-Plugin-Hash-CSP
         run: pnpm p:build
       - name: Archive production artifacts
@@ -43,8 +43,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: npm
-      - run: npm ci
+          cache: pnpm
+      - run: pnpm install
       - name: Download production artifacts
         uses: actions/download-artifact@v4
         with:
