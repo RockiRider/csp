@@ -102,6 +102,19 @@ export const transformIndexHtmlHandler = async ({
     return;
   }
 
+  if (chunk?.code) {
+    const hash = generateHash(chunk.code, algorithm);
+    addHash({
+      hash,
+      key: "script-src",
+      data: {
+        algorithm,
+        content: chunk.code,
+      },
+      collection: collection,
+    });
+  }
+
   if (bundle) {
     for (const fileName of Object.keys(bundle)) {
       const currentFile = bundle[fileName];
@@ -110,22 +123,20 @@ export const transformIndexHtmlHandler = async ({
       if (currentFile) {
         if (currentFile.type === "chunk") {
           const code = currentFile.code;
-
-          if (chunk?.code === code) {
-            console.log("Matching code and chunk!");
-          }
-
           const hash = generateHash(code, algorithm);
-          addHash({
-            hash,
-            key: "script-src",
-            data: {
-              algorithm,
-              content: code,
-            },
-            collection: collection,
-          });
+          if (!collection["script-src"].has(hash)) {
+            addHash({
+              hash,
+              key: "script-src",
+              data: {
+                algorithm,
+                content: code,
+              },
+              collection: collection,
+            });
+          }
         }
+
         if (currentFile.type === "asset" && isCss) {
           const code = currentFile.source as string; // We know this is a string because of the cssFilter
           const hash = generateHash(code, algorithm);

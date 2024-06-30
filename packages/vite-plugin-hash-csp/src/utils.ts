@@ -1,5 +1,5 @@
 import { createFilter } from "vite";
-import { WarnMissingPolicyProps } from "./types";
+import { CSPPolicy, WarnMissingPolicyProps } from "./types";
 
 export const extractBaseURL = (url: string): string | false => {
   try {
@@ -37,3 +37,12 @@ export const jsTsFilter = createFilter([
   "**/*.tsx",
 ]);
 export const htmlFilter = createFilter("**.html");
+
+export const mergePolicies = (
+  defaultPolicy: CSPPolicy,
+  userPolicy: CSPPolicy | undefined
+) => {
+  if (!userPolicy) return defaultPolicy;
+  // Simple object merge; for deep merge, you might need a more sophisticated approach
+  return { ...defaultPolicy, ...userPolicy };
+};

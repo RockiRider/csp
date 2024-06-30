@@ -4,7 +4,7 @@ import { MyPluginOptions, TransformationStatus } from "./types";
 import { DEFAULT_POLICY } from "./constants";
 import { createNewCollection } from "./core";
 import { transformHandler, transformIndexHtmlHandler } from "./transform";
-import { cssFilter, jsTsFilter } from "./utils";
+import { cssFilter, jsTsFilter, mergePolicies } from "./utils";
 
 export default function vitePluginCSP(
   options: MyPluginOptions | undefined = {}
@@ -16,6 +16,8 @@ export default function vitePluginCSP(
   } = options;
 
   const CORE_COLLECTION = createNewCollection();
+
+  const effectivePolicy = mergePolicies(DEFAULT_POLICY, policy);
 
   let isDevMode = false; // This is a flag to check if we are in dev mode
   const isUserDevOpt = runOnDev; // This is a flag to check if the user wants to run in dev mode
@@ -91,7 +93,7 @@ export default function vitePluginCSP(
           html,
           context,
           algorithm,
-          policy,
+          policy: effectivePolicy,
           collection: CORE_COLLECTION,
           pluginContext,
           canRunInDevMode: canRunInDevMode(),
