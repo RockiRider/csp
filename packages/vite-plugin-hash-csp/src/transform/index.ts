@@ -101,59 +101,58 @@ export const transformIndexHtmlHandler = async ({
     //Return early if there are no transformations and we are in dev mode
     return;
   }
+  //No need to do this
+  // if (chunk?.code) {
+  //   const hash = generateHash(chunk.code, algorithm);
+  //   addHash({
+  //     hash,
+  //     key: "script-src",
+  //     data: {
+  //       algorithm,
+  //       content: chunk.code,
+  //     },
+  //     collection: collection,
+  //   });
+  // }
 
-  if (chunk?.code) {
-    const hash = generateHash(chunk.code, algorithm);
-    addHash({
-      hash,
-      key: "script-src",
-      data: {
-        algorithm,
-        content: chunk.code,
-      },
-      collection: collection,
-    });
-  }
+  // if (bundle) {
+  //   for (const fileName of Object.keys(bundle)) {
+  //     const currentFile = bundle[fileName];
+  //     const isCss = cssFilter(fileName);
 
-  if (bundle) {
-    for (const fileName of Object.keys(bundle)) {
-      const currentFile = bundle[fileName];
-      const isCss = cssFilter(fileName);
+  //     if (currentFile) {
+  //       if (currentFile.type === "chunk") {
+  //         const code = currentFile.code;
+  //         const hash = generateHash(code, algorithm);
+  //         if (!collection["script-src"].has(hash)) {
+  //           addHash({
+  //             hash,
+  //             key: "script-src",
+  //             data: {
+  //               algorithm,
+  //               content: code,
+  //             },
+  //             collection: collection,
+  //           });
+  //         }
+  //       }
 
-      if (currentFile) {
-        if (currentFile.type === "chunk") {
-          const code = currentFile.code;
-          const hash = generateHash(code, algorithm);
-          if (!collection["script-src"].has(hash)) {
-            addHash({
-              hash,
-              key: "script-src",
-              data: {
-                algorithm,
-                content: code,
-              },
-              collection: collection,
-            });
-          }
-        }
-
-        if (currentFile.type === "asset" && isCss) {
-          const code = currentFile.source as string; // We know this is a string because of the cssFilter
-          const hash = generateHash(code, algorithm);
-          console.log(code);
-          addHash({
-            hash,
-            key: "style-src",
-            data: {
-              algorithm,
-              content: code,
-            },
-            collection: collection,
-          });
-        }
-      }
-    }
-  }
+  //       if (currentFile.type === "asset" && isCss) {
+  //         const code = currentFile.source as string; // We know this is a string because of the cssFilter
+  //         const hash = generateHash(code, algorithm);
+  //         addHash({
+  //           hash,
+  //           key: "style-src",
+  //           data: {
+  //             algorithm,
+  //             content: code,
+  //           },
+  //           collection: collection,
+  //         });
+  //       }
+  //     }
+  //   }
+  // }
 
   const updatedCollection = handleIndexHtml({
     html,

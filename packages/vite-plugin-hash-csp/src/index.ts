@@ -34,7 +34,6 @@ export default function vitePluginCSP(
     enforce: "post", // Not sure yet what to do here
     buildStart() {
       pluginContext = this;
-      console.log("Build start");
     },
     apply(config, { command }) {
       // If we are in dev mode return true
