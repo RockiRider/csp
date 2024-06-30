@@ -41,7 +41,7 @@ export const transformHandler = async ({
       const hash = generateHash(code, algorithm);
       addHash({
         hash,
-        key: "script-src",
+        key: "script-src-elem",
         data: {
           algorithm,
           content: code,
@@ -55,7 +55,7 @@ export const transformHandler = async ({
       const hash = generateHash(code, algorithm);
       addHash({
         hash,
-        key: "style-src",
+        key: "style-src-elem",
         data: {
           algorithm,
           content: code,

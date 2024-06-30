@@ -6,14 +6,19 @@
     "p:build": "turbo build --filter=vite-plugin-hash-csp",
     "p:test": "turbo test --filter=vite-plugin-hash-csp",
     "dev": "turbo dev --filter=react",
+    "r:dev": "turbo dev --filter=react",
     "r:build": "turbo build --filter=react",
     "r:preview": "turbo preview --filter=react",
+    "r:test": "turbo test --filter=react",
+    "r:test:ui": "turbo run test:ui --filter=react",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@playwright/test": "^1.45.0",
     "@repo/eslint-config": "workspace:^",
     "@repo/typescript-config": "workspace:^",
+    "@types/node": "^20.14.2",
     "prettier": "^3.1.1",
     "turbo": "^2.0.0",
     "typescript": "^5.5.2"

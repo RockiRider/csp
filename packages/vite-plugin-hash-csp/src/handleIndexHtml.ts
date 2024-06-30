@@ -48,7 +48,7 @@ export function handleIndexHtml({
         const hash = generateHash(txt, algorithm);
         addHash({
           hash,
-          key: "script-src",
+          key: "script-src-elem",
           data: { algorithm, content: txt },
           collection: HASH_COLLECTION,
         });

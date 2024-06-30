@@ -16,8 +16,10 @@ export const createNewCollection = (): HashCollection => {
   return {
     "script-src": new Map<string, HashDataCollection>(), //External scripts
     "script-src-attr": new Map<string, HashDataCollection>(), //In line scripts
+    "script-src-elem": new Map<string, HashDataCollection>(), //External scripts
     "style-src": new Map<string, HashDataCollection>(), //External styles
     "style-src-attr": new Map<string, HashDataCollection>(), //In line styles
+    "style-src-elem": new Map<string, HashDataCollection>(), //External styles
   };
 };
 

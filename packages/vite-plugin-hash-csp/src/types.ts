@@ -49,10 +49,13 @@ export type HashDataCollection = {
 };
 
 export type HashCollection = {
-  "script-src-attr": Map<string, HashDataCollection>; //External scripts
-  "style-src-attr": Map<string, HashDataCollection>; //In line scripts
-  "script-src": Map<string, HashDataCollection>; //External styles
   "style-src": Map<string, HashDataCollection>; //In line styles
+  "style-src-elem": Map<string, HashDataCollection>; //External styles
+  "style-src-attr": Map<string, HashDataCollection>; //In line scripts
+
+  "script-src": Map<string, HashDataCollection>; //External styles
+  "script-src-attr": Map<string, HashDataCollection>; //External scripts
+  "script-src-elem": Map<string, HashDataCollection>;
 };
 
 export type HashCollectionKey = keyof HashCollection;
