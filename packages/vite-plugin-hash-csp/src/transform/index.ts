@@ -10,7 +10,7 @@ import { handleIndexHtml } from "../handleIndexHtml";
 import { PluginContext } from "rollup";
 import { DEFAULT_DEV_POLICY } from "../constants";
 import { generatePolicyString, policyToTag } from "../policy/createPolicy";
-import { cssFilter, jsTsFilter } from "../utils";
+import { cssFilter, jsFilter, tsFilter } from "../utils";
 
 export interface TransformHandlerProps {
   code: string;
@@ -31,13 +31,14 @@ export const transformHandler = async ({
 }: TransformHandlerProps) => {
   if (!server) return null; // Exit early if we are not in dev mode
   const isCss = cssFilter(id);
-  const isJs = jsTsFilter(id);
+  const isJs = jsFilter(id);
+  const isTs = tsFilter(id);
 
   const isAllTransformed = () =>
     Array.from(transformationStatus.values()).every((value) => value === true);
 
   if (transformationStatus.has(id)) {
-    if (isJs) {
+    if (isJs || isTs) {
       const hash = generateHash(code, algorithm);
       addHash({
         hash,
@@ -68,12 +69,11 @@ export const transformHandler = async ({
     //Files that are deps of the entry points that are loaded in the load() hook
 
     if (isJs) {
-      console.log("JS 2", id);
-
       //TODO:  Analyze the file to determine if this script contains in line styles
       //TODO: If it does, we probably need to extract the inline styles, hash them and add them to the style-src-elem
       //TODO: Handle inline styles here but in a re-usable way, so we can also handle them in the in the if statement above too and inside transformIndexHtmlHandler
 
+      // Generate a hash for the code
       const hash = generateHash(code, algorithm);
       addHash({
         hash,
@@ -86,7 +86,6 @@ export const transformHandler = async ({
       });
       transformationStatus.set(id, true);
     } else if (isCss) {
-      // console.log("CSS 2", id);
       const hash = generateHash(code, algorithm);
       addHash({
         hash,

@@ -31,7 +31,7 @@ export type HashAlgorithms = "sha256" | "sha384" | "sha512";
 export type MyPluginOptions = {
   algorithm?: HashAlgorithms;
   policy?: CSPPolicy;
-  runOnDev?: boolean;
+  unstable_runOnDev?: boolean;
 };
 
 export type HashCache = {

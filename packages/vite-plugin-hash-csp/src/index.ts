@@ -4,7 +4,7 @@ import { MyPluginOptions, TransformationStatus } from "./types";
 import { DEFAULT_POLICY } from "./constants";
 import { createNewCollection } from "./core";
 import { transformHandler, transformIndexHtmlHandler } from "./transform";
-import { cssFilter, jsTsFilter, mergePolicies } from "./utils";
+import { cssFilter, jsFilter, mergePolicies, tsFilter } from "./utils";
 
 export default function vitePluginCSP(
   options: MyPluginOptions | undefined = {}
@@ -12,7 +12,7 @@ export default function vitePluginCSP(
   const {
     algorithm = "sha256",
     policy = DEFAULT_POLICY,
-    runOnDev = false,
+    unstable_runOnDev = false,
   } = options;
 
   const CORE_COLLECTION = createNewCollection();
@@ -20,7 +20,7 @@ export default function vitePluginCSP(
   const effectivePolicy = mergePolicies(DEFAULT_POLICY, policy);
 
   let isDevMode = false; // This is a flag to check if we are in dev mode
-  const isUserDevOpt = runOnDev; // This is a flag to check if the user wants to run in dev mode
+  const isUserDevOpt = unstable_runOnDev; // This is a flag to check if the user wants to run in dev mode
   const canRunInDevMode = () => isDevMode && isUserDevOpt; // This is a function to check if we can run in dev mode
   let pluginContext: PluginContext | undefined = undefined; //Needed for logging
 
@@ -67,8 +67,9 @@ export default function vitePluginCSP(
     load(id) {
       // Entry points to files that need to be transformed
       const isCss = cssFilter(id);
-      const isJs = jsTsFilter(id);
-      if (isCss || isJs) transformationStatus.set(id, false);
+      const isJs = jsFilter(id);
+      const isTs = tsFilter(id);
+      if (isCss || isJs || isTs) transformationStatus.set(id, false);
 
       return null;
     },
@@ -108,6 +109,10 @@ export default function vitePluginCSP(
       ) {
         this.warn(log);
       }
+    },
+    moduleParsed(info) {
+      console.log("Running module parsed", info.id);
+      // if()
     },
     configureServer(thisServer) {
       server = thisServer;
