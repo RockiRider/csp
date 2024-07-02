@@ -1,5 +1,5 @@
 import { IndexHtmlTransformContext, ViteDevServer } from "vite";
-import { addHash, generateHash } from "../core";
+import { addHash, generateHash } from "../policy/core";
 import {
   CSPPolicy,
   HashAlgorithms,
@@ -8,7 +8,7 @@ import {
 } from "../types";
 import { handleIndexHtml } from "../handleIndexHtml";
 import { PluginContext } from "rollup";
-import { DEFAULT_DEV_POLICY } from "../constants";
+import { DEFAULT_DEV_POLICY } from "../policy/constants";
 import { generatePolicyString, policyToTag } from "../policy/createPolicy";
 import { cssFilter, jsFilter, tsFilter } from "../utils";
 

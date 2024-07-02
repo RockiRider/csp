@@ -1,6 +1,6 @@
 import * as cheerio from "cheerio";
 import { CSPPolicy, HashAlgorithms, HashCollection } from "./types";
-import { addHash, generateHash, warnMissingPolicy } from "./core";
+import { addHash, generateHash, warnMissingPolicy } from "./policy/core";
 import { PluginContext } from "rollup";
 
 type handleIndexHtmlProps = {

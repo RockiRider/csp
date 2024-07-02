@@ -30,7 +30,7 @@ export type HashAlgorithms = "sha256" | "sha384" | "sha512";
 
 export type MyPluginOptions = {
   /**
-   * What hashing algorithm to use. Default is sha256
+   * What hashing algorithm to use. Default is sha-256
    */
   algorithm?: HashAlgorithms;
   /**
@@ -38,7 +38,7 @@ export type MyPluginOptions = {
    */
   policy?: CSPPolicy;
   /**
-   * This is an unstable option that runs the plugin in development mode. Currently only unstable due to issues hashing css. Read more about it [here](https://example.com)
+   * **Warning** This is an unstable option that allows the plugin to run when running `vite dev`. Currently only unstable due to issues hashing CSS when facing CSS-in-JS (MUI, StyledComponents, etc). Read more about it [here](https://example.com)
    */
   unstable_runOnDev?: boolean;
 };

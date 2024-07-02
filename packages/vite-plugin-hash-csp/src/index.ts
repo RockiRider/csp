@@ -1,10 +1,11 @@
 import { Plugin, ViteDevServer } from "vite";
 import { PluginContext } from "rollup";
 import { MyPluginOptions, TransformationStatus } from "./types";
-import { DEFAULT_POLICY } from "./constants";
-import { createNewCollection } from "./core";
+import { DEFAULT_POLICY } from "./policy/constants";
+import { createNewCollection } from "./policy/core";
 import { transformHandler, transformIndexHtmlHandler } from "./transform";
 import { cssFilter, jsFilter, mergePolicies, tsFilter } from "./utils";
+import { handleModuleParsed } from "./css";
 
 export default function vitePluginCSP(
   options: MyPluginOptions | undefined = {}
@@ -114,10 +115,7 @@ export default function vitePluginCSP(
         this.warn(log);
       }
     },
-    moduleParsed(info) {
-      console.log("Running module parsed", info.id);
-      // if()
-    },
+    moduleParsed: (info) => handleModuleParsed({ info }),
     configureServer(thisServer) {
       server = thisServer;
     },

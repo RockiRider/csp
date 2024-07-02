@@ -4,9 +4,9 @@ import {
   HashCollectionKey,
   HashDataCollection,
   WarnMissingPolicyProps,
-} from "./types";
+} from "../types";
 import crypto from "crypto";
-import { isExternalSource, isSourceInPolicy } from "./utils";
+import { isExternalSource, isSourceInPolicy } from "../utils";
 
 /**
  * Used for hash data storage
