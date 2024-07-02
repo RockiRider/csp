@@ -29,8 +29,17 @@ export type CSPPolicy = Partial<{
 export type HashAlgorithms = "sha256" | "sha384" | "sha512";
 
 export type MyPluginOptions = {
+  /**
+   * What hashing algorithm to use. Default is sha256
+   */
   algorithm?: HashAlgorithms;
+  /**
+   * This is the policy that will be your base policy. Learn more about CSP [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
+   */
   policy?: CSPPolicy;
+  /**
+   * This is an unstable option that runs the plugin in development mode. Currently only unstable due to issues hashing css. Read more about it [here](https://example.com)
+   */
   unstable_runOnDev?: boolean;
 };
 

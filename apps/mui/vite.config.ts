@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     csp({
       algorithm: "sha256",
-      runOnDev: true,
+      unstable_runOnDev: false,
       policy: {
         "style-src-elem": [
           "'self'",

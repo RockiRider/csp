@@ -65,6 +65,8 @@ export default function vitePluginCSP(
       }
     },
     load(id) {
+      if (!canRunInDevMode()) return null; // Exit early if we are not in dev mode or if we are in dev mode but the user does not want to run in dev mode
+
       // Entry points to files that need to be transformed
       const isCss = cssFilter(id);
       const isJs = jsFilter(id);
@@ -76,6 +78,8 @@ export default function vitePluginCSP(
     transform: {
       order: "pre",
       handler: async (code, id) => {
+        if (!canRunInDevMode()) return null; // Exit early if we are not in dev mode or if we are in dev mode but the user does not want to run in dev mode
+
         await transformHandler({
           code,
           id,
