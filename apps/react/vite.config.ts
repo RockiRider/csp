@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     csp({
       algorithm: "sha256",
-      unstable_runOnDev: true,
+      runOnDev: true,
     }),
   ],
   preview: {
