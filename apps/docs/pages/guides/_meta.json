@@ -1,0 +1,10 @@
+{
+    "spa": {
+        "title": "MPA",
+        "href": "/guides/mpa"
+    },
+    "mpa": {
+        "title": "SPA",
+        "href": "/guides/spa"
+    }
+}

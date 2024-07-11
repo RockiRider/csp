@@ -1,0 +1,29 @@
+{
+    "name": "docs",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "postbuild": "next-sitemap",
+        "preview": "npx serve out -p 3000",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "copy-to-clipboard": "^3.3.3",
+        "framer-motion": "^11.0.5",
+        "next": "latest",
+        "next-sitemap": "^4.2.3",
+        "nextra": "^2.13.3",
+        "nextra-theme-docs": "^2.13.3",
+        "react": "latest",
+        "react-dom": "latest"
+    },
+    "devDependencies": {
+        "@types/node": "latest",
+        "@types/react": "latest",
+        "eslint": "^8.0.0",
+        "eslint-config-next": "latest",
+        "typescript": "latest"
+    }
+}
