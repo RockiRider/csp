@@ -15,6 +15,8 @@
     "em:dev": "turbo dev --filter=emotion",
     "em:build": "turbo build --filter=emotion",
     "em:preview": "turbo preview --filter=emotion",
+    "docs:dev": "turbo dev --filter=docs",
+    "docs:build": "turbo build --filter=docs",
     "test": "pnpm exec playwright test",
     "test:ui": "pnpm exec playwright test --ui",
     "lint": "turbo lint",

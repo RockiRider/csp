@@ -1,0 +1,10 @@
+{
+  "index": {
+    "title": "Home",
+    "href": "/"
+  },
+  "guides": {
+    "title": "Guides",
+    "href": "/guides"
+  }
+}
