@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const TITLE = "Vite + React + TS";
+const TITLE = "Vite + React";
 
 test("Index HTML Loaded", async ({ page }) => {
   await page.goto("/");
