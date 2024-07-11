@@ -1,28 +1,45 @@
 import { test, expect } from "@playwright/test";
 
+const TITLE = "Vite + Emotion";
+
 test("Index HTML Loaded", async ({ page }) => {
   await page.goto("/");
-  await expect(page).toHaveTitle("Vite + React + TS");
+  await expect(page).toHaveTitle(TITLE);
 });
 
 test("Loaded main JS script", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator("text=Vite + React")).toBeVisible();
+  await expect(page.locator(`text=${TITLE}`)).toBeVisible();
 });
 
-test("Loaded CSS Styles", async ({ page }) => {
+test("Loaded Inline styles", async ({ page }) => {
   await page.goto("/");
 
-  const element = page.getByRole("heading", { name: "Vite + React" });
+  const element = page.getByRole("button", { name: "Something else" });
   await expect(element).toBeVisible();
 
   const color = await element.evaluate(
     (el) => window.getComputedStyle(el).color
   );
 
-  console.log(color);
+  expect(color).toBe("rgb(255, 0, 0)");
+});
 
-  expect(color).toBe("rgb(33, 53, 71)");
+test("Loaded Emotion styles", async ({ page }) => {
+  await page.goto("/");
+
+  const element = page.getByRole("button", { name: "Click Me" });
+  await expect(element).toBeVisible();
+
+  const color = await element.evaluate(
+    (el) => window.getComputedStyle(el).color
+  );
+  const borderColor = await element.evaluate(
+    (el) => window.getComputedStyle(el).borderColor
+  );
+
+  expect(color).toBe("rgb(255, 0, 0)");
+  expect(borderColor).toBe("rgb(0, 0, 0)");
 });
 
 test("JQuery is blocked by CSP", async ({ page }) => {
