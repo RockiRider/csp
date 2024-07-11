@@ -13,7 +13,7 @@ export default defineConfig({
         "style-src-elem": [
           "'self'",
           "https://fonts.googleapis.com",
-          // "'unsafe-inline'",
+          "'unsafe-inline'",
         ],
         "font-src": ["'self'", "https://fonts.gstatic.com"],
       },

@@ -10,18 +10,14 @@ export default defineConfig({
       algorithm: "sha256",
       unstable_runOnDev: true,
       policy: {
-        "style-src-elem": [
-          "'self'",
-          "'unsafe-inline'",
-          // "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
-        ],
+        "style-src-elem": ["'self'", "'unsafe-inline'"],
       },
     }),
   ],
   preview: {
-    port: 4000,
+    port: 4002,
   },
   server: {
-    port: 3000,
+    port: 3002,
   },
 });
