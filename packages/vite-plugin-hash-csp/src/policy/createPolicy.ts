@@ -32,6 +32,12 @@ export const generatePolicyString = ({
   for (const [key, value] of Object.entries(collection)) {
     const currentMap = value;
     const currentPolicy = finalPolicy[key as keyof CSPPolicy] ?? [];
+
+    if (currentPolicy.includes("'unsafe-inline'")) {
+      // If we have unsafe-inline, we should not add any hashes because this will override the unsafe-inline
+      continue;
+    }
+
     if (currentMap.size > 0) {
       finalPolicy[key as keyof CSPPolicy] = [
         ...currentPolicy,

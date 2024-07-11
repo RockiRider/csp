@@ -1,5 +1,5 @@
 import { ModuleInfo, ProgramNode } from "rollup";
-import { walk } from "estree-walker";
+import { Node, walk } from "estree-walker";
 
 /**
  * There are 3 approaches to getting this CSS in JS detection to work:
@@ -12,52 +12,95 @@ interface HandleModuleParsedProps {
   info: ModuleInfo;
 }
 export const handleModuleParsed = ({ info }: HandleModuleParsedProps) => {
-  if (info.id.includes("StyledExample")) {
-    const hasFoundStyles = findStyles(info.ast);
+  if (info.id.includes("@emotion+sheet")) {
+    const hasFoundStyles = findStyles(info.ast, info.id);
     console.log("Has found styles: ", hasFoundStyles);
   }
 };
 
+export const extractCSSFromTaggedTemplate = (node: Node) => {
+  if (node.type !== "TaggedTemplateExpression") {
+    return null;
+  }
+
+  let cssContent = "";
+
+  // Iterate through the quasis to concatenate the raw strings
+  node.quasi.quasis.forEach((quasi: any) => {
+    cssContent += quasi.value.raw;
+  });
+
+  // Optionally, handle expressions if needed
+
+  return cssContent;
+};
+
 // TODO: 1 Look for VariableDeclerations. Look at their names and their values. If the names include anything like "styles or css" and the values include any css like syntax, we have found our styles.
 //TODO: 2 Look at imports from elsewhere (other files, so we can catch out things like emotion, styled-components, etc)
-const findStyles = (ast: ProgramNode | null): boolean => {
+const findStyles = (ast: ProgramNode | null, fileId: string): boolean => {
   if (!ast) return false;
   let foundStyles = false;
 
   walk(ast, {
     enter(node) {
       // Check for VariableDeclaration nodes
-      if (node.type === "VariableDeclaration") {
-        // Iterate through each declaration in the VariableDeclaration
-        node.declarations.forEach((declaration) => {
-          // Check if the variable name includes "styles" or "css"
-          if (declaration.id.type === "Identifier") {
-            const name = declaration.id.name;
-            const isStyleVariable =
-              declaration.id.name.includes("style") ||
-              declaration.id.name.includes("css") ||
-              name.includes("className");
+      // if (node.type === "VariableDeclaration") {
+      //   // Iterate through each declaration in the VariableDeclaration
+      //   node.declarations.forEach((declaration) => {
+      //     // Check if the variable name includes "styles" or "css"
+      //     if (declaration.id.type === "Identifier") {
+      //       const name = declaration.id.name;
+      //       const isStyleVariable =
+      //         declaration.id.name.includes("style") ||
+      //         declaration.id.name.includes("css") ||
+      //         name.includes("className");
 
-            //TODO: Continue from here
-            console.log(declaration.init);
+      //       //TODO: Continue from here
+      //       // console.log(declaration.init);
 
-            // if (declaration.init?.type === "") {
-            //   console.log(declaration);
+      //       // if (declaration.init?.type === "") {
+      //       //   console.log(declaration);
 
-            //   const hasCssSyntax =
-            //     declaration.init &&
-            //     typeof declaration.init.value === "string" &&
-            //     (declaration.init.value.includes(":") ||
-            //       declaration.init.value.includes(";"));
-            // }
+      //       //   const hasCssSyntax =
+      //       //     declaration.init &&
+      //       //     typeof declaration.init.value === "string" &&
+      //       //     (declaration.init.value.includes(":") ||
+      //       //       declaration.init.value.includes(";"));
+      //       // }
 
-            if (isStyleVariable) {
-              foundStyles = true;
-            }
+      //       if (isStyleVariable) {
+      //         foundStyles = true;
+      //       }
+      //     }
+      //     //   Basic check for CSS-like syntax in the initializer value
+      //   });
+      // }
+      if (
+        node.type === "CallExpression" &&
+        node.callee.type === "MemberExpression" &&
+        node.callee.property.type === "Identifier" &&
+        node.callee.property.name === "insertRule"
+      ) {
+        // Assuming the first argument is the rule's content or identifier
+        if (node.arguments.length > 0) {
+          const firstArg = node.arguments[0];
+          if (firstArg?.type === "Identifier") {
+            // If the argument is an identifier, log its name
+            console.log("Inserting rule with identifier:", firstArg.name);
+          } else if (firstArg?.type === "Literal") {
+            // If the argument is a literal, log its value
+            console.log("Inserting rule with literal content:", firstArg.value);
           }
-          //   Basic check for CSS-like syntax in the initializer value
-        });
+          // Handle other types (e.g., MemberExpression) as needed
+        }
       }
+      // if (node.type === "TaggedTemplateExpression") {
+      //   const cssContent = extractCSSFromTaggedTemplate(node);
+      //   if (cssContent) {
+      //     foundStyles = true;
+      //     console.log(cssContent);
+      //   }
+      // }
     },
   });
 
