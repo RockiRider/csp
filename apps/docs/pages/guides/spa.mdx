@@ -57,12 +57,14 @@ export default defineConfig({
 
 ### Caveats
 
-If you are using a library that dynamically injects css into the page (e.g. `styled-components`, `emotion`, or `MUI`), you will need to set your `style-elem-src` policy to `unsafe-inline` **OR** switch to use a `server` & `nonce`.
+If you are using a library that dynamically injects css into the page (e.g. `styled-components`, `emotion`, or `MUI`), you will need to set your `style-elem-src` policy to include `'unsafe-inline'`.
+
+The only other alternative is to move to a server and use nonce based CSPs.
 
 We are actively working to find a solution to this [issue](https://github.com/RockiRider/vite-plugin-hash-csp/issues/2), and there isn't much support for hash based CSPs in those libraries yet.
 
-<Callout>
-    There are risks to using `unsafe-inline` for your styles. But most of these can be mitigated by a sound CSP. [Read more about this here](https://scotthelme.co.uk/can-you-get-pwned-with-css/)
+<Callout type="warning">
+    There are risks to using `'unsafe-inline'` for your styles. But most of these can be mitigated by the rest of the CSP. [Read more about this here](https://scotthelme.co.uk/can-you-get-pwned-with-css/)
 </Callout>
 
 
