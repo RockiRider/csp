@@ -69,10 +69,6 @@ export const transformHandler = async ({
     //Files that are deps of the entry points that are loaded in the load() hook
 
     if (isJs) {
-      //TODO:  Analyze the file to determine if this script contains in line styles
-      //TODO: If it does, we probably need to extract the inline styles, hash them and add them to the style-src-elem
-      //TODO: Handle inline styles here but in a re-usable way, so we can also handle them in the in the if statement above too and inside transformIndexHtmlHandler
-
       // Generate a hash for the code
       const hash = generateHash(code, algorithm);
       addHash({
@@ -137,19 +133,6 @@ export const transformIndexHtmlHandler = async ({
     //Return early if there are no transformations and we are in dev mode
     return;
   }
-  //No need to do this
-  // if (chunk?.code) {
-  //   const hash = generateHash(chunk.code, algorithm);
-  //   addHash({
-  //     hash,
-  //     key: "script-src",
-  //     data: {
-  //       algorithm,
-  //       content: chunk.code,
-  //     },
-  //     collection: collection,
-  //   });
-  // }
 
   // if (bundle) {
   //   for (const fileName of Object.keys(bundle)) {

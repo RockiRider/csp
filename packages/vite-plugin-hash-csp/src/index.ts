@@ -5,7 +5,7 @@ import { DEFAULT_POLICY } from "./policy/constants";
 import { createNewCollection } from "./policy/core";
 import { transformHandler, transformIndexHtmlHandler } from "./transform";
 import { cssFilter, jsFilter, mergePolicies, tsFilter } from "./utils";
-import { handleModuleParsed } from "./css";
+import { unstable_handleModuleParsed } from "./css";
 
 export default function vitePluginCSP(
   options: MyPluginOptions | undefined = {}
@@ -13,7 +13,8 @@ export default function vitePluginCSP(
   const {
     algorithm = "sha256",
     policy = DEFAULT_POLICY,
-    unstable_runOnDev = false,
+    runOnDev = false,
+    mode = "prod",
   } = options;
 
   const CORE_COLLECTION = createNewCollection();
@@ -21,7 +22,7 @@ export default function vitePluginCSP(
   const effectivePolicy = mergePolicies(DEFAULT_POLICY, policy);
 
   let isDevMode = false; // This is a flag to check if we are in dev mode
-  const isUserDevOpt = unstable_runOnDev; // This is a flag to check if the user wants to run in dev mode
+  const isUserDevOpt = runOnDev; // This is a flag to check if the user wants to run in dev mode
   const canRunInDevMode = () => isDevMode && isUserDevOpt; // This is a function to check if we can run in dev mode
   let pluginContext: PluginContext | undefined = undefined; //Needed for logging
 
@@ -115,7 +116,9 @@ export default function vitePluginCSP(
         this.warn(log);
       }
     },
-    moduleParsed: (info) => handleModuleParsed({ info }),
+    moduleParsed: (info) =>
+      // This handleModuleParsed function is not ready for production
+      mode === "prod" ? undefined : unstable_handleModuleParsed({ info }),
     configureServer(thisServer) {
       server = thisServer;
     },

@@ -11,7 +11,9 @@ import { Node, walk } from "estree-walker";
 interface HandleModuleParsedProps {
   info: ModuleInfo;
 }
-export const handleModuleParsed = ({ info }: HandleModuleParsedProps) => {
+export const unstable_handleModuleParsed = ({
+  info,
+}: HandleModuleParsedProps) => {
   if (info.id.includes("@emotion+sheet")) {
     const hasFoundStyles = findStyles(info.ast, info.id);
     console.log("Has found styles: ", hasFoundStyles);

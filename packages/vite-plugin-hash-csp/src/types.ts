@@ -38,9 +38,17 @@ export type MyPluginOptions = {
    */
   policy?: CSPPolicy;
   /**
-   * **Warning** This is an unstable option that allows the plugin to run when running `vite dev`. Currently only unstable due to issues hashing CSS when facing CSS-in-JS (MUI, StyledComponents, etc). Read more about it [here](https://example.com)
+   * Allows this plugin to run in dev mode. The trade off is that developers can see the CSP policy in action in dev mode, at the cost of performance
    */
-  unstable_runOnDev?: boolean;
+  runOnDev?: boolean;
+  /**
+   * This is a flag for the plugin to know what type of app you are building. Default is SPA
+   */
+  type?: "SPA";
+  /**
+   * Ignore this flag completely unless you are a contributor. This is for testing purposes
+   */
+  mode?: "dev" | "prod";
 };
 
 export type HashCache = {
