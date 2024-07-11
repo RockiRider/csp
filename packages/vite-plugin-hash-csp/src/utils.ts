@@ -30,12 +30,8 @@ export const isSourceInPolicy = ({
 };
 
 export const cssFilter = createFilter("**.css");
-export const jsTsFilter = createFilter([
-  "**/*.js",
-  "**/*.ts",
-  "**/*.jsx",
-  "**/*.tsx",
-]);
+export const jsFilter = createFilter(["**/*.js?(*)", "**/*.jsx?(*)"]);
+export const tsFilter = createFilter(["**/*.ts", "**/*.tsx"]);
 export const htmlFilter = createFilter("**.html");
 
 export const mergePolicies = (

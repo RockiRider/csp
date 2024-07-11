@@ -1,5 +1,5 @@
 import { IndexHtmlTransformContext, ViteDevServer } from "vite";
-import { addHash, generateHash } from "../core";
+import { addHash, generateHash } from "../policy/core";
 import {
   CSPPolicy,
   HashAlgorithms,
@@ -8,9 +8,9 @@ import {
 } from "../types";
 import { handleIndexHtml } from "../handleIndexHtml";
 import { PluginContext } from "rollup";
-import { DEFAULT_DEV_POLICY } from "../constants";
+import { DEFAULT_DEV_POLICY } from "../policy/constants";
 import { generatePolicyString, policyToTag } from "../policy/createPolicy";
-import { cssFilter, jsTsFilter } from "../utils";
+import { cssFilter, jsFilter, tsFilter } from "../utils";
 
 export interface TransformHandlerProps {
   code: string;
@@ -31,13 +31,14 @@ export const transformHandler = async ({
 }: TransformHandlerProps) => {
   if (!server) return null; // Exit early if we are not in dev mode
   const isCss = cssFilter(id);
-  const isJs = jsTsFilter(id);
+  const isJs = jsFilter(id);
+  const isTs = tsFilter(id);
 
   const isAllTransformed = () =>
     Array.from(transformationStatus.values()).every((value) => value === true);
 
   if (transformationStatus.has(id)) {
-    if (isJs) {
+    if (isJs || isTs) {
       const hash = generateHash(code, algorithm);
       addHash({
         hash,
@@ -49,9 +50,7 @@ export const transformHandler = async ({
         collection: CORE_COLLECTION,
       });
       transformationStatus.set(id, true);
-    }
-
-    if (isCss) {
+    } else if (isCss) {
       const hash = generateHash(code, algorithm);
       addHash({
         hash,
@@ -63,14 +62,47 @@ export const transformHandler = async ({
         collection: CORE_COLLECTION,
       });
       transformationStatus.set(id, true);
+    } else {
+      // Do nothing
     }
+  } else {
+    //Files that are deps of the entry points that are loaded in the load() hook
 
-    if (isAllTransformed() && (isCss || isJs)) {
-      await server.transformIndexHtml("/index.html", "", "/");
-      server.ws.send({
-        type: "full-reload",
+    if (isJs) {
+      // Generate a hash for the code
+      const hash = generateHash(code, algorithm);
+      addHash({
+        hash,
+        key: "script-src-elem",
+        data: {
+          algorithm,
+          content: code,
+        },
+        collection: CORE_COLLECTION,
       });
+      transformationStatus.set(id, true);
+    } else if (isCss) {
+      const hash = generateHash(code, algorithm);
+      addHash({
+        hash,
+        key: "style-src-elem",
+        data: {
+          algorithm,
+          content: code,
+        },
+        collection: CORE_COLLECTION,
+      });
+      transformationStatus.set(id, true);
+    } else {
+      // Do nothing
     }
+  }
+
+  if (isAllTransformed() && (isCss || isJs)) {
+    await server.transformIndexHtml("/index.html", "", "/");
+    server.ws.send({
+      type: "full-reload",
+    });
   }
 
   return null;
@@ -101,19 +133,6 @@ export const transformIndexHtmlHandler = async ({
     //Return early if there are no transformations and we are in dev mode
     return;
   }
-  //No need to do this
-  // if (chunk?.code) {
-  //   const hash = generateHash(chunk.code, algorithm);
-  //   addHash({
-  //     hash,
-  //     key: "script-src",
-  //     data: {
-  //       algorithm,
-  //       content: chunk.code,
-  //     },
-  //     collection: collection,
-  //   });
-  // }
 
   // if (bundle) {
   //   for (const fileName of Object.keys(bundle)) {

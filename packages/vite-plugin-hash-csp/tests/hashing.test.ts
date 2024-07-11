@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { generateHash } from "../src/core";
+import { generateHash } from "../src/policy/core";
 import { APP_CSS, INDEX_CSS } from "../mocks/css";
 
 const APP_HASH = "oHFeCgntvQ+95lgWp14PoPyLMUxSYMB2jBm/OqwiYho=";

@@ -1,4 +1,4 @@
-import { CSPPolicy } from "./types";
+import { CSPPolicy } from "../types";
 
 export const DEFAULT_DEV_POLICY: CSPPolicy = {
   "default-src": ["'self'"],

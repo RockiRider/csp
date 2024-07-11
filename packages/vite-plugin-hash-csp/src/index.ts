@@ -1,10 +1,11 @@
 import { Plugin, ViteDevServer } from "vite";
 import { PluginContext } from "rollup";
 import { MyPluginOptions, TransformationStatus } from "./types";
-import { DEFAULT_POLICY } from "./constants";
-import { createNewCollection } from "./core";
+import { DEFAULT_POLICY } from "./policy/constants";
+import { createNewCollection } from "./policy/core";
 import { transformHandler, transformIndexHtmlHandler } from "./transform";
-import { cssFilter, jsTsFilter, mergePolicies } from "./utils";
+import { cssFilter, jsFilter, mergePolicies, tsFilter } from "./utils";
+import { unstable_handleModuleParsed } from "./css";
 
 export default function vitePluginCSP(
   options: MyPluginOptions | undefined = {}
@@ -13,6 +14,7 @@ export default function vitePluginCSP(
     algorithm = "sha256",
     policy = DEFAULT_POLICY,
     runOnDev = false,
+    mode = "prod",
   } = options;
 
   const CORE_COLLECTION = createNewCollection();
@@ -65,15 +67,21 @@ export default function vitePluginCSP(
       }
     },
     load(id) {
+      if (!canRunInDevMode()) return null; // Exit early if we are not in dev mode or if we are in dev mode but the user does not want to run in dev mode
+
+      // Entry points to files that need to be transformed
       const isCss = cssFilter(id);
-      const isJs = jsTsFilter(id);
-      if (isCss || isJs) transformationStatus.set(id, false);
+      const isJs = jsFilter(id);
+      const isTs = tsFilter(id);
+      if (isCss || isJs || isTs) transformationStatus.set(id, false);
 
       return null;
     },
     transform: {
       order: "pre",
       handler: async (code, id) => {
+        if (!canRunInDevMode()) return null; // Exit early if we are not in dev mode or if we are in dev mode but the user does not want to run in dev mode
+
         await transformHandler({
           code,
           id,
@@ -108,6 +116,9 @@ export default function vitePluginCSP(
         this.warn(log);
       }
     },
+    moduleParsed: (info) =>
+      // This handleModuleParsed function is not ready for production
+      mode === "prod" ? undefined : unstable_handleModuleParsed({ info }),
     configureServer(thisServer) {
       server = thisServer;
     },

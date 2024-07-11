@@ -7,16 +7,44 @@ import { defineConfig, devices } from "@playwright/test";
 // import dotenv from 'dotenv';
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
 
-const APPS = {
-  "r:dev": {
+const APPS = [
+  {
     url: "http://localhost:3000",
     command: `pnpm r:dev`,
+    testDir: "./apps/react/tests",
+    name: "React - Dev",
   },
-  "r:preview": {
+  {
     url: "http://localhost:4000",
     command: `pnpm r:preview`,
+    testDir: "./apps/react/tests",
+    name: "React - Build",
   },
-};
+  {
+    url: "http://localhost:3001",
+    command: `pnpm mui:dev`,
+    testDir: "./apps/mui/tests",
+    name: "Mui - Dev",
+  },
+  {
+    url: "http://localhost:4001",
+    command: `pnpm mui:preview`,
+    testDir: "./apps/mui/tests",
+    name: "Mui - Build",
+  },
+  {
+    url: "http://localhost:3002",
+    command: `pnpm em:dev`,
+    testDir: "./apps/emotion/tests",
+    name: "Emotion - Dev",
+  },
+  {
+    url: "http://localhost:4002",
+    command: `pnpm em:preview`,
+    testDir: "./apps/emotion/tests",
+    name: "Emotion - Build",
+  },
+];
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -41,32 +69,24 @@ export default defineConfig({
   },
 
   /* Configure projects for major browsers */
-  projects: [
-    {
-      name: "Base React - Dev",
-      use: { ...devices["Desktop Chrome"], baseURL: APPS["r:dev"].url },
-      testDir: "./apps/react/tests",
-    },
-    {
-      name: "Base React - Build",
-      use: { ...devices["Desktop Chrome"], baseURL: APPS["r:preview"].url },
-      testDir: "./apps/react/tests",
-    },
-  ],
+  projects: APPS.map((app) => {
+    return {
+      name: app.name,
+      use: {
+        ...devices["Desktop Chrome"],
+        baseURL: app.url,
+      },
+      testDir: app.testDir,
+    };
+  }),
 
   /* Run your local dev server before starting the tests */
-  webServer: [
-    {
-      command: APPS["r:dev"].command,
-      url: APPS["r:dev"].url,
+  webServer: APPS.map((app) => {
+    return {
+      command: app.command,
+      url: app.url,
       timeout: 60 * 1000, // 60 seconds
       reuseExistingServer: !process.env.CI,
-    },
-    {
-      command: APPS["r:preview"].command,
-      url: APPS["r:preview"].url,
-      timeout: 60 * 1000, // 60 seconds
-      reuseExistingServer: !process.env.CI,
-    },
-  ],
+    };
+  }),
 });
