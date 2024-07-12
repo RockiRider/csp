@@ -44,6 +44,18 @@ const APPS = [
     testDir: "./apps/emotion/tests",
     name: "Emotion - Build",
   },
+  {
+    url: "http://localhost:3003",
+    command: `pnpm tailwind:dev`,
+    testDir: "./apps/tailwind/tests",
+    name: "Tailwind - Dev",
+  },
+  {
+    url: "http://localhost:4003",
+    command: `pnpm tailwind:preview`,
+    testDir: "./apps/tailwind/tests",
+    name: "Tailwind - Build",
+  },
 ];
 
 /**
