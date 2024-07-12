@@ -1,5 +1,6 @@
 import { createFilter } from "vite";
-import { CSPPolicy, WarnMissingPolicyProps } from "./types";
+import { CSPPolicy, Outlier, WarnMissingPolicyProps } from "./types";
+import { REQUIRE_POST_TRANSFORM } from "./transform/constants";
 
 export const extractBaseURL = (url: string): string | false => {
   try {
@@ -42,4 +43,12 @@ export const mergePolicies = (
   if (!userPolicy) return defaultPolicy;
   // Simple object merge; for deep merge, you might need a more sophisticated approach
   return { ...defaultPolicy, ...userPolicy };
+};
+
+export const parseOutliers = (outliers: Array<Outlier>) => {
+  return {
+    postTransform: outliers.some((outlier) =>
+      REQUIRE_POST_TRANSFORM.includes(outlier)
+    ),
+  };
 };

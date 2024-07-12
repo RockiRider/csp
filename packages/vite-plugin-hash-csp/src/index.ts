@@ -4,7 +4,14 @@ import { MyPluginOptions, TransformationStatus } from "./types";
 import { DEFAULT_POLICY } from "./policy/constants";
 import { createNewCollection } from "./policy/core";
 import { transformHandler, transformIndexHtmlHandler } from "./transform";
-import { cssFilter, jsFilter, mergePolicies, tsFilter } from "./utils";
+import {
+  cssFilter,
+  jsFilter,
+  mergePolicies,
+  parseOutliers,
+  sassFilter,
+  tsFilter,
+} from "./utils";
 import { unstable_handleModuleParsed } from "./css";
 
 export default function vitePluginCSP(
@@ -13,16 +20,19 @@ export default function vitePluginCSP(
   const {
     algorithm = "sha256",
     policy = DEFAULT_POLICY,
-    runOnDev = false,
+    dev = {},
     mode = "prod",
   } = options;
 
+  const { outlierSupport = [], run = false } = dev;
+
   const CORE_COLLECTION = createNewCollection();
+  console.log("RUN IS", run);
 
   const effectivePolicy = mergePolicies(DEFAULT_POLICY, policy);
 
   let isDevMode = false; // This is a flag to check if we are in dev mode
-  const isUserDevOpt = runOnDev; // This is a flag to check if the user wants to run in dev mode
+  const isUserDevOpt = run; // This is a flag to check if the user wants to run in dev mode
   const canRunInDevMode = () => isDevMode && isUserDevOpt; // This is a function to check if we can run in dev mode
   let pluginContext: PluginContext | undefined = undefined; //Needed for logging
 
@@ -31,9 +41,11 @@ export default function vitePluginCSP(
   const transformationStatus: TransformationStatus = new Map<string, boolean>();
   const isTransformationStatusEmpty = () => transformationStatus.size === 0;
 
+  const requirements = parseOutliers(outlierSupport);
+
   return {
     name: "vite-plugin-hash-csp",
-    enforce: "post", // Not sure yet what to do here
+    enforce: "post",
     buildStart() {
       pluginContext = this;
     },
@@ -71,14 +83,15 @@ export default function vitePluginCSP(
 
       // Entry points to files that need to be transformed
       const isCss = cssFilter(id);
+      const isSass = sassFilter(id);
       const isJs = jsFilter(id);
       const isTs = tsFilter(id);
-      if (isCss || isJs || isTs) transformationStatus.set(id, false);
+      if (isCss || isJs || isTs || isSass) transformationStatus.set(id, false);
 
       return null;
     },
     transform: {
-      order: "pre",
+      order: requirements.postTransform ? "post" : "pre",
       handler: async (code, id) => {
         if (!canRunInDevMode()) return null; // Exit early if we are not in dev mode or if we are in dev mode but the user does not want to run in dev mode
 

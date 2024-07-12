@@ -10,7 +10,7 @@ import { handleIndexHtml } from "../handleIndexHtml";
 import { PluginContext } from "rollup";
 import { DEFAULT_DEV_POLICY } from "../policy/constants";
 import { generatePolicyString, policyToTag } from "../policy/createPolicy";
-import { cssFilter, jsFilter, tsFilter } from "../utils";
+import { cssFilter, jsFilter, sassFilter, tsFilter } from "../utils";
 
 export interface TransformHandlerProps {
   code: string;
@@ -31,6 +31,7 @@ export const transformHandler = async ({
 }: TransformHandlerProps) => {
   if (!server) return null; // Exit early if we are not in dev mode
   const isCss = cssFilter(id);
+  const isSass = sassFilter(id);
   const isJs = jsFilter(id);
   const isTs = tsFilter(id);
 
@@ -50,7 +51,7 @@ export const transformHandler = async ({
         collection: CORE_COLLECTION,
       });
       transformationStatus.set(id, true);
-    } else if (isCss) {
+    } else if (isCss || isSass) {
       const hash = generateHash(code, algorithm);
       addHash({
         hash,
@@ -81,8 +82,9 @@ export const transformHandler = async ({
         collection: CORE_COLLECTION,
       });
       transformationStatus.set(id, true);
-    } else if (isCss) {
+    } else if (isCss || isSass) {
       const hash = generateHash(code, algorithm);
+      console.log(code);
       addHash({
         hash,
         key: "style-src-elem",
@@ -134,6 +136,7 @@ export const transformIndexHtmlHandler = async ({
     return;
   }
 
+  // This is commented out because it doesn't look like we need to actually hash the bundle, due to using just 'self' is enough in the policy.
   // if (bundle) {
   //   for (const fileName of Object.keys(bundle)) {
   //     const currentFile = bundle[fileName];

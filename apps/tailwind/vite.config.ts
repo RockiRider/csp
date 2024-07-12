@@ -4,7 +4,18 @@ import csp from "vite-plugin-hash-csp";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), csp({ runOnDev: true })],
+  plugins: [
+    react(),
+    csp({
+      dev: {
+        run: true,
+        outlierSupport: ["tailwind"],
+      },
+      policy: {
+        "style-src-elem": ["'unsafe-inline'"],
+      },
+    }),
+  ],
   preview: {
     port: 4003,
   },

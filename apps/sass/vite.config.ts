@@ -7,7 +7,10 @@ export default defineConfig({
   plugins: [
     react(),
     csp({
-      runOnDev: true,
+      dev: {
+        run: true,
+        outlierSupport: ["sass"],
+      },
     }),
   ],
   preview: {
