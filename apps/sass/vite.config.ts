@@ -4,11 +4,16 @@ import csp from "vite-plugin-hash-csp";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), csp({ runOnDev: true })],
+  plugins: [
+    react(),
+    csp({
+      runOnDev: true,
+    }),
+  ],
   preview: {
-    port: 4003,
+    port: 4004,
   },
   server: {
-    port: 3003,
+    port: 3004,
   },
 });

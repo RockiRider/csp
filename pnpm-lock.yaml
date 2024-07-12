@@ -120,7 +120,7 @@ importers:
         version: 5.5.2
       vite:
         specifier: ^5.3.1
-        version: 5.3.1(@types/node@20.14.2)
+        version: 5.3.1(@types/node@20.14.2)(sass@1.77.8)
       vite-plugin-hash-csp:
         specifier: workspace:^
         version: link:../../packages/vite-plugin-hash-csp
@@ -160,7 +160,7 @@ importers:
         version: 5.5.2
       vite:
         specifier: 5.3.1
-        version: 5.3.1(@types/node@20.14.2)
+        version: 5.3.1(@types/node@20.14.2)(sass@1.77.8)
       vite-plugin-hash-csp:
         specifier: workspace:^
         version: link:../../packages/vite-plugin-hash-csp
@@ -203,7 +203,53 @@ importers:
         version: 5.4.5
       vite:
         specifier: ^5.3.1
-        version: 5.3.1(@types/node@20.14.2)
+        version: 5.3.1(@types/node@20.14.2)(sass@1.77.8)
+      vite-plugin-hash-csp:
+        specifier: workspace:^
+        version: link:../../packages/vite-plugin-hash-csp
+
+  apps/sass:
+    dependencies:
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.3
+        version: 18.3.3
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.0
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^7.13.1
+        version: 7.16.0(@typescript-eslint/parser@7.16.0)(eslint@8.57.0)(typescript@5.5.2)
+      '@typescript-eslint/parser':
+        specifier: ^7.13.1
+        version: 7.16.0(eslint@8.57.0)(typescript@5.5.2)
+      '@vitejs/plugin-react':
+        specifier: ^4.3.1
+        version: 4.3.1(vite@5.3.1)
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      eslint-plugin-react-hooks:
+        specifier: ^4.6.2
+        version: 4.6.2(eslint@8.57.0)
+      eslint-plugin-react-refresh:
+        specifier: ^0.4.7
+        version: 0.4.7(eslint@8.57.0)
+      sass:
+        specifier: ^1.77.8
+        version: 1.77.8
+      typescript:
+        specifier: ^5.2.2
+        version: 5.5.2
+      vite:
+        specifier: ^5.3.1
+        version: 5.3.1(@types/node@20.14.2)(sass@1.77.8)
       vite-plugin-hash-csp:
         specifier: workspace:^
         version: link:../../packages/vite-plugin-hash-csp
@@ -255,7 +301,7 @@ importers:
         version: 5.5.2
       vite:
         specifier: ^5.3.1
-        version: 5.3.1(@types/node@20.14.2)
+        version: 5.3.1(@types/node@20.14.2)(sass@1.77.8)
       vite-plugin-hash-csp:
         specifier: workspace:^
         version: link:../../packages/vite-plugin-hash-csp
@@ -324,7 +370,7 @@ importers:
         version: 5.5.2
       vite:
         specifier: ^5.3.1
-        version: 5.3.1(@types/node@20.14.2)
+        version: 5.3.1(@types/node@20.14.2)(sass@1.77.8)
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@20.14.2)
@@ -2619,7 +2665,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.24.7(@babel/core@7.24.7)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.3.1(@types/node@20.14.2)
+      vite: 5.3.1(@types/node@20.14.2)(sass@1.77.8)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -5100,6 +5146,10 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
+  /immutable@4.3.6:
+    resolution: {integrity: sha512-Ju0+lEMyzMVZarkTn/gqRpdqd5dOPaz1mCZ0SH3JV6iFw81PldE/PEB1hWVEA288HPt4WXW8O7AWxB10M+03QQ==}
+    dev: true
+
   /import-fresh@3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -7275,10 +7325,6 @@ packages:
       is-regex: 1.1.4
     dev: true
 
-  /safer-buffer@2.1.2:
-    resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
-    dev: false
-
   /scheduler@0.23.2:
     resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
     dependencies:
@@ -8188,7 +8234,7 @@ packages:
       debug: 4.3.5
       pathe: 1.1.2
       picocolors: 1.0.1
-      vite: 5.3.1(@types/node@20.14.2)
+      vite: 5.3.1(@types/node@20.14.2)(sass@1.77.8)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -8200,7 +8246,7 @@ packages:
       - terser
     dev: true
 
-  /vite@5.3.1(@types/node@20.14.2):
+  /vite@5.3.1(@types/node@20.14.2)(sass@1.77.8):
     resolution: {integrity: sha512-XBmSKRLXLxiaPYamLv3/hnP/KXDai1NDexN0FpkTaZXTfycHvkRHoenpgl/fvuK/kPbB6xAgoyiryAhQNxYmAQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -8232,6 +8278,7 @@ packages:
       esbuild: 0.21.5
       postcss: 8.4.39
       rollup: 4.18.0
+      sass: 1.77.8
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
@@ -8279,7 +8326,7 @@ packages:
       strip-literal: 2.1.0
       tinybench: 2.8.0
       tinypool: 0.8.4
-      vite: 5.3.1(@types/node@20.14.2)
+      vite: 5.3.1(@types/node@20.14.2)(sass@1.77.8)
       vite-node: 1.6.0(@types/node@20.14.2)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:

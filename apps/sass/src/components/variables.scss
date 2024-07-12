@@ -1,0 +1,50 @@
+// Primary Palette
+$color-primary: #007bff;
+$color-secondary: #6c757d;
+$color-success: #28a745;
+$color-info: #17a2b8;
+$color-warning: #ffc107;
+$color-danger: #dc3545;
+$color-light: #f8f9fa;
+$color-dark: #343a40;
+
+// Neutral Palette
+$color-white: #ffffff;
+$color-gray-100: #f8f9fa;
+$color-gray-200: #e9ecef;
+$color-gray-300: #dee2e6;
+$color-gray-400: #ced4da;
+$color-gray-500: #adb5bd;
+$color-gray-600: #6c757d;
+$color-gray-700: #495057;
+$color-gray-800: #343a40;
+$color-gray-900: #212529;
+$color-black: #000000;
+
+// Accent Colors
+$color-accent-1: #ff4081;
+$color-accent-2: #651fff;
+$color-accent-3: #304ffe;
+
+// Background Colors
+$background-color-body: #fff;
+$background-color-card: $color-gray-100;
+$background-color-header: $color-primary;
+$background-color-footer: $color-dark;
+
+// Border Colors
+$border-color-base: $color-gray-300;
+$border-color-dark: $color-gray-500;
+$border-color-light: $color-gray-200;
+
+// Text Colors
+$text-color-main: $color-gray-900;
+$text-color-secondary: $color-gray-600;
+$text-color-light: $color-white;
+$text-color-dark: $color-black;
+
+// Button Colors
+$button-color-primary: $color-primary;
+$button-color-secondary: $color-secondary;
+$button-hover-background-primary: darken($color-primary, 10%);
+$button-hover-background-secondary: darken($color-secondary, 10%);
