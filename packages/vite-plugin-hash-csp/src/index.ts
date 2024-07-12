@@ -88,10 +88,6 @@ export default function vitePluginCSP(
       if (isCss || isJs || isTs || isPreCss)
         transformationStatus.set(id, false);
 
-      if (isCss || isPreCss) {
-        console.log(id);
-      }
-
       return null;
     },
     transform: {

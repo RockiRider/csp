@@ -43,7 +43,6 @@ export const transformHandler = async ({
 
   const handleCSS = () => {
     const currentCode = transformMode === "pre" ? code : getCSS(code);
-    console.log(currentCode);
     const hash = generateHash(currentCode, algorithm);
     addHash({
       hash,
