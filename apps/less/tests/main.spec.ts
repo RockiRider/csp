@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const TITLE = "Vite + Tailwind";
+const TITLE = "Vite + Less";
 
 test("Index HTML Loaded", async ({ page }) => {
   await page.goto("/");
@@ -12,15 +12,21 @@ test("Loaded main JS script", async ({ page }) => {
   await expect(page.locator(`text=${TITLE}`)).toBeVisible();
 });
 
-test("Loaded Tailwind styles", async ({ page }) => {
+test("Loaded Less styles", async ({ page }) => {
   await page.goto("/");
 
-  const element = page.getByRole("button", { name: "Count is 0" });
+  const element = page.getByRole("button", { name: "Click me" });
   await expect(element).toBeVisible();
 
+  // Check for the color
   const color = await element.evaluate(
     (el) => window.getComputedStyle(el).color
   );
+  expect(color).toBe("rgb(0, 123, 255)"); // #007bff in rgb
 
-  expect(color).toBe("rgb(59, 130, 246, 1");
+  // Check for the border
+  const border = await element.evaluate(
+    (el) => window.getComputedStyle(el).border
+  );
+  expect(border).toBe("1px solid rgb(52, 58, 64)"); // #343a40 in rgb
 });

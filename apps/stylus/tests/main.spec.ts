@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const TITLE = "Vite + Sass";
+const TITLE = "Vite + Stylus";
 
 test("Index HTML Loaded", async ({ page }) => {
   await page.goto("/");
@@ -12,7 +12,7 @@ test("Loaded main JS script", async ({ page }) => {
   await expect(page.locator(`text=${TITLE}`)).toBeVisible();
 });
 
-test("Loaded Sass styles", async ({ page }) => {
+test("Loaded Stylus styles", async ({ page }) => {
   await page.goto("/");
 
   const element = page.getByRole("button", { name: "Click me" });

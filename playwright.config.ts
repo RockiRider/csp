@@ -56,6 +56,42 @@ const APPS = [
     testDir: "./apps/tailwind/tests",
     name: "Tailwind - Build",
   },
+  {
+    url: "http://localhost:3004",
+    command: `pnpm sass:dev`,
+    testDir: "./apps/sass/tests",
+    name: "Sass - Dev",
+  },
+  {
+    url: "http://localhost:4004",
+    command: `pnpm sass:preview`,
+    testDir: "./apps/sass/tests",
+    name: "Sass - Build",
+  },
+  {
+    url: "http://localhost:3005",
+    command: `pnpm less:dev`,
+    testDir: "./apps/less/tests",
+    name: "Less - Dev",
+  },
+  {
+    url: "http://localhost:4005",
+    command: `pnpm less:preview`,
+    testDir: "./apps/less/tests",
+    name: "Less - Build",
+  },
+  {
+    url: "http://localhost:3006",
+    command: `pnpm stylus:dev`,
+    testDir: "./apps/stylus/tests",
+    name: "Stylus - Dev",
+  },
+  {
+    url: "http://localhost:4006",
+    command: `pnpm stylus:preview`,
+    testDir: "./apps/stylus/tests",
+    name: "Stylus - Build",
+  },
 ];
 
 /**
