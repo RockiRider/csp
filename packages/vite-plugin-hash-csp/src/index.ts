@@ -101,6 +101,7 @@ export default function vitePluginCSP(
           CORE_COLLECTION,
           transformationStatus,
           server,
+          transformMode: requirements.postTransform ? "post" : "pre",
         });
         return null;
       },

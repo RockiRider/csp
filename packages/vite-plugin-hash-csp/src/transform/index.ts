@@ -11,6 +11,7 @@ import { PluginContext } from "rollup";
 import { DEFAULT_DEV_POLICY } from "../policy/constants";
 import { generatePolicyString, policyToTag } from "../policy/createPolicy";
 import { cssFilter, jsFilter, sassFilter, tsFilter } from "../utils";
+import { getCSS } from "../css/extraction";
 
 export interface TransformHandlerProps {
   code: string;
@@ -18,6 +19,7 @@ export interface TransformHandlerProps {
   algorithm: HashAlgorithms;
   CORE_COLLECTION: HashCollection;
   transformationStatus: TransformationStatus;
+  transformMode: "pre" | "post"; // Lets us know if we are in the pre or post transform
   server?: ViteDevServer; // This is the ViteDevServer, if this exists it means we are in dev mode
 }
 
@@ -27,6 +29,7 @@ export const transformHandler = async ({
   algorithm,
   CORE_COLLECTION,
   transformationStatus,
+  transformMode,
   server,
 }: TransformHandlerProps) => {
   if (!server) return null; // Exit early if we are not in dev mode
@@ -38,31 +41,40 @@ export const transformHandler = async ({
   const isAllTransformed = () =>
     Array.from(transformationStatus.values()).every((value) => value === true);
 
+  const handleCSS = () => {
+    const currentCode = transformMode === "pre" ? code : getCSS(code);
+    const hash = generateHash(currentCode, algorithm);
+    addHash({
+      hash,
+      key: "style-src-elem",
+      data: {
+        algorithm,
+        content: code,
+      },
+      collection: CORE_COLLECTION,
+    });
+    transformationStatus.set(id, true);
+  };
+
+  const handleJS = () => {
+    const hash = generateHash(code, algorithm);
+    addHash({
+      hash,
+      key: "script-src-elem",
+      data: {
+        algorithm,
+        content: code,
+      },
+      collection: CORE_COLLECTION,
+    });
+    transformationStatus.set(id, true);
+  };
+
   if (transformationStatus.has(id)) {
     if (isJs || isTs) {
-      const hash = generateHash(code, algorithm);
-      addHash({
-        hash,
-        key: "script-src-elem",
-        data: {
-          algorithm,
-          content: code,
-        },
-        collection: CORE_COLLECTION,
-      });
-      transformationStatus.set(id, true);
+      handleJS();
     } else if (isCss || isSass) {
-      const hash = generateHash(code, algorithm);
-      addHash({
-        hash,
-        key: "style-src-elem",
-        data: {
-          algorithm,
-          content: code,
-        },
-        collection: CORE_COLLECTION,
-      });
-      transformationStatus.set(id, true);
+      handleCSS();
     } else {
       // Do nothing
     }
@@ -70,31 +82,9 @@ export const transformHandler = async ({
     //Files that are deps of the entry points that are loaded in the load() hook
 
     if (isJs) {
-      // Generate a hash for the code
-      const hash = generateHash(code, algorithm);
-      addHash({
-        hash,
-        key: "script-src-elem",
-        data: {
-          algorithm,
-          content: code,
-        },
-        collection: CORE_COLLECTION,
-      });
-      transformationStatus.set(id, true);
+      handleJS();
     } else if (isCss || isSass) {
-      const hash = generateHash(code, algorithm);
-      console.log(code);
-      addHash({
-        hash,
-        key: "style-src-elem",
-        data: {
-          algorithm,
-          content: code,
-        },
-        collection: CORE_COLLECTION,
-      });
-      transformationStatus.set(id, true);
+      handleCSS();
     } else {
       // Do nothing
     }
