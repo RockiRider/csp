@@ -21,6 +21,12 @@
     "sass:dev": "turbo dev --filter=sass",
     "sass:build": "turbo build --filter=sass",
     "sass:preview": "turbo preview --filter=sass",
+    "less:dev": "turbo dev --filter=less",
+    "less:build": "turbo build --filter=less",
+    "less:preview": "turbo preview --filter=less",
+    "stylus:dev": "turbo dev --filter=stylus",
+    "stylus:build": "turbo build --filter=stylus",
+    "stylus:preview": "turbo preview --filter=stylus",
     "docs:dev": "turbo dev --filter=docs",
     "docs:build": "turbo build --filter=docs",
     "test": "pnpm exec playwright test",
@@ -36,6 +42,7 @@
     "prettier": "^3.1.1",
     "turbo": "^2.0.0",
     "typescript": "^5.5.2"
+  
   },
   "engines": {
     "node": ">=18"

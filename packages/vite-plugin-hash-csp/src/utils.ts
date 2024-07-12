@@ -31,7 +31,7 @@ export const isSourceInPolicy = ({
 };
 
 export const cssFilter = createFilter("**.css");
-export const sassFilter = createFilter("**.scss");
+export const preCssFilter = createFilter("**.{scss,less,styl}"); //TODO: This filter is not working
 export const jsFilter = createFilter(["**/*.js?(*)", "**/*.jsx?(*)"]);
 export const tsFilter = createFilter(["**/*.ts", "**/*.tsx"]);
 export const htmlFilter = createFilter("**.html");

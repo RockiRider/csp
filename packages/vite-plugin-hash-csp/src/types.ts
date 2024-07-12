@@ -28,7 +28,7 @@ export type CSPPolicy = Partial<{
 
 export type HashAlgorithms = "sha256" | "sha384" | "sha512";
 
-export type Outlier = "tailwind" | "sass";
+export type Outlier = "tailwind" | "sass" | "less" | "stylus";
 
 export type DevOptions = {
   /**

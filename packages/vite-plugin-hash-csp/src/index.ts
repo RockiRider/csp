@@ -9,7 +9,7 @@ import {
   jsFilter,
   mergePolicies,
   parseOutliers,
-  sassFilter,
+  preCssFilter,
   tsFilter,
 } from "./utils";
 import { unstable_handleModuleParsed } from "./css";
@@ -82,10 +82,15 @@ export default function vitePluginCSP(
 
       // Entry points to files that need to be transformed
       const isCss = cssFilter(id);
-      const isSass = sassFilter(id);
+      const isPreCss = preCssFilter(id);
       const isJs = jsFilter(id);
       const isTs = tsFilter(id);
-      if (isCss || isJs || isTs || isSass) transformationStatus.set(id, false);
+      if (isCss || isJs || isTs || isPreCss)
+        transformationStatus.set(id, false);
+
+      if (isCss || isPreCss) {
+        console.log(id);
+      }
 
       return null;
     },

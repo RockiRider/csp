@@ -10,7 +10,7 @@ import { handleIndexHtml } from "../handleIndexHtml";
 import { PluginContext } from "rollup";
 import { DEFAULT_DEV_POLICY } from "../policy/constants";
 import { generatePolicyString, policyToTag } from "../policy/createPolicy";
-import { cssFilter, jsFilter, sassFilter, tsFilter } from "../utils";
+import { cssFilter, jsFilter, preCssFilter, tsFilter } from "../utils";
 import { getCSS } from "../css/extraction";
 
 export interface TransformHandlerProps {
@@ -34,7 +34,7 @@ export const transformHandler = async ({
 }: TransformHandlerProps) => {
   if (!server) return null; // Exit early if we are not in dev mode
   const isCss = cssFilter(id);
-  const isSass = sassFilter(id);
+  const isPreCss = preCssFilter(id);
   const isJs = jsFilter(id);
   const isTs = tsFilter(id);
 
@@ -43,6 +43,7 @@ export const transformHandler = async ({
 
   const handleCSS = () => {
     const currentCode = transformMode === "pre" ? code : getCSS(code);
+    console.log(currentCode);
     const hash = generateHash(currentCode, algorithm);
     addHash({
       hash,
@@ -73,7 +74,7 @@ export const transformHandler = async ({
   if (transformationStatus.has(id)) {
     if (isJs || isTs) {
       handleJS();
-    } else if (isCss || isSass) {
+    } else if (isCss || isPreCss) {
       handleCSS();
     } else {
       // Do nothing
@@ -83,7 +84,7 @@ export const transformHandler = async ({
 
     if (isJs) {
       handleJS();
-    } else if (isCss || isSass) {
+    } else if (isCss || isPreCss) {
       handleCSS();
     } else {
       // Do nothing
