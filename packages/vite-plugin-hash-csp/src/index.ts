@@ -27,7 +27,6 @@ export default function vitePluginCSP(
   const { outlierSupport = [], run = false } = dev;
 
   const CORE_COLLECTION = createNewCollection();
-  console.log("RUN IS", run);
 
   const effectivePolicy = mergePolicies(DEFAULT_POLICY, policy);
 

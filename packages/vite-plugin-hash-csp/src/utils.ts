@@ -41,7 +41,7 @@ export const mergePolicies = (
   userPolicy: CSPPolicy | undefined
 ) => {
   if (!userPolicy) return defaultPolicy;
-  // Simple object merge; for deep merge, you might need a more sophisticated approach
+  // Simple object merge; we might be able to get away without deep merge
   return { ...defaultPolicy, ...userPolicy };
 };
 
