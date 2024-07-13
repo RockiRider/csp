@@ -3,7 +3,6 @@
   "extends": "@repo/typescript-config/node",
   "compilerOptions": {  
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "noEmit": true
   },
   "include": ["vite.config.ts"]
 }
