@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@repo/eslint-config": "workspace:^",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@repo/typescript-config": "workspace:^",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
@@ -26,8 +28,7 @@
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.2.2",
-    "vite-plugin-hash-csp": "workspace:^",
-    "@repo/typescript-config": "workspace:^",
-    "vite": "5.3.1"
+    "vite": "5.3.1",
+    "vite-plugin-hash-csp": "workspace:^"
   }
 }

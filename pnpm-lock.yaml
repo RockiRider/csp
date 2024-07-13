@@ -84,6 +84,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.11.5
         version: 11.11.5(@emotion/react@11.11.4)(@types/react@18.3.3)(react@18.3.1)
+      '@repo/eslint-config':
+        specifier: workspace:^
+        version: link:../../packages/eslint-config
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -130,6 +133,9 @@ importers:
 
   apps/less:
     dependencies:
+      '@repo/eslint-config':
+        specifier: workspace:^
+        version: link:../../packages/eslint-config
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -195,6 +201,9 @@ importers:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
     devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:^
+        version: link:../../packages/eslint-config
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
@@ -228,6 +237,9 @@ importers:
 
   apps/react:
     dependencies:
+      '@repo/eslint-config':
+        specifier: workspace:^
+        version: link:../../packages/eslint-config
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -323,6 +335,9 @@ importers:
 
   apps/stylus:
     dependencies:
+      '@repo/eslint-config':
+        specifier: workspace:^
+        version: link:../../packages/eslint-config
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -372,6 +387,9 @@ importers:
 
   apps/tailwind:
     dependencies:
+      '@repo/eslint-config':
+        specifier: workspace:^
+        version: link:../../packages/eslint-config
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -457,6 +475,9 @@ importers:
         specifier: ^1.0.0-rc.12
         version: 1.0.0-rc.12
     devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:^
+        version: link:../eslint-config
       '@rollup/plugin-commonjs':
         specifier: ^26.0.1
         version: 26.0.1(rollup@4.18.1)
