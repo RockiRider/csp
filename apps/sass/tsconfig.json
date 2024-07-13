@@ -1,11 +1,5 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
+  "extends": "@repo/typescript-config/vite",
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -18,12 +18,13 @@
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react": "4.2.1",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "typescript": "^5.2.2",
     "vite-plugin-hash-csp": "workspace:^",
-    "vite": "^5.3.1"
+    "@repo/typescript-config": "workspace:^",
+    "vite": "5.3.1"
   }
 }
