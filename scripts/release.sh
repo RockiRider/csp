@@ -33,11 +33,15 @@ update_version() {
   fi
 
   if [[ "$SEMVER" != "major" && "$SEMVER" != "minor" && "$SEMVER" != "patch" ]]; then
-    echo "Error: Invalid version. Please enter Please enter 'major/minor/patch'"
+    echo "Error: Invalid version. Please enter 'major/minor/patch'"
     exit 1
   fi
 
-  npm version -w $PACKAGE_NAME $SEMVER
+  # Change directory to the package's directory before running pnpm version
+  cd "./packages/$PACKAGE_NAME" || exit
+  pnpm version $SEMVER
+  # Return to the original directory after updating the version
+  cd - || exit
 }
 
 get_new_version() {
