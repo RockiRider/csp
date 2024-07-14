@@ -6,5 +6,9 @@
   "guides": {
     "title": "Guides",
     "href": "/guides"
+  },
+  "api": {
+    "title": "API",
+    "href": "/api"
   }
 }

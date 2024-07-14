@@ -30,55 +30,6 @@ importers:
         specifier: ^5.5.2
         version: 5.5.3
 
-  apps/css:
-    dependencies:
-      '@repo/eslint-config':
-        specifier: workspace:^
-        version: link:../../packages/eslint-config
-      react:
-        specifier: ^18.2.0
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.3.1(react@18.3.1)
-    devDependencies:
-      '@repo/typescript-config':
-        specifier: workspace:^
-        version: link:../../packages/typescript-config
-      '@types/react':
-        specifier: ^18.2.66
-        version: 18.3.3
-      '@types/react-dom':
-        specifier: ^18.2.22
-        version: 18.3.0
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^7.2.0
-        version: 7.16.0(@typescript-eslint/parser@7.16.0)(eslint@8.57.0)(typescript@5.5.3)
-      '@typescript-eslint/parser':
-        specifier: ^7.2.0
-        version: 7.16.0(eslint@8.57.0)(typescript@5.5.3)
-      '@vitejs/plugin-react':
-        specifier: 4.2.1
-        version: 4.2.1(vite@5.3.1)
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.0
-      eslint-plugin-react-hooks:
-        specifier: ^4.6.0
-        version: 4.6.2(eslint@8.57.0)
-      eslint-plugin-react-refresh:
-        specifier: ^0.4.6
-        version: 0.4.8(eslint@8.57.0)
-      typescript:
-        specifier: ^5.2.2
-        version: 5.5.3
-      vite:
-        specifier: 5.3.1
-        version: 5.3.1(@types/node@20.14.10)(sass@1.77.8)
-      vite-plugin-hash-csp:
-        specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
-
   apps/docs:
     dependencies:
       copy-to-clipboard:
@@ -175,7 +126,7 @@ importers:
         version: 5.5.3
       vite:
         specifier: 5.3.1
-        version: 5.3.1(@types/node@20.14.10)(sass@1.77.8)
+        version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
       vite-plugin-hash-csp:
         specifier: workspace:^
         version: link:../../packages/vite-plugin-hash-csp
@@ -279,7 +230,7 @@ importers:
         version: 5.5.3
       vite:
         specifier: 5.3.1
-        version: 5.3.1(@types/node@20.14.10)(sass@1.77.8)
+        version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
       vite-plugin-hash-csp:
         specifier: workspace:^
         version: link:../../packages/vite-plugin-hash-csp
@@ -328,7 +279,7 @@ importers:
         version: 5.5.3
       vite:
         specifier: 5.3.1
-        version: 5.3.1(@types/node@20.14.10)(sass@1.77.8)
+        version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
       vite-plugin-hash-csp:
         specifier: workspace:^
         version: link:../../packages/vite-plugin-hash-csp
@@ -487,7 +438,7 @@ importers:
         version: 5.5.3
       vite:
         specifier: 5.3.1
-        version: 5.3.1(@types/node@20.14.10)(sass@1.77.8)
+        version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
       vite-plugin-hash-csp:
         specifier: workspace:^
         version: link:../../packages/vite-plugin-hash-csp
@@ -559,7 +510,7 @@ importers:
         version: 5.5.3
       vite:
         specifier: 5.3.1
-        version: 5.3.1(@types/node@20.14.10)(sass@1.77.8)
+        version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@20.14.10)
