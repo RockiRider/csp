@@ -28,9 +28,26 @@ export type CSPPolicy = Partial<{
 
 export type HashAlgorithms = "sha256" | "sha384" | "sha512";
 
+export type Outlier = "tailwind" | "sass" | "less" | "stylus";
+
+export type DevOptions = {
+  /**
+   * Allows this plugin to run in dev mode. The trade-off is that developers can see the CSP policy in action in dev mode, at the cost of performance.
+   * @default false
+   */
+  run?: boolean;
+  /**
+   * This is a list of outliers that require special treatment during dev mode.
+   * @example ["tailwind", "sass"]
+   */
+  outlierSupport?: Array<Outlier>;
+};
+
 export type MyPluginOptions = {
   /**
-   * What hashing algorithm to use. Default is sha-256
+   * What hashing algorithm to use. Default is sha-256.
+   * @default "sha256"
+   * @example "sha512"
    */
   algorithm?: HashAlgorithms;
   /**
@@ -38,17 +55,19 @@ export type MyPluginOptions = {
    */
   policy?: CSPPolicy;
   /**
-   * Allows this plugin to run in dev mode. The trade off is that developers can see the CSP policy in action in dev mode, at the cost of performance
-   */
-  runOnDev?: boolean;
-  /**
-   * This is a flag for the plugin to know what type of app you are building. Default is SPA
+   * This is a flag for the plugin to know what type of app you are building. Default is SPA.
+   * @default "SPA"
    */
   type?: "SPA";
   /**
-   * Ignore this flag completely unless you are a contributor. This is for testing purposes
+   * Ignore this flag completely unless you are a contributor. This is for testing purposes.
+   * @default "prod"
    */
   mode?: "dev" | "prod";
+  /**
+   * Options that apply only when running `vite dev`.
+   */
+  dev?: DevOptions;
 };
 
 export type HashCache = {

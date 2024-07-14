@@ -1,5 +1,6 @@
 import { createFilter } from "vite";
-import { CSPPolicy, WarnMissingPolicyProps } from "./types";
+import { CSPPolicy, Outlier, WarnMissingPolicyProps } from "./types";
+import { REQUIRE_POST_TRANSFORM } from "./transform/constants";
 
 export const extractBaseURL = (url: string): string | false => {
   try {
@@ -30,6 +31,7 @@ export const isSourceInPolicy = ({
 };
 
 export const cssFilter = createFilter("**.css");
+export const preCssFilter = createFilter(["**.scss", "**.less", "**.styl"]);
 export const jsFilter = createFilter(["**/*.js?(*)", "**/*.jsx?(*)"]);
 export const tsFilter = createFilter(["**/*.ts", "**/*.tsx"]);
 export const htmlFilter = createFilter("**.html");
@@ -39,6 +41,18 @@ export const mergePolicies = (
   userPolicy: CSPPolicy | undefined
 ) => {
   if (!userPolicy) return defaultPolicy;
-  // Simple object merge; for deep merge, you might need a more sophisticated approach
+  // Simple object merge; we might be able to get away without deep merge
   return { ...defaultPolicy, ...userPolicy };
+};
+
+export const parseOutliers = (outliers: Array<Outlier>) => {
+  return {
+    postTransform: outliers.some((outlier) =>
+      REQUIRE_POST_TRANSFORM.includes(outlier)
+    ),
+  };
+};
+
+export const removeEscapedBacktick = (str: string) => {
+  return str.replace(/\\`/g, "`");
 };

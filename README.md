@@ -1,9 +1,8 @@
 # Vite-Plugin-Hash-CSP
 
-## Documentation#
+## Documentation
 
-**Better docs coming soon.**
-For now check out the [ReadMe](/packages/vite-plugin-hash-csp/README.md) in the package directory.
+[Available here](https://vite-csp.tsotne.co.uk)
 
 ## Contributing
 
@@ -12,3 +11,5 @@ For now check out the [ReadMe](/packages/vite-plugin-hash-csp/README.md) in the 
 ### What's inside?
 
 This is a turborepo monorepo using pnpm.
+
+All the apps under `/apps` are used to test the plugin.

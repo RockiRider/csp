@@ -42,14 +42,41 @@ export default defineConfig({
   plugins: [
     react(),
     csp({
-      algorithm: "sha256",  // Pick your hashing algorithm
-      runOnDev: true,   // Run on `vite dev`
+      dev: {
+        run: true,  // Run the plugin in dev mode
+      },   
       policy: {
         "script-src": ["'self'", "https://www.google-analytics.com"],    //Allow google analytics to run
         "font-src": ["'self'", "https://fonts.gstatic.com"],    //Allows fonts from Google to load
       }
     }),
   ],
+});
+
+```
+
+### Additional support
+
+If you are using any pre-processors like (e.g. `sass`, etc) or `tailwind`. You will need to tell the plugin this, because these require additional support when running `vite dev`
+You can do this by adding the `outlierSupport` key to the plugin options. 
+
+```ts
+
+import { defineConfig, PluginOption } from "vite";
+import react from "@vitejs/plugin-react";
+import csp from "vite-plugin-hash-csp";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    react(),
+    csp({
+      dev: {
+        run: true,
+        outlierSupport: ["less"], 
+      },
+    })
+  ]
 });
 
 ```
@@ -71,6 +98,6 @@ We are actively working to find a solution to this [issue](https://github.com/Ro
 ## Maintenance 
 
 This is one of the most difficult parts of CSPs. They are very easy to get wrong, and can break your site if you aren't careful.
-- Adding `vite dev` support via `runOnDev` flag is a great way to test your new third party scripts work before deploying it to production.
+- Adding `vite dev` support via `run.dev` flag is a great way to test your new third party scripts work before deploying it to production.
 - We will be developing eslint rules to help you catch common mistakes in your CSPs. Watch this space!
 

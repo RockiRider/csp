@@ -40,3 +40,7 @@ test-results/
 playwright-report/
 /blob-report/
 /playwright/.cache/
+
+
+# Ignore scripts playground
+scripts/playground/*

@@ -1,0 +1,105 @@
+import { Callout, Tabs, Tab } from "nextra-theme-docs";
+
+# API
+This is the API documentation for this plugin. 
+<Callout type="warning">
+    All of this is subject to change as the plugin is still pre v1.0
+</Callout>
+
+## Example
+```ts
+
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import csp from "vite-plugin-hash-csp";
+
+export default defineConfig({
+  plugins: [
+    react(),
+    csp({
+      algorithm: "sha256", // Hash algorithm
+      dev: {
+        run: true, // Run in development mode
+      },
+      policy: {
+        "script-src": ["'self'", "https://www.google-analytics.com"],
+        "style-src-elem": [
+          "'self'",
+          "https://fonts.googleapis.com",
+          "'unsafe-inline'",
+        ],
+        "font-src": ["'self'", "https://fonts.gstatic.com"],
+      },
+    }),
+  ],
+});
+
+```
+
+## Options
+
+### algorithm
+- Type: `string`
+- Default: `sha256`
+- Description: The algorithm to use for hashing the content.
+
+
+### dev
+- Type: `object`
+- Default: `{run: false, outlierSupport: []}`
+- Description: The options for the dev server.
+
+#### dev properties
+
+<Tabs items={['run', 'outlierSupport']} defaultIndex="0">
+  <Tabs.Tab>
+    ### `run`
+    - **Type:** `boolean`
+    - **Default:** `false`
+    - **Description:** Determines whether the `vite-plugin-hash-csp` should run in development mode. When set to `true`, the plugin will generate and apply CSP hashes even during development, allowing you to test CSP policies before deployment.
+
+    <Callout type="info">
+      Enabling `run` in development can help identify CSP violations early in the development process, making it easier to address them before production.
+    </Callout>
+
+    <Callout type="warning">
+      Enabling `run` could have performance implicantions in development mode.
+    </Callout>
+
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ### `outlierSupport`
+    - **Type:** `Array<string>`
+    - **Default:** `[]`
+    - **Description:** Specifies a list of sources that should be treated as exceptions in the CSP policy. This is useful for allowing specific external scripts or styles that do not conform to the general CSP policy defined in the `policy` option.
+    - **Options**:
+      - `sass`
+      - `less`
+      - `stylus`
+      - `tailwind`
+
+    <Callout type="info">
+        If you are using any css pre-processors that are not supported, you can try adding `sass` to the array of `outlierSupport` to see if it works. Either way, please open an issue on the repo so we can add support for it.
+    </Callout>
+  </Tabs.Tab>
+</Tabs>
+
+### policy
+- Type: `object`
+- Default: `{}`
+- Description: The CSP policy to use. This is an object where the key is the CSP directive and the value is an array of strings that are allowed.
+
+#### policy properties
+The key is the CSP directive and the value is an array of strings that are allowed.
+All [official CSP directives](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy#directives) should be supported. If you find one that is not, please open an issue on the repo.
+
+```ts
+{
+    "script-src": ["'self'", "https://www.google-analytics.com"],
+    "style-src-elem": [
+        "'self'",
+        "https://fonts.googleapis.com",
+        "'unsafe-inline'",
+    ],
+    "font-src": ["'self'", "https://fonts.gstatic.com"],
+}
