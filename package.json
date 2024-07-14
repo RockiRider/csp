@@ -33,7 +33,8 @@
     "test": "pnpm exec playwright test",
     "test:ui": "pnpm exec playwright test --ui",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "deploy": "bash scripts/deploy.sh vite-plugin-hash-csp"
   },
   "devDependencies": {
     "@playwright/test": "^1.45.0",
