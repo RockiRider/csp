@@ -19,8 +19,8 @@ test("Loaded Tailwind styles", async ({ page }) => {
   await expect(element).toBeVisible();
 
   const color = await element.evaluate(
-    (el) => window.getComputedStyle(el).color
+    (el) => window.getComputedStyle(el).backgroundColor
   );
 
-  expect(color).toBe("rgb(59, 130, 246, 1");
+  expect(color).toBe("rgb(59, 130, 246)");
 });
