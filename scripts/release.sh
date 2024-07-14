@@ -22,8 +22,8 @@ check_branch() {
 }
 
 update_version() {
-  if ! [ -x "$(command -v npm)" ]; then
-    echo 'Error: NPM is not installed.' >&2
+  if ! [ -x "$(command -v pnpm)" ]; then
+    echo 'Error: PNPM is not installed.' >&2
     exit 1
   fi
 
