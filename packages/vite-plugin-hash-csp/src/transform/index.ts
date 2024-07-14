@@ -46,8 +46,6 @@ export const transformHandler = async ({
 
     const hash = generateHash(currentCode, algorithm);
 
-    // console.log("Hash", hash);
-
     addHash({
       hash,
       key: "style-src-elem",

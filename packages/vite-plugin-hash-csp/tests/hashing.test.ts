@@ -1,13 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { generateHash } from "../src/policy/core";
-import {
-  APP_CSS,
-  INDEX_CSS,
-  JSON_APP_CSS,
-  JSON_INDEX_CSS,
-  TAILWIND_CSS,
-} from "../mocks/css";
+import { APP_CSS, INDEX_CSS, TAILWIND_CSS } from "../mocks/css";
 import { getCSS } from "../src/css/extraction";
+import { JSON_APP_CSS, JSON_INDEX_CSS } from "../mocks/post";
 
 const APP_HASH = "oHFeCgntvQ+95lgWp14PoPyLMUxSYMB2jBm/OqwiYho=";
 const INDEX_HASH = "p5OBltPlKyHqPir3S9YLIBKtZi7Y65BbhvmELl+UvcQ=";
@@ -20,7 +15,7 @@ describe("Hashing Tests", () => {
     expect(hashIndex).toEqual(INDEX_HASH);
   });
 
-  test("CSS Extraction  ", () => {
+  test("CSS Extraction and Hashing", () => {
     const indexCSS = getCSS(JSON_INDEX_CSS.code);
     const appCSS = getCSS(JSON_APP_CSS.code);
     const hash = generateHash(indexCSS, "sha256");
@@ -30,13 +25,9 @@ describe("Hashing Tests", () => {
     expect(hash).toEqual(INDEX_HASH);
   });
 
-  test.only("Tailwind CSS Hashing", () => {
+  test("Tailwind CSS Hashing", () => {
     const TAILWIND_HASH = "mOVp/ihEwO3hk0cZbCG190/lUPdu8zDouI4u4xrtezc=";
-
-    const css = getCSS(TAILWIND_CSS.code);
-
-    const tailwindHash = generateHash(css, "sha256");
-
+    const tailwindHash = generateHash(TAILWIND_CSS, "sha256");
     expect(tailwindHash).toEqual(TAILWIND_HASH);
   });
 });

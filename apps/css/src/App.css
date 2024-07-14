@@ -1,0 +1,75 @@
+.main {
+  border:2px solid green;
+}
+.1st {
+  color:green;
+  font-size:30px;
+  background-color:#9400D3;
+}
+._st {
+  color:green;
+  font-size:30px;
+  background-color:#4B0082;
+}
+.-st {
+  color:green;
+  font-size:30px;
+  background-color:#0000FF;
+}
+.st {
+  color:green;
+  font-size:30px;
+  background-color:#00FF00;
+}
+.St {
+  color:green;
+  font-size:30px;
+  background-color:#FFFF00;
+}
+.--1st {
+  color:green;
+  font-size:30px;
+  background-color:#FF7F00;
+}
+.s {
+  color:green;
+  font-size:30px;
+  background-color:#FF0000;
+}
+._1 {
+  color:green;
+  font-size:30px;
+  background-color:#9400D3;
+}
+.- {
+  color:green;
+  font-size:30px;
+  background-color:#4B0082;
+}
+.-- {
+  color:green;
+  font-size:30px;
+  background-color:#0000FF;
+}
+._ {
+  color:green;
+  font-size:30px;
+  background-color:#00FF00;
+}
+.__{
+  color:green;
+  font-size:30px;
+  background-color:#FFFF00;
+}
+.button\:cool {
+  color: green;
+  font-size: 30px;
+  background-color: #FF0000;
+}
+
+.button\:cool:hover {
+  color: green;
+  font-size: 30px;
+  background-color: #9400D3;
+  cursor: pointer;
+}
