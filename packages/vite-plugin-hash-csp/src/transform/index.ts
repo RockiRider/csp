@@ -43,7 +43,11 @@ export const transformHandler = async ({
 
   const handleCSS = () => {
     const currentCode = transformMode === "pre" ? code : getCSS(code);
+
     const hash = generateHash(currentCode, algorithm);
+
+    // console.log("Hash", hash);
+
     addHash({
       hash,
       key: "style-src-elem",

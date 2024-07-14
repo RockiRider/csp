@@ -52,3 +52,7 @@ export const parseOutliers = (outliers: Array<Outlier>) => {
     ),
   };
 };
+
+export const removeEscapedBacktick = (str: string) => {
+  return str.replace(/\\`/g, "`");
+};

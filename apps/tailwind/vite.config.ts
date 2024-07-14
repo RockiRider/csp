@@ -11,9 +11,6 @@ export default defineConfig({
         run: true,
         outlierSupport: ["tailwind"],
       },
-      policy: {
-        "style-src-elem": ["'unsafe-inline'"], //For testing purposes on dev
-      },
     }),
   ],
   preview: {
