@@ -28,6 +28,8 @@
     "stylus:dev": "turbo dev --filter=stylus",
     "stylus:build": "turbo build --filter=stylus",
     "stylus:preview": "turbo preview --filter=stylus",
+    "re:dev": "turbo dev --filter=remix-app",
+    "re:build": "turbo build --filter=remix-app",
     "docs:dev": "turbo dev --filter=docs",
     "docs:build": "turbo build --filter=docs",
     "test": "pnpm exec playwright test",
