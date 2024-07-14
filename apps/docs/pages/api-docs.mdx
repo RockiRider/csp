@@ -1,0 +1,56 @@
+import { Callout } from "nextra-theme-docs";
+
+# API
+This is the API documentation for this plugin. 
+<Callout type="warning">
+    All of this is subject to change as the plugin is still pre v1.0
+</Callout>
+
+## Example
+```ts
+
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import csp from "vite-plugin-hash-csp";
+
+export default defineConfig({
+  plugins: [
+    react(),
+    csp({
+      algorithm: "sha256", // Hash algorithm
+      dev: {
+        run: true, // Run in development mode
+      },
+      policy: {
+        "script-src": ["'self'", "https://www.google-analytics.com"],
+        "style-src-elem": [
+          "'self'",
+          "https://fonts.googleapis.com",
+          "'unsafe-inline'",
+        ],
+        "font-src": ["'self'", "https://fonts.gstatic.com"],
+      },
+    }),
+  ],
+});
+
+```
+
+## Options
+
+### algorithm
+- Type: `string`
+- Default: `sha256`
+- Description: The algorithm to use for hashing the content.
+
+
+### dev
+- Type: `object`
+- Default: `{run: false}`
+- Description: The options for the dev server.
+
+### policy
+- Type: `object`
+- Default: `{}`
+- Description: The CSP policy to use. This is an object where the key is the CSP directive and the value is an array of strings that are allowed.
+

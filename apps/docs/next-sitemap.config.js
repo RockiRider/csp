@@ -19,7 +19,7 @@ module.exports = {
       priority: 0.9,
     },
     {
-      loc: "/api/",
+      loc: "/api-docs",
       priority: 0.6,
     },
   ],
