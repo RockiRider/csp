@@ -8,17 +8,9 @@ This plugin allows you to declare your Content Security Policy (CSP) for all Vit
 
 **Warning**: This Plugin is still in development.
 
-## Installation
-
-```bash
-
-npm install vite-plugin-hash-csp
-
-```
-
 ## Usage
 
-```javascript
+```ts
 // vite.config.ts
 import { defineConfig } from "vite";
 import csp from "vite-plugin-hash-csp";
