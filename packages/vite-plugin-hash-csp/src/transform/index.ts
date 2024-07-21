@@ -6,7 +6,7 @@ import {
   HashCollection,
   TransformationStatus,
 } from "../types";
-import { handleIndexHtml } from "../handleIndexHtml";
+import { handleIndexHtml } from "./handleIndexHtml";
 import { PluginContext } from "rollup";
 import { DEFAULT_DEV_POLICY } from "../policy/constants";
 import { generatePolicyString, policyToTag } from "../policy/createPolicy";

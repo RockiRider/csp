@@ -1,3 +1,5 @@
+import csp from "vite-plugin-hash-csp";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
@@ -6,6 +8,6 @@ export default defineNuxtConfig({
     html: {
       cspNonce: "PLACEHOLDER",
     },
-    plugins: [],
+    plugins: [csp({ dev: { run: true }, features: { mpa: true } })],
   },
 });

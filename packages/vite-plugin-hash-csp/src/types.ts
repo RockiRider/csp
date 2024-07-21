@@ -55,15 +55,26 @@ export type MyPluginOptions = {
    */
   policy?: CSPPolicy;
   /**
-   * This is a flag for the plugin to know what type of app you are building. Default is SPA.
+   * This is a flag for the plugin to know what type of app you are building. Default is SPA. This is the only option available for now.
    * @default "SPA"
    */
   type?: "SPA";
   /**
-   * Ignore this flag completely unless you are a contributor. This is for testing purposes.
-   * @default "prod"
+   * Ignore this feature completely unless you are a contributor. This is for testing and developing new features.
+   * @default "undefined"
    */
-  mode?: "dev" | "prod";
+  features?: {
+    /**
+     * This is a flag to enable Multi-Page Application support. This is still in development.
+     * @default false
+     */
+    mpa?: boolean;
+    /**
+     * This is a flag to enable CSS in JS support. This is still in development.
+     * @default false
+     */
+    cssInJs?: boolean;
+  };
   /**
    * Options that apply only when running `vite dev`.
    */

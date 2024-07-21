@@ -12,5 +12,8 @@
   "dependencies": {
     "nuxt": "^3.12.4",
     "vue": "latest"
+  },
+  "devDependencies": {
+    "vite-plugin-hash-csp": "workspace:^"
   }
 }

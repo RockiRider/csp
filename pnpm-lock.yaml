@@ -243,6 +243,10 @@ importers:
       vue:
         specifier: latest
         version: 3.4.33(typescript@5.5.3)
+    devDependencies:
+      vite-plugin-hash-csp:
+        specifier: workspace:^
+        version: link:../../packages/vite-plugin-hash-csp
 
   apps/react:
     dependencies:
@@ -362,6 +366,9 @@ importers:
       vite:
         specifier: ^5.1.0
         version: 5.3.4(@types/node@20.14.10)
+      vite-plugin-hash-csp:
+        specifier: workspace:^
+        version: link:../../packages/vite-plugin-hash-csp
       vite-tsconfig-paths:
         specifier: ^4.2.1
         version: 4.3.2(typescript@5.5.3)(vite@5.3.4)

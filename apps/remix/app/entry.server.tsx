@@ -52,6 +52,7 @@ function handleBotRequest(
         context={remixContext}
         url={request.url}
         abortDelay={ABORT_DELAY}
+        nonce="PLACEHOLDER"
       />,
       {
         onAllReady() {
