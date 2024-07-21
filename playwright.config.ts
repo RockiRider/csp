@@ -122,6 +122,12 @@ const APPS = [
     testDir: "./apps/svelte-app/tests",
     name: "Svelte - Dev",
   },
+  {
+    url: "http://localhost:4008",
+    command: `pnpm sv:preview`,
+    testDir: "./apps/svelte-app/tests",
+    name: "Svelte - Build",
+  },
 ];
 
 /**

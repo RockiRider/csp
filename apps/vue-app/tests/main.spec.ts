@@ -16,9 +16,11 @@ test("Loaded CSS Styles", async ({ page }) => {
   await page.goto("/");
 
   const element = page.getByRole("heading", { name: TITLE });
+
+  const button = page.getByRole("button", { name: "count is" });
   await expect(element).toBeVisible();
 
-  const color = await element.evaluate(
+  const color = await button.evaluate(
     (el) => window.getComputedStyle(el).backgroundColor
   );
 
