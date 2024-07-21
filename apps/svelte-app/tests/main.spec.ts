@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const TITLE = "Vite + Vue";
+const TITLE = "Vite + Svelte";
 
 test("Index HTML Loaded", async ({ page }) => {
   await page.goto("/");
@@ -16,7 +16,6 @@ test("Loaded CSS Styles", async ({ page }) => {
   await page.goto("/");
 
   const element = page.getByRole("heading", { name: TITLE });
-
   const button = page.getByRole("button", { name: "count is" });
   await expect(element).toBeVisible();
 
@@ -24,5 +23,5 @@ test("Loaded CSS Styles", async ({ page }) => {
     (el) => window.getComputedStyle(el).backgroundColor
   );
 
-  expect(color).toBe("rgb(66, 184, 131)");
+  expect(color).toBe("rgb(255, 62, 0)");
 });
