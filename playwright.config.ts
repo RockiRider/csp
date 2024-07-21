@@ -104,6 +104,18 @@ const APPS = [
     testDir: "./apps/vue/tests",
     name: "Vue - Build",
   },
+  {
+    url: "http://localhost:3009",
+    command: `pnpm pr:dev`,
+    testDir: "./apps/preact-app/tests",
+    name: "Preact - Dev",
+  },
+  {
+    url: "http://localhost:4009",
+    command: `pnpm pr:preview`,
+    testDir: "./apps/preact-app/tests",
+    name: "Preact - Build",
+  },
 ];
 
 /**
