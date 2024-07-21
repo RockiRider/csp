@@ -4,6 +4,10 @@ import { Tabs, Callout } from "nextra-theme-docs"
 
 This plugin provides 1st class support for Single Page Applications (SPA).
 
+<Callout type="info">
+Examples of SPA's are React, Vue, Svelte, etc
+</Callout>
+
 ## What problem does this plugin solve?
 The issue with SPA's is that they don't have a server that the application runs on to generate a unique `nonce` for each request. This means that you can't use [nonce based CSPs](https://content-security-policy.com/nonce/). 
 This plugin solves this issue by using the alternative [hash based CSP](https://content-security-policy.com/hash/) instead, which is the only way to secure your SPA without a server.

@@ -13,6 +13,7 @@ import {
   tsFilter,
 } from "./utils";
 import { unstable_handleModuleParsed } from "./css";
+import { FEATURE_FLAGS } from "./constants";
 
 export default function vitePluginCSP(
   options: MyPluginOptions | undefined = {}
@@ -21,7 +22,7 @@ export default function vitePluginCSP(
     algorithm = "sha256",
     policy = DEFAULT_POLICY,
     dev = {},
-    mode = "prod",
+    features = FEATURE_FLAGS,
   } = options;
 
   const { outlierSupport = [], run = false } = dev;
@@ -53,7 +54,13 @@ export default function vitePluginCSP(
       if (command === "serve" && config.mode === "development" && isUserDevOpt)
         return true;
       // apply only on build but not for SSR
-      return command === "build" && !config.build?.ssr;
+      if (command === "build" && !config.build?.ssr) {
+        return true;
+      }
+      if (command === "build" && features.mpa && config.build?.ssr) {
+        return true;
+      }
+      return false;
     },
     configResolved(config) {
       const devCommand =
@@ -68,12 +75,11 @@ export default function vitePluginCSP(
       if (devCommand) {
         isDevMode = true;
       }
-
-      if (config.appType !== "spa") {
+      // TODO: Add a flag in the config instead of commenting out
+      if (config.appType !== "spa" && !features.mpa) {
         throw new Error("Vite CSP Plugin only works with SPA apps for now");
       }
-      const ssrCheck = config.build.ssr;
-      if (ssrCheck) {
+      if (config.build.ssr && !features.mpa) {
         throw new Error("Vite CSP Plugin does not work with SSR apps");
       }
     },
@@ -93,6 +99,9 @@ export default function vitePluginCSP(
     transform: {
       order: requirements.postTransform ? "post" : "pre",
       handler: async (code, id) => {
+        if (features.mpa) {
+          console.log(id);
+        }
         if (!canRunInDevMode()) return null; // Exit early if we are not in dev mode or if we are in dev mode but the user does not want to run in dev mode
 
         await transformHandler({
@@ -110,6 +119,7 @@ export default function vitePluginCSP(
     transformIndexHtml: {
       order: "post",
       handler: async (html, context) => {
+        console.log("transformIndexHtml");
         return transformIndexHtmlHandler({
           html,
           context,
@@ -132,7 +142,7 @@ export default function vitePluginCSP(
     },
     moduleParsed: (info) =>
       // This handleModuleParsed function is not ready for production
-      mode === "prod" ? undefined : unstable_handleModuleParsed({ info }),
+      features.cssInJs ? unstable_handleModuleParsed({ info }) : undefined,
     configureServer(thisServer) {
       server = thisServer;
     },
