@@ -5,6 +5,7 @@ export const REQUIRE_POST_TRANSFORM: Array<Outlier> = [
   "sass",
   "less",
   "stylus",
+  "vue",
 ];
 
 export const DEFAULT_DEV_OPTIONS: DevOptions = {
