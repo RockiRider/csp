@@ -92,6 +92,18 @@ const APPS = [
     testDir: "./apps/stylus/tests",
     name: "Stylus - Build",
   },
+  {
+    url: "http://localhost:3007",
+    command: `pnpm vue:dev`,
+    testDir: "./apps/vue/tests",
+    name: "Vue - Dev",
+  },
+  {
+    url: "http://localhost:4007",
+    command: `pnpm vue:preview`,
+    testDir: "./apps/vue/tests",
+    name: "Vue - Build",
+  },
 ];
 
 /**
