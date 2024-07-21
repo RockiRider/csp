@@ -95,13 +95,13 @@ const APPS = [
   {
     url: "http://localhost:3007",
     command: `pnpm vue:dev`,
-    testDir: "./apps/vue/tests",
+    testDir: "./apps/vue-app/tests",
     name: "Vue - Dev",
   },
   {
     url: "http://localhost:4007",
     command: `pnpm vue:preview`,
-    testDir: "./apps/vue/tests",
+    testDir: "./apps/vue-app/tests",
     name: "Vue - Build",
   },
   {
@@ -115,6 +115,12 @@ const APPS = [
     command: `pnpm pr:preview`,
     testDir: "./apps/preact-app/tests",
     name: "Preact - Build",
+  },
+  {
+    url: "http://localhost:3008",
+    command: `pnpm sv:dev`,
+    testDir: "./apps/svelte-app/tests",
+    name: "Svelte - Dev",
   },
 ];
 
