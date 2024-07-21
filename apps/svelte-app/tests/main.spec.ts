@@ -23,5 +23,5 @@ test("Loaded CSS Styles", async ({ page }) => {
     (el) => window.getComputedStyle(el).backgroundColor
   );
 
-  expect(color).toBe("rgb(255,62,0)");
+  expect(color).toBe("rgb(255, 62, 0)");
 });
