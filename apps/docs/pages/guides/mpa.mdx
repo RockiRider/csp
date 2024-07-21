@@ -3,11 +3,16 @@ import {Callout} from "nextra-theme-docs";
 # MPA
 This plugin currently does not support Multi Page Applications (MPA). 
 
+<Callout type="info">
+Examples of MPA frameworks are Nuxt.js, Remix, etc
+</Callout>
+
 Its something that I did try to implement but it was not possible due to the nature of how MPA's work.
 
 I would recommened looking at your MPA framework and seeing if they have any nonce support, if not you could create a solution that works for your MPA. You just need to follow these rules:
 
-### On every page request you should:
+## Rules to follow
+**On every page request you should:**
 - Generate a new [nonce](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce)
 - Add the nonce to the [CSP header or meta] (https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
 - Add the nonce to the script/style tags
