@@ -105,18 +105,6 @@ const APPS = [
     name: "Vue - Build",
   },
   {
-    url: "http://localhost:3009",
-    command: `pnpm pr:dev`,
-    testDir: "./apps/preact-app/tests",
-    name: "Preact - Dev",
-  },
-  {
-    url: "http://localhost:4009",
-    command: `pnpm pr:preview`,
-    testDir: "./apps/preact-app/tests",
-    name: "Preact - Build",
-  },
-  {
     url: "http://localhost:3008",
     command: `pnpm sv:dev`,
     testDir: "./apps/svelte-app/tests",
@@ -127,6 +115,18 @@ const APPS = [
     command: `pnpm sv:preview`,
     testDir: "./apps/svelte-app/tests",
     name: "Svelte - Build",
+  },
+  {
+    url: "http://localhost:3009",
+    command: `pnpm pr:dev`,
+    testDir: "./apps/preact-app/tests",
+    name: "Preact - Dev",
+  },
+  {
+    url: "http://localhost:4009",
+    command: `pnpm pr:preview`,
+    testDir: "./apps/preact-app/tests",
+    name: "Preact - Build",
   },
 ];
 
