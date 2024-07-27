@@ -42,6 +42,10 @@ export default defineConfig({
 - Type: `string`
 - Default: `sha256`
 - Description: The algorithm to use for hashing the content.
+- Options:
+  - `sha256`
+  - `sha384`
+  - `sha512`
 
 
 ### dev
@@ -77,6 +81,7 @@ export default defineConfig({
       - `less`
       - `stylus`
       - `tailwind`
+      - `vue`
 
     <Callout type="info">
         If you are using any css pre-processors that are not supported, you can try adding `sass` to the array of `outlierSupport` to see if it works. Either way, please open an issue on the repo so we can add support for it.
