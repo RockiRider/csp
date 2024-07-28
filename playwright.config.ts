@@ -58,15 +58,15 @@ const APPS = [
   },
   {
     url: "http://localhost:3004",
-    command: `pnpm sass:dev`,
-    testDir: "./apps/sass/tests",
-    name: "Sass - Dev",
+    command: `pnpm scss:dev`,
+    testDir: "./apps/scss/tests",
+    name: "Scss - Dev",
   },
   {
     url: "http://localhost:4004",
     command: `pnpm sass:preview`,
     testDir: "./apps/sass/tests",
-    name: "Sass - Build",
+    name: "Scss - Build",
   },
   {
     url: "http://localhost:3005",

@@ -2,32 +2,33 @@ import { Tabs, Callout } from "nextra-theme-docs"
 
 # SPA 
 
-This plugin provides 1st class support for Single Page Applications (SPA).
+This plugin provides first-class support for Single Page Applications (SPAs).
 
 <Callout type="info">
-Examples of SPA's are React, Vue, Svelte, etc
+Examples of SPAs include React, Vue, Svelte, etc.
 </Callout>
 
-## What problem does this plugin solve?
-The issue with SPA's is that they don't have a server that the application runs on to generate a unique `nonce` for each request. This means that you can't use [nonce based CSPs](https://content-security-policy.com/nonce/). 
-This plugin solves this issue by using the alternative [hash based CSP](https://content-security-policy.com/hash/) instead, which is the only way to secure your SPA without a server.
+
+## What Problem Does This Plugin Solve?
+The issue with SPAs is that they don't have a server to generate a unique `nonce` for each request. This means you can't use [nonce-based CSPs](https://content-security-policy.com/nonce/). This plugin solves this issue by using an alternative [hash-based CSP](https://content-security-policy.com/hash/), which is the only way to secure your SPA without a server.
+
 
 ## Installation
 
 <Tabs items={['npm', 'yarn', 'pnpm']} defaultIndex="1">
   <Tabs.Tab>
   ```bash
-npm install vite-plugin-hash-csp
+npm install -D vite-plugin-hash-csp -
   ```
   </Tabs.Tab>
   <Tabs.Tab>
   ```bash 
-yarn add vite-plugin-hash-csp
+yarn add -D vite-plugin-hash-csp
     ```
   </Tabs.Tab>
   <Tabs.Tab>
   ```bash
-pnpm add vite-plugin-hash-csp
+pnpm add -D vite-plugin-hash-csp
   ```
   </Tabs.Tab>
 </Tabs>
@@ -88,20 +89,19 @@ export default defineConfig({
 
 ### Caveats
 
-If you are using a library that dynamically injects css into the page (e.g. `styled-components`, `emotion`, or `MUI`), you will need to set your `style-elem-src` policy to include `'unsafe-inline'`.
+If you are using a library that dynamically injects CSS into the page (e.g., `styled-components`, `emotion`, or `MUI`), you will need to set your `style-elem-src` policy to include `'unsafe-inline'`.
 
-The only other alternative is to move to a server and use nonce based CSPs.
+The only alternative is to move to a server and use nonce-based CSPs.
 
-We are actively working to find a solution to this [issue](https://github.com/RockiRider/vite-plugin-hash-csp/issues/2), and there isn't much support for hash based CSPs in those libraries yet.
+We are actively working to find a solution to this [issue](https://github.com/RockiRider/vite-plugin-hash-csp/issues/2), but there isn't much support for hash-based CSPs in those libraries yet.
 
 <Callout type="warning">
-    There are risks to using `'unsafe-inline'` for your styles. But most of these can be mitigated by the rest of the CSP. [Read more about this here](https://scotthelme.co.uk/can-you-get-pwned-with-css/)
+There are risks to using `'unsafe-inline'` for your styles. However, most of these could potentially be mitigated by the rest of the CSP. [Read more about this here](https://scotthelme.co.uk/can-you-get-pwned-with-css/)
 </Callout>
 
 
 ## Maintenance 
 
-This is one of the most difficult parts of CSPs. They are very easy to get wrong, and can break your site if you aren't careful.
-- Adding `vite dev` support via `run.dev` flag is a great way to test your new third party scripts work before deploying it to production.
-- We will be developing eslint rules to help you catch common mistakes in your CSPs. Watch this space!
-
+Maintaining CSPs can be challenging as they are easy to get wrong and can break your site if not configured correctly.
+- Adding `vite dev` support via the `run.dev` flag is a great way to test your new third-party scripts before deploying them to production.
+- We are developing ESLint rules to help you catch common mistakes in your CSPs. Watch this space!

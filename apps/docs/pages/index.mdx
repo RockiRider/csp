@@ -1,18 +1,63 @@
-import { Tab, Tabs, Cards, Card } from "nextra-theme-docs";
 
 # Vite Plugin Hash CSP
-This is a **Vite plugin** that lets you quickly add a Content Security Policy (CSP) to your Vite project. Whilst CSPs are a great way to protect your site from XSS attacks, they can be a pain to set up correctly and maintain. 
-This plugin aims to solve these pain points.
+Introducing the **Vite Plugin Hash CSP**, your ultimate solution for effortlessly implementing a robust Content Security Policy (CSP) in your Vite-powered Single Page Application (SPA). CSPs are crucial for protecting your site against XSS attacks, but setting them up correctly can be complex and time-consuming. Our plugin eliminates these challenges with a straightforward, effective approach.
 
+## Why Choose Vite Plugin Hash CSP?
+
+- **Effortless Integration**: Simply declare your CSP inside your `vite.config.ts` file and you're ready to go. No complex setup, no hassle.
+- **Automated Hashing**: Unlike traditional methods that rely on nonces (which aren't feasible for SPAs), our plugin hashes all your code at build time, ensuring your CSP is always up-to-date and secure.
+- **Real-Time CSP Validation**: Avoid the risk of shipping code that gets blocked in production. Our plugin runs your CSP in Vite dev mode, providing immediate feedback and ensuring your CSP policies are correct before deployment.
+- **Designed for SPAs**: Tailored specifically for Single Page Applications, our plugin addresses the unique challenges they present.
+
+## Supported Technologies
+
+Here is a quick overview of the technologies we support, categorized by the level of configuration required:
+
+### Frameworks/Libraries
+
+| Framework/Library  | Support Level           | Notes                                                      |
+|--------------------|-------------------------|------------------------------------------------------------|
+| React              | ✅ Out of the Box        |                                                            |
+| Vue                | ⚙️ Small Extra Config    | Requires `outlierSupport: ["vue"]` in [config](/api-docs/#dev) |
+| Svelte             | ✅ Out of the Box        |                                                            |
+| Quik               | ✅ Out of the Box        |                                                            |
+| Solid              | ✅ Out of the Box        |                                                            |
+| Remix              | ❌ Not Supported         |                                                            |
+| Remix SPA Mode     | ❌ Not Supported         | We are working on a solution for this                      |
+| Nuxt (Vue)         | ❌ Not Supported         |                                                            |
+| Astro              | ❌ Not Supported         |                                                            |
+
+### CSS Solutions
+
+| CSS Solution       | Support Level           | Notes                                                      |
+|--------------------|-------------------------|------------------------------------------------------------|
+| CSS                | ✅ Out of the Box        |                                                            |
+| Tailwind           | ⚙️ Small Extra Config    | Requires `outlierSupport: ["tailwind"]` in [config](/api-docs/#dev)      |
+| SCSS               | ⚙️ Small Extra Config    | Requires `outlierSupport: ["scss"]` in [config](/api-docs/#dev)          |
+| SASS               | ⚙️ Small Extra Config    | Requires `outlierSupport: ["sass"]` in [config](/api-docs/#dev)          |
+| LESS               | ⚙️ Small Extra Config    | Requires `outlierSupport: ["less"]` in [config](/api-docs/#dev)          |
+| STYLUS             | ⚙️ Small Extra Config    | Requires `outlierSupport: ["stylus"]` in [config](/api-docs/#dev)        |
+| Emotion            | ⚠️ Partial Support       | [Read about this here](/guides/spa#caveats)                |
+| MUI                | ⚠️ Partial Support       | [Read about this here](/guides/spa#caveats)                |
+| Styled Components  | ⚠️ Partial Support       | [Read about this here](/guides/spa#caveats)                |
 
 ## Getting Started
 
-We have 2 seperate guides for Single Page Applications (SPA) and Multi Page Applications (MPA). Choose the one that best fits your project.
+Ready to secure your SPA with ease? Follow our comprehensive guide to get started:
 
-<Cards>
-  <Card title="SPA" href="/guides/spa" />
-  <Card title="MPA" href="/guides/mpa" />
-</Cards>
+[Read the SPA Guide](/guides/spa)
 
+## Advice for Multi Page Applications (MPAs)
 
+While our plugin is specifically designed for Single Page Applications (SPAs) and does not support Multi Page Applications (MPAs) due to architectural differences, we understand that developers may still need guidance for implementing CSPs in MPAs.
 
+Our MPA guide is a good place to start:
+
+[Read the MPA Guide](/guides/mpa)
+
+## Why We Stand Out
+
+- **Developer Experience (DX) First**: Our plugin is designed with developers in mind, ensuring a smooth and intuitive integration process. From easy configuration to real-time CSP validation in development mode, we prioritize making your life easier.
+- **Comprehensive Testing**: Vite Plugin Hash CSP is thoroughly tested across a wide range of frameworks and libraries to ensure compatibility and reliability. You can trust that our plugin will work seamlessly with your tech stack.
+
+Protect your Vite SPA with a hassle-free, secure, and reliable Content Security Policy. Start using Vite Plugin Hash CSP today and experience peace of mind with your application's security.

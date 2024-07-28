@@ -31,4 +31,5 @@ export default {
       </span>
     ),
   },
+  darkMode: true,
 };
