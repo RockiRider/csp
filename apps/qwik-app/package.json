@@ -1,0 +1,20 @@
+{
+  "name": "qwik-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "serve dist"
+  },
+  "devDependencies": {
+    "serve": "^14.2.3",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.4",
+    "vite-plugin-hash-csp": "workspace:^"
+  },
+  "dependencies": {
+    "@builder.io/qwik": "^1.6.0"
+  }
+}
