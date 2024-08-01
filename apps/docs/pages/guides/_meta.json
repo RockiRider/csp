@@ -6,5 +6,9 @@
     "mpa": {
         "title": "MPA",
         "href": "/guides/mpa"
+    },
+    "policy": {
+        "title": "Creating your Policy",
+        "href": "/guides/policy"
     }
 }

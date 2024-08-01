@@ -1,0 +1,77 @@
+import {Callout} from "nextra-theme-docs";
+
+# Creating your policy
+
+This will hopefully help you build your CSP policy.
+
+
+## Default Policies
+We do this so you don't have to worry about the basics. These are merged with your custom policies.
+
+```ts
+"default-src": ["'self'"],
+"img-src": ["'self'", "data:"],
+"script-src-elem": ["'self'"],
+"style-src-elem": ["'self'"],
+```
+
+## Typical use cases
+
+#### Third party javascript
+
+Third party code like, Google Analytics, Hotjar, etc. are common in most websites. You can use the `script-src` directive to allow these scripts to run.
+
+<Callout type="warning">
+    When doing this you are essentially trusting third party code to run on your website. Make sure you trust the third party and that they are not compromised.
+</Callout>
+
+```ts
+
+import { defineConfig, PluginOption } from "vite";
+import react from "@vitejs/plugin-react";
+import csp from "vite-plugin-hash-csp";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    react(),
+    csp({
+        policy: {
+            "script-src": ["https://www.google-analytics.com"],
+        }
+    }),
+  ],
+});
+
+```
+<Callout type="info">
+    Targetting a specific domain is a good way to ensure that only scripts from that domain are allowed to run. Sometimes its even better to be more specific and target a specific path on that domain, aslong as the path is unique and constant.
+</Callout>
+
+#### Third party css
+Third party styles, that are injected at runtime are also common in most websites. You can use the `style-src` directive to allow these styles to be applied.
+
+
+```ts
+
+import { defineConfig, PluginOption } from "vite";
+import react from "@vitejs/plugin-react";
+import csp from "vite-plugin-hash-csp";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    react(),
+    csp({
+        policy: {
+            "style-src": ["https://example.com/styles/main.css"],
+        }
+    }),
+  ],
+});
+
+```
+
+## Full list of directives
+
+**The full list can be [found here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy#directives)**
