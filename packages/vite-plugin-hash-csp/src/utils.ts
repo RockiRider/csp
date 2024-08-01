@@ -39,10 +39,28 @@ export const htmlFilter = createFilter("**.html");
 export const mergePolicies = (
   defaultPolicy: CSPPolicy,
   userPolicy: CSPPolicy | undefined
-) => {
+): CSPPolicy => {
   if (!userPolicy) return defaultPolicy;
-  // Simple object merge; we might be able to get away without deep merge
-  return { ...defaultPolicy, ...userPolicy };
+
+  const mergedPolicy: CSPPolicy = { ...defaultPolicy };
+
+  for (const key in userPolicy as CSPPolicy) {
+    const _key = key as keyof CSPPolicy;
+    if (userPolicy.hasOwnProperty(key)) {
+      const defaultValues = defaultPolicy[_key] || [];
+      const userValues = userPolicy[_key] || [];
+
+      if (Array.isArray(userValues)) {
+        mergedPolicy[_key] = Array.from(
+          new Set([...defaultValues, ...userValues])
+        );
+      } else {
+        mergedPolicy[_key] = userValues;
+      }
+    }
+  }
+
+  return mergedPolicy;
 };
 
 export const parseOutliers = (outliers: Array<Outlier>) => {
