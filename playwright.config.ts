@@ -128,6 +128,18 @@ const APPS = [
     testDir: "./apps/preact-app/tests",
     name: "Preact - Build",
   },
+  {
+    url: "http://localhost:3010",
+    command: `pnpm solid:dev`,
+    testDir: "./apps/solid-app/tests",
+    name: "Solid - Dev",
+  },
+  {
+    url: "http://localhost:4010",
+    command: `pnpm solid:preview`,
+    testDir: "./apps/solid-app/tests",
+    name: "Solid - Build",
+  },
 ];
 
 /**
