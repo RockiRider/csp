@@ -64,8 +64,8 @@ const APPS = [
   },
   {
     url: "http://localhost:4004",
-    command: `pnpm sass:preview`,
-    testDir: "./apps/sass/tests",
+    command: `pnpm scss:preview`,
+    testDir: "./apps/scss/tests",
     name: "Scss - Build",
   },
   {
