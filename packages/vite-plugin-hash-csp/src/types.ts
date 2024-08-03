@@ -1,6 +1,7 @@
 import { PluginContext } from "rollup";
 
 export type CSPKeys =
+  //Fetch directives
   | "default-src"
   | "script-src"
   | "style-src"
@@ -20,7 +21,20 @@ export type CSPKeys =
   | "style-src-attr"
   | "style-src-elem"
   | "upgrade-insecure-requests"
-  | "worker-src";
+  | "worker-src"
+  | "fenced-frame-src"
+  //Document directives
+  | "base-uri"
+  | "sandbox"
+  //Navigation directives
+  | "form-action"
+  | "frame-ancestors"
+  //Reporting directives
+  | "report-to"
+  //Other directives
+  | "require-trusted-types-for"
+  | "trusted-types"
+  | "upgrade-insecure-requests";
 
 export type CSPPolicy = Partial<{
   [n in CSPKeys]: string[];
