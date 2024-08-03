@@ -65,7 +65,8 @@ export type MyPluginOptions = {
    */
   algorithm?: HashAlgorithms;
   /**
-   * This is the policy that will be your base policy. Learn more about CSP [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
+   * This is your CSP policy. Learn more about CSP [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
+   * Enter as a key-value pair. The key is the directive and the value is an array of sources.
    */
   policy?: CSPPolicy;
   /**
