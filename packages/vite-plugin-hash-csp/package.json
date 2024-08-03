@@ -9,6 +9,7 @@
     "build": "rollup -c",
     "test": "vitest"
   },
+  "homepage": "https://vite-csp.tsotne.co.uk",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RockiRider/vite-plugin-hash-csp",
