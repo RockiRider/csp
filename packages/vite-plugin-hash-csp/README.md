@@ -1,10 +1,10 @@
 # Vite Plugin Hash CSP
 
-This Vite plugin allows you to declare your Content Security Policy (CSP) for your Vite project. First class support for SPA's
+This is a well tested Vite Plugin that allows you to declare your Content Security Policy (CSP) for your Vite project. First class support for SPA's
 
 ## Documentation
 
-Full documentation is available [here](https://vite-csp.tsotne.co.uk).
+Full documentation and helpful guides are available [here](https://vite-csp.tsotne.co.uk).
 
 ## Installation
 
@@ -39,7 +39,3 @@ export default defineConfig({
   ],
 });
 ```
-
-## License
-
-MIT License
