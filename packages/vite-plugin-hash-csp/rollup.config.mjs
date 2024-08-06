@@ -8,7 +8,7 @@ export default defineConfig({
   output: {
     file: "dist/index.js",
     format: "esm", // Output as ES Module
-    sourcemap: true,
+    sourcemap: false,
   },
   external: ["lightningcss", "fsevents", "vite"],
   plugins: [
@@ -17,7 +17,7 @@ export default defineConfig({
       declaration: true,
       declarationDir: "dist",
       include: ["src/**/*.ts"],
-      sourceMap: true,
+      sourceMap: false,
     }), // Transpile TypeScript
     resolve(), // Resolves node modules
     commonjs(), // Converts commonjs to ES modules
