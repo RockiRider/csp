@@ -10,7 +10,7 @@ export default defineConfig({
     format: "esm", // Output as ES Module
     sourcemap: false,
   },
-  external: ["lightningcss", "fsevents", "vite"],
+  external: ["lightningcss", "fsevents", "vite", "cheerio"],
   plugins: [
     typescript({
       tsconfig: "tsconfig.json",
