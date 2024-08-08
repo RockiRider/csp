@@ -28,7 +28,7 @@
   "typings": "dist/index.d.ts",
   "type": "module",
   "peerDependencies": {
-    "vite": ">5.x.x"
+     "vite": ">=5.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^26.0.1",
