@@ -4,6 +4,7 @@ import {
   CSPPolicy,
   HashAlgorithms,
   HashCollection,
+  ShouldSkip,
   TransformationStatus,
 } from "../types";
 import { handleIndexHtml } from "./handleIndexHtml";
@@ -112,6 +113,7 @@ export interface TransformIndexHtmlHandlerProps {
   canRunInDevMode: Boolean;
   isTransformationStatusEmpty: Boolean;
   isHashing: Boolean;
+  shouldSkip: ShouldSkip;
 }
 
 export const transformIndexHtmlHandler = async ({
@@ -124,6 +126,7 @@ export const transformIndexHtmlHandler = async ({
   canRunInDevMode,
   isTransformationStatusEmpty,
   isHashing,
+  shouldSkip,
 }: TransformIndexHtmlHandlerProps) => {
   if (isTransformationStatusEmpty && server) {
     //Return early if there are no transformations and we are in dev mode
@@ -137,7 +140,7 @@ export const transformIndexHtmlHandler = async ({
       const isCss = cssFilter(fileName);
 
       if (currentFile) {
-        if (currentFile.type === "chunk") {
+        if (currentFile.type === "chunk" && !shouldSkip["script-src"]) {
           const code = currentFile.code;
           const hash = generateHash(code, algorithm);
           if (!collection["script-src"].has(hash)) {
@@ -153,7 +156,7 @@ export const transformIndexHtmlHandler = async ({
           }
         }
 
-        if (currentFile.type === "asset" && isCss) {
+        if (currentFile.type === "asset" && isCss && !shouldSkip["style-src"]) {
           const code = currentFile.source as string; // We know this is a string because of the cssFilter
           const hash = generateHash(code, algorithm);
           addHash({

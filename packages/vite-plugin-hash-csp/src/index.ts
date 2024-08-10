@@ -2,7 +2,7 @@ import { Plugin, ViteDevServer } from "vite";
 import { PluginContext } from "rollup";
 import { MyPluginOptions, TransformationStatus } from "./types";
 import { DEFAULT_POLICY } from "./policy/constants";
-import { createNewCollection } from "./policy/core";
+import { calculateSkip, createNewCollection } from "./policy/core";
 import { transformHandler, transformIndexHtmlHandler } from "./transform";
 import {
   cssFilter,
@@ -44,6 +44,7 @@ export default function vitePluginCSP(
   const isTransformationStatusEmpty = () => transformationStatus.size === 0;
 
   const requirements = parseOutliers(outlierSupport);
+  const shouldSkip = calculateSkip(policy);
 
   return {
     name: "vite-plugin-hash-csp",
@@ -135,6 +136,7 @@ export default function vitePluginCSP(
           canRunInDevMode: canRunInDevMode(),
           isTransformationStatusEmpty: isTransformationStatusEmpty(),
           isHashing: hash,
+          shouldSkip,
         });
       },
     },
