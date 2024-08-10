@@ -11,6 +11,9 @@ export default defineConfig({
         run: true,
         outlierSupport: ["stylus"],
       },
+      build: {
+        hash: true,
+      },
     }),
   ],
   preview: {

@@ -3,7 +3,10 @@ import solid from "vite-plugin-solid";
 import csp from "vite-plugin-hash-csp";
 
 export default defineConfig({
-  plugins: [solid(), csp({ dev: { run: true } }) as PluginOption],
+  plugins: [
+    solid(),
+    csp({ dev: { run: true }, build: { hash: true } }) as PluginOption,
+  ],
   preview: {
     port: 4010,
   },
