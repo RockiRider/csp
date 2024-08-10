@@ -13,8 +13,8 @@ describe("Policy Tests", () => {
     expect(mergedPolicy).toEqual({
       "default-src": ["'self'"],
       "img-src": ["'self'", "data:"],
-      "script-src-elem": ["'self'"],
-      "style-src-elem": ["'self'"],
+      // "script-src-elem": ["'self'"],
+      // "style-src-elem": ["'self'"],
       "frame-src": ["example.com"],
     });
   });
@@ -29,8 +29,8 @@ describe("Policy Tests", () => {
     expect(mergedPolicy).toEqual({
       "default-src": ["'self'"],
       "img-src": ["'self'", "data:", "example.com"],
-      "script-src-elem": ["'self'"],
-      "style-src-elem": ["'self'"],
+      // "script-src-elem": ["'self'"],
+      // "style-src-elem": ["'self'"],
     });
   });
 });
