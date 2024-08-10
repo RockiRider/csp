@@ -111,6 +111,7 @@ export interface TransformIndexHtmlHandlerProps {
   pluginContext: PluginContext | undefined;
   canRunInDevMode: Boolean;
   isTransformationStatusEmpty: Boolean;
+  isHashing: Boolean;
 }
 
 export const transformIndexHtmlHandler = async ({
@@ -122,6 +123,7 @@ export const transformIndexHtmlHandler = async ({
   pluginContext,
   canRunInDevMode,
   isTransformationStatusEmpty,
+  isHashing,
 }: TransformIndexHtmlHandlerProps) => {
   if (isTransformationStatusEmpty && server) {
     //Return early if there are no transformations and we are in dev mode
@@ -129,44 +131,44 @@ export const transformIndexHtmlHandler = async ({
   }
 
   // This is commented out because it doesn't look like we need to actually hash the bundle, due to using just 'self' is enough in the policy.
-  // if (bundle) {
-  //   for (const fileName of Object.keys(bundle)) {
-  //     const currentFile = bundle[fileName];
-  //     const isCss = cssFilter(fileName);
+  if (bundle && isHashing) {
+    for (const fileName of Object.keys(bundle)) {
+      const currentFile = bundle[fileName];
+      const isCss = cssFilter(fileName);
 
-  //     if (currentFile) {
-  //       if (currentFile.type === "chunk") {
-  //         const code = currentFile.code;
-  //         const hash = generateHash(code, algorithm);
-  //         if (!collection["script-src"].has(hash)) {
-  //           addHash({
-  //             hash,
-  //             key: "script-src",
-  //             data: {
-  //               algorithm,
-  //               content: code,
-  //             },
-  //             collection: collection,
-  //           });
-  //         }
-  //       }
+      if (currentFile) {
+        if (currentFile.type === "chunk") {
+          const code = currentFile.code;
+          const hash = generateHash(code, algorithm);
+          if (!collection["script-src"].has(hash)) {
+            addHash({
+              hash,
+              key: "script-src",
+              data: {
+                algorithm,
+                content: code,
+              },
+              collection: collection,
+            });
+          }
+        }
 
-  //       if (currentFile.type === "asset" && isCss) {
-  //         const code = currentFile.source as string; // We know this is a string because of the cssFilter
-  //         const hash = generateHash(code, algorithm);
-  //         addHash({
-  //           hash,
-  //           key: "style-src",
-  //           data: {
-  //             algorithm,
-  //             content: code,
-  //           },
-  //           collection: collection,
-  //         });
-  //       }
-  //     }
-  //   }
-  // }
+        if (currentFile.type === "asset" && isCss) {
+          const code = currentFile.source as string; // We know this is a string because of the cssFilter
+          const hash = generateHash(code, algorithm);
+          addHash({
+            hash,
+            key: "style-src",
+            data: {
+              algorithm,
+              content: code,
+            },
+            collection: collection,
+          });
+        }
+      }
+    }
+  }
 
   const updatedCollection = handleIndexHtml({
     html,

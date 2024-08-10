@@ -23,9 +23,11 @@ export default function vitePluginCSP(
     policy = DEFAULT_POLICY,
     dev = {},
     features = FEATURE_FLAGS,
+    build = {},
   } = options;
 
   const { outlierSupport = [], run = false } = dev;
+  const { hash = false } = build;
 
   const CORE_COLLECTION = createNewCollection();
 
@@ -98,7 +100,6 @@ export default function vitePluginCSP(
     },
     transform: {
       order: requirements.postTransform ? "post" : "pre",
-      // order: "post",
       handler: async (code, id) => {
         if (features.mpa) {
           console.log(id);
@@ -133,6 +134,7 @@ export default function vitePluginCSP(
           pluginContext,
           canRunInDevMode: canRunInDevMode(),
           isTransformationStatusEmpty: isTransformationStatusEmpty(),
+          isHashing: hash,
         });
       },
     },
