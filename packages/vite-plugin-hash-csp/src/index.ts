@@ -27,7 +27,7 @@ export default function vitePluginCSP(
   } = options;
 
   const { outlierSupport = [], run = false } = dev;
-  const { hash = false } = build;
+  const { hash = true } = build;
 
   const CORE_COLLECTION = createNewCollection();
 
