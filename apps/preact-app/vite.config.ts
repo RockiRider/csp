@@ -10,6 +10,9 @@ export default defineConfig({
       dev: {
         run: true,
       },
+      build: {
+        hash: true,
+      },
     }) as PluginOption, //This is a type assertion due to a monorepo issue regarding stylus, this is not needed in a normal project
   ],
   preview: {

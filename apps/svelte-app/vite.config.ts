@@ -10,6 +10,9 @@ export default defineConfig({
       dev: {
         run: true,
       },
+      build: {
+        hash: true,
+      },
     }) as PluginOption,
   ],
   preview: {
