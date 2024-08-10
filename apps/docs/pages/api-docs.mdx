@@ -109,3 +109,21 @@ You can read our guide for creating a policy [here](/guides/policy)
     ],
     "font-src": ["'self'", "https://fonts.gstatic.com"],
 }
+```
+
+### build
+- Type: `object`
+- Default: `{hash: false}`
+- Description: Options that apply only when running `vite build`.
+
+<Tabs items={['hash']} defaultIndex="0">
+  <Tabs.Tab>
+    ### `hash`
+    - **Type:** `boolean`
+    - **Default:** `false`
+    - **Description:** Determines if the plugin should hash the applications code during the build process.
+    <Callout type="info">
+      The reason this is set to false by default is because you might not neccessarily need to use hashes in production because of the [default policy](/guides/policy#default-policies) including 'self'. This depends on your deployment strategy.
+     </Callout>
+  </Tabs.Tab>
+</Tabs>
