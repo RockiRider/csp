@@ -1,0 +1,9 @@
+scripts/playground/**
+
+# Ignore artifacts:
+build
+coverage
+dist
+
+# Ignore all HTML files:
+**/*.html

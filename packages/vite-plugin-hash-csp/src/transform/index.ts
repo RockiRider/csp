@@ -1,6 +1,7 @@
 import { IndexHtmlTransformContext, ViteDevServer } from "vite";
 import { addHash, generateHash } from "../policy/core";
 import {
+  BundleContext,
   CSPPolicy,
   HashAlgorithms,
   HashCollection,
@@ -133,53 +134,64 @@ export const transformIndexHtmlHandler = async ({
     return;
   }
 
-  // This is commented out because it doesn't look like we need to actually hash the bundle, due to using just 'self' is enough in the policy.
+  const bundleContext = {} as BundleContext;
+
+  // If bundle is true we are in build mode
   if (bundle && isHashing) {
     for (const fileName of Object.keys(bundle)) {
       const currentFile = bundle[fileName];
       const isCss = cssFilter(fileName);
 
       if (currentFile) {
-        if (currentFile.type === "chunk" && !shouldSkip["script-src"]) {
+        if (currentFile.type === "chunk" && !shouldSkip["script-src-elem"]) {
           const code = currentFile.code;
           const hash = generateHash(code, algorithm);
-          if (!collection["script-src"].has(hash)) {
+          if (!collection["script-src-elem"].has(hash)) {
             addHash({
               hash,
-              key: "script-src",
+              key: "script-src-elem",
               data: {
                 algorithm,
                 content: code,
               },
               collection: collection,
             });
+            bundleContext[fileName] = { type: "chunk", hash };
           }
         }
 
-        if (currentFile.type === "asset" && isCss && !shouldSkip["style-src"]) {
+        if (
+          currentFile.type === "asset" &&
+          isCss &&
+          !shouldSkip["style-src-elem"]
+        ) {
           const code = currentFile.source as string; // We know this is a string because of the cssFilter
           const hash = generateHash(code, algorithm);
           addHash({
             hash,
-            key: "style-src",
+            key: "style-src-elem",
             data: {
               algorithm,
               content: code,
             },
             collection: collection,
           });
+          bundleContext[fileName] = { type: "asset", hash };
         }
       }
     }
   }
 
-  const updatedCollection = handleIndexHtml({
-    html,
-    algorithm,
-    collection,
-    policy,
-    context: pluginContext,
-  });
+  const { html: newHtml, HASH_COLLECTION: updatedCollection } = handleIndexHtml(
+    {
+      html,
+      algorithm,
+      collection,
+      policy,
+      context: pluginContext,
+      bundleContext: bundle ? bundleContext : undefined,
+    }
+  );
 
   const finalPolicy = { ...policy };
 
@@ -202,7 +214,7 @@ export const transformIndexHtmlHandler = async ({
   const InjectedHtmlTags = policyToTag(policyString);
 
   return {
-    html,
+    html: newHtml,
     tags: InjectedHtmlTags,
   };
 };

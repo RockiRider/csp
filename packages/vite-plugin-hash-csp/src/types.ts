@@ -151,3 +151,8 @@ export type ShouldSkip = {
   "script-src-attr": boolean;
   "script-src-elem": boolean;
 };
+
+export type BundleContext = Record<
+  string,
+  { type: "chunk" | "asset"; hash: string }
+>;

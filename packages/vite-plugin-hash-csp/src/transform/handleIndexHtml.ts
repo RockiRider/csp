@@ -1,7 +1,18 @@
 import * as cheerio from "cheerio";
-import { CSPPolicy, HashAlgorithms, HashCollection } from "../types";
+import {
+  BundleContext,
+  CSPPolicy,
+  HashAlgorithms,
+  HashCollection,
+} from "../types";
 import { addHash, generateHash, warnMissingPolicy } from "../policy/core";
 import { PluginContext } from "rollup";
+import { extractAssetPath } from "../utils";
+
+/**
+ * TODO: Support hashing the bundle's JS and CSS in the correct hashing algorithm
+ * TODO: Support correct warning logging of truly external scripts and styles.
+ */
 
 type handleIndexHtmlProps = {
   html: string;
@@ -9,6 +20,7 @@ type handleIndexHtmlProps = {
   collection: HashCollection;
   policy: CSPPolicy;
   context: PluginContext | undefined;
+  bundleContext?: BundleContext;
 };
 
 /**
@@ -22,8 +34,10 @@ export function handleIndexHtml({
   algorithm,
   collection: HASH_COLLECTION,
   policy,
+  bundleContext,
 }: handleIndexHtmlProps) {
   const $ = cheerio.load(html);
+  console.log(bundleContext);
 
   // All script tags
   $("script").each(function (i, el) {
@@ -31,11 +45,23 @@ export function handleIndexHtml({
     if (Object.keys(el.attribs).length && el.attribs?.src?.length) {
       try {
         const scriptSrc = el.attribs.src;
+
         warnMissingPolicy({
           source: scriptSrc,
           currentPolicy: policy["script-src"] ?? [],
           sourceType: "script-src",
         });
+
+        if (bundleContext) {
+          const fileName = extractAssetPath(scriptSrc);
+          if (fileName) {
+            const found = bundleContext[fileName];
+            if (found) {
+              //If we have found this, we then ned to amend the script to add an integrity attribute
+              $(el).attr("integrity", `sha256-${found.hash}`);
+            }
+          }
+        }
       } catch (e) {
         console.error("Error hashing script src", e);
       }
@@ -48,7 +74,7 @@ export function handleIndexHtml({
         const hash = generateHash(txt, algorithm);
         addHash({
           hash,
-          key: "script-src-elem",
+          key: "script-src",
           data: { algorithm, content: txt },
           collection: HASH_COLLECTION,
         });
@@ -152,5 +178,6 @@ export function handleIndexHtml({
   //           });
   //       });
   //   }
-  return HASH_COLLECTION;
+  console.log($.html());
+  return { HASH_COLLECTION, html: $.html() };
 }
