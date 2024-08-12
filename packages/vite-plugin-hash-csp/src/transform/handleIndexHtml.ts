@@ -10,7 +10,6 @@ import { PluginContext } from "rollup";
 import { extractAssetPath } from "../utils";
 
 /**
- * TODO: Support hashing the bundle's JS and CSS in the correct hashing algorithm
  * TODO: Support correct warning logging of truly external scripts and styles.
  */
 
@@ -37,7 +36,6 @@ export function handleIndexHtml({
   bundleContext,
 }: handleIndexHtmlProps) {
   const $ = cheerio.load(html);
-  console.log(bundleContext);
 
   // All script tags
   $("script").each(function (i, el) {
@@ -58,7 +56,7 @@ export function handleIndexHtml({
             const found = bundleContext[fileName];
             if (found) {
               //If we have found this, we then ned to amend the script to add an integrity attribute
-              $(el).attr("integrity", `sha256-${found.hash}`);
+              $(el).attr("integrity", `${algorithm}-${found.hash}`);
             }
           }
         }
@@ -82,76 +80,37 @@ export function handleIndexHtml({
     }
   });
 
-  // $("style").each(function (i, el) {
-  //   // Inline styles
-  //   if (el.childNodes?.[0]?.type === "text") {
-  //     const txt = $.text([el.childNodes?.[0]]);
-  //     if (txt.length) {
-  //       const hash = generateHash(txt);
-  //       addHash(
-  //         hash,
-  //         "styleSrcHashes",
-  //         {
-  //           type: "sha256",
-  //           content: txt,
-  //         },
-  //         el
-  //       );
-  //     }
-  //   }
-  // });
-
-  // $("[style]").each((i, el) => {
-  //   const inlineStyle = el.attribs?.style;
-  //   if (inlineStyle?.length) {
-  //     const hash = generateHash(inlineStyle);
-  //     addHash(
-  //       hash,
-  //       "styleAttrHashes",
-  //       {
-  //         type: "sha256",
-  //         content: inlineStyle,
-  //       },
-  //       el
-  //     );
-  //   }
-  // });
-
-  //Log out cheerio html
-
-  // All style tags
-  //   $("style").each(function (i, el) {
-  //     // Inline styles
-  //     if (el.childNodes?.[0]?.type === "text") {
-  //       const txt = $.text([el.childNodes?.[0]]);
-  //       if (txt.length) {
-  //         const cssImportUrls = getCssImportUrls(txt);
-  //         cssImportUrls.forEach((v) => {
-  //           if (v.length) {
-  //             const fileId = path.resolve(v);
-  //             if (idMap.has(fileId)) {
-  //               addHash(idMap.get(fileId)?.[hashingMethod], "styleSrcHashes");
-  //             }
-  //           }
-  //         });
-  //         addHash(hash(hashingMethod, txt), "styleSrcHashes");
-  //       }
-  //     }
-  //   });
-
   // Styles linked in head
-  //   $("link").each(function (i, el) {
-  //     if (
-  //       Object.keys(el.attribs).length &&
-  //       el.attribs?.rel === "stylesheet" &&
-  //       el.attribs?.href?.length
-  //     ) {
-  //       const fileId = path.resolve(el.attribs?.href);
-  //       if (idMap.has(fileId)) {
-  //         addHash(idMap.get(fileId)?.[hashingMethod], "styleSrcHashes");
+  // $("link").each(function (i, el) {
+  //   if (
+  //     Object.keys(el.attribs).length &&
+  //     el.attribs?.rel === "stylesheet" &&
+  //     el.attribs?.href?.length
+  //   ) {
+  //     try {
+  //       const styleSrc = el.attribs.href;
+
+  //       warnMissingPolicy({
+  //         source: styleSrc,
+  //         currentPolicy: policy["style-src"] ?? [],
+  //         sourceType: "style-src",
+  //       });
+
+  //       if (bundleContext) {
+  //         const fileName = extractAssetPath(styleSrc);
+  //         if (fileName) {
+  //           const found = bundleContext[fileName];
+  //           if (found) {
+  //             //If we have found this, we then ned to amend the script to add an integrity attribute
+  //             $(el).attr("integrity", `${algorithm}-${found.hash}`);
+  //           }
+  //         }
   //       }
+  //     } catch (e) {
+  //       console.error("Error hashing style src", e);
   //     }
-  //   });
+  //   }
+  // });
 
   // Hash inline styles in `style=""` tags if enabled
   // if (hashEnabled["style-src-attr"]) {
