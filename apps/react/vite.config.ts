@@ -15,9 +15,6 @@ export default defineConfig({
         hash: true,
       },
       // TODO: Looks like style-src-elem needs self + integrity attribute - https://stackoverflow.com/questions/77338818/content-security-policy-hashes-for-files-dont-seem-to-work
-      // policy: {
-      //   // "style-src-elem": ["'self'"],
-      // },
     }),
   ],
   preview: {

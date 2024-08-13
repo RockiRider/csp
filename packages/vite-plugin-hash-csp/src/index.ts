@@ -78,7 +78,6 @@ export default function vitePluginCSP(
       if (devCommand) {
         isDevMode = true;
       }
-      // TODO: Add a flag in the config instead of commenting out
       if (config.appType !== "spa" && !features.mpa) {
         throw new Error("Vite CSP Plugin only works with SPA apps for now");
       }
