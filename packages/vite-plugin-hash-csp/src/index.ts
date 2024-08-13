@@ -71,7 +71,7 @@ export default function vitePluginCSP(
 
       if (devCommand && !isUserDevOpt) {
         console.warn(
-          "You are running in development mode but runOnDev is set to false. This will not inject the default policy for development mode"
+          "You are running in development mode but dev.run is set to false. This will not inject the default policy for development mode"
         );
       }
 

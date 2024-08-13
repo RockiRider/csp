@@ -72,7 +72,7 @@ export function handleIndexHtml({
         const hash = generateHash(txt, algorithm);
         addHash({
           hash,
-          key: "script-src",
+          key: "script-src-elem",
           data: { algorithm, content: txt },
           collection: HASH_COLLECTION,
         });
@@ -80,7 +80,7 @@ export function handleIndexHtml({
     }
   });
 
-  // Styles linked in head
+  // TODO: Maybe we don't need this if we are just using 'self' anyway in the policy?
   // $("link").each(function (i, el) {
   //   if (
   //     Object.keys(el.attribs).length &&
@@ -137,6 +137,5 @@ export function handleIndexHtml({
   //           });
   //       });
   //   }
-  console.log($.html());
   return { HASH_COLLECTION, html: $.html() };
 }
