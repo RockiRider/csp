@@ -52,8 +52,7 @@
     "test:ui": "pnpm exec playwright test --ui",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "old:release": "bash scripts/release.sh vite-plugin-csp-guard",
-    "new:release": "bash scripts/release.sh vite-plugin-csp-guard"
+    "release": "bash scripts/release.sh vite-plugin-csp-guard"
   },
   "devDependencies": {
     "@playwright/test": "^1.45.0",
