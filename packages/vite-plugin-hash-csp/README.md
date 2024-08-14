@@ -1,6 +1,6 @@
 # Vite Plugin Hash CSP
 
-This is has moved to [vite-plugin-csp-guard]()
+## This package has **moved** to [vite-plugin-csp-guard](https://www.npmjs.com/package/vite-plugin-csp-guard)
 
 ## Documentation
 
