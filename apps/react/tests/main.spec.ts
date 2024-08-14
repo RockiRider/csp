@@ -45,3 +45,34 @@ test("JQuery is blocked by CSP", async ({ page }) => {
   // Assert that the CSP violation was detected
   expect(cspViolationDetected).toBe(true);
 });
+
+test("Inline script is blocked by CSP", async ({ page }) => {
+  let cspViolationDetected = false;
+  let inlineScriptExecuted = false;
+  const expectedErrorMessage =
+    "Refused to execute inline script because it violates the following Content Security Policy directive:";
+  const inlineScriptLogMessage = "Inline script executed";
+
+  // Listen for console events and check if the expected CSP violation error occurs
+  page.on("console", (message) => {
+    if (
+      message.type() === "error" &&
+      message.text().includes(expectedErrorMessage)
+    ) {
+      cspViolationDetected = true;
+    }
+    if (
+      message.type() === "log" &&
+      message.text().includes(inlineScriptLogMessage)
+    ) {
+      inlineScriptExecuted = true;
+    }
+  });
+
+  await page.goto("/");
+
+  // Assert that the CSP violation was detected
+  expect(cspViolationDetected).toBe(true);
+  // Assert that the inline script log message was not detected
+  expect(inlineScriptExecuted).toBe(false);
+});
