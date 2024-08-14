@@ -1,6 +1,6 @@
 # Vite Plugin Hash CSP
 
-This is a well tested Vite Plugin that allows you to declare your Content Security Policy (CSP) for your Vite project. First class support for SPA's
+## This package has **moved** to [vite-plugin-csp-guard](https://www.npmjs.com/package/vite-plugin-csp-guard)
 
 ## Documentation
 

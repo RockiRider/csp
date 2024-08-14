@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-hash-csp",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "author": {
     "name": "Tsotne Gvadzabia"
   },
@@ -12,11 +12,11 @@
   "homepage": "https://vite-csp.tsotne.co.uk",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RockiRider/vite-plugin-hash-csp",
+    "url": "git+https://github.com/RockiRider/csp",
     "directory": "packages/vite-plugin-hash-csp"
   },
   "bugs": {
-    "url": "https://github.com/RockiRider/vite-plugin-hash-csp/issues"
+    "url": "https://github.com/RockiRider/csp/issues"
   },
   "license": "GPL-3.0-only",
   "main": "dist/index.js",
