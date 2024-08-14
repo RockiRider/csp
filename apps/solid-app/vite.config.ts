@@ -1,6 +1,6 @@
 import { defineConfig, PluginOption } from "vite";
 import solid from "vite-plugin-solid";
-import csp from "vite-plugin-hash-csp";
+import csp from "vite-plugin-csp-guard";
 
 export default defineConfig({
   plugins: [

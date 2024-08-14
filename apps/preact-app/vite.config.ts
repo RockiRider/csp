@@ -1,6 +1,6 @@
 import { defineConfig, PluginOption } from "vite";
 import preact from "@preact/preset-vite";
-import csp from "vite-plugin-hash-csp";
+import csp from "vite-plugin-csp-guard";
 
 // https://vitejs.dev/config/
 export default defineConfig({

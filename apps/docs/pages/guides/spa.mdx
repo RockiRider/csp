@@ -18,17 +18,17 @@ The issue with SPAs is that they don't have a server to generate a unique `nonce
 <Tabs items={['npm', 'yarn', 'pnpm']} defaultIndex="1">
   <Tabs.Tab>
   ```bash
-npm install -D vite-plugin-hash-csp -
+npm install -D vite-plugin-csp-guard -
   ```
   </Tabs.Tab>
   <Tabs.Tab>
   ```bash 
-yarn add -D vite-plugin-hash-csp
+yarn add -D vite-plugin-csp-guard
     ```
   </Tabs.Tab>
   <Tabs.Tab>
   ```bash
-pnpm add -D vite-plugin-hash-csp
+pnpm add -D vite-plugin-csp-guard
   ```
   </Tabs.Tab>
 </Tabs>
@@ -40,7 +40,7 @@ pnpm add -D vite-plugin-hash-csp
 
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import csp from "vite-plugin-hash-csp";
+import csp from "vite-plugin-csp-guard";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -69,7 +69,7 @@ You can do this by adding the `outlierSupport` key to the plugin options.
 
 import { defineConfig, PluginOption } from "vite";
 import react from "@vitejs/plugin-react";
-import csp from "vite-plugin-hash-csp";
+import csp from "vite-plugin-csp-guard";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -93,7 +93,7 @@ If you are using a library that dynamically injects CSS into the page (e.g., `st
 
 The only alternative is to move to a server and use nonce-based CSPs.
 
-We are actively working to find a solution to this [issue](https://github.com/RockiRider/vite-plugin-hash-csp/issues/2), but there isn't much support for hash-based CSPs in those libraries yet.
+We are actively working to find a solution to this [issue](https://github.com/RockiRider/vite-plugin-csp-guard/issues/2), but there isn't much support for hash-based CSPs in those libraries yet.
 
 <Callout type="warning">
 There are risks to using `'unsafe-inline'` for your styles. However, most of these could potentially be mitigated by the rest of the CSP. [Read more about this here](https://scotthelme.co.uk/can-you-get-pwned-with-css/)

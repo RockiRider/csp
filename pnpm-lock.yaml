@@ -127,9 +127,9 @@ importers:
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/less:
     dependencies:
@@ -176,9 +176,9 @@ importers:
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(less@4.2.0)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/mui:
     dependencies:
@@ -231,9 +231,9 @@ importers:
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/preact-app:
     dependencies:
@@ -250,9 +250,9 @@ importers:
       vite:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@20.14.10)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/react:
     dependencies:
@@ -299,9 +299,9 @@ importers:
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/remix:
     dependencies:
@@ -372,9 +372,9 @@ importers:
       vite:
         specifier: ^5.1.0
         version: 5.3.4(@types/node@20.14.10)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
       vite-tsconfig-paths:
         specifier: ^4.2.1
         version: 4.3.2(typescript@5.5.3)(vite@5.3.4)
@@ -448,9 +448,9 @@ importers:
       vite:
         specifier: ^5.1.0
         version: 5.3.4(@types/node@20.14.10)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
       vite-tsconfig-paths:
         specifier: ^4.2.1
         version: 4.3.2(typescript@5.5.4)(vite@5.3.4)
@@ -500,9 +500,9 @@ importers:
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(sass@1.77.8)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/solid-app:
     dependencies:
@@ -516,9 +516,9 @@ importers:
       vite:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@20.14.10)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
       vite-plugin-solid:
         specifier: ^2.10.2
         version: 2.10.2(solid-js@1.8.19)(vite@5.3.4)
@@ -571,9 +571,9 @@ importers:
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/svelte-app:
     devDependencies:
@@ -598,9 +598,9 @@ importers:
       vite:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@20.14.10)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/tailwind:
     dependencies:
@@ -656,9 +656,9 @@ importers:
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/vue-app:
     dependencies:
@@ -675,9 +675,9 @@ importers:
       vite:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@20.14.10)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
       vue-tsc:
         specifier: ^2.0.24
         version: 2.0.26(typescript@5.5.3)
@@ -708,7 +708,7 @@ importers:
 
   packages/typescript-config: {}
 
-  packages/vite-plugin-hash-csp:
+  packages/vite-plugin-csp-guard:
     dependencies:
       cheerio:
         specifier: ^1.0.0-rc.12
@@ -756,6 +756,55 @@ importers:
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@20.14.10)
+
+  packages/vite-plugin-hash-csp:
+    dependencies:
+      cheerio:
+        specifier: ^1.0.0-rc.12
+        version: 1.0.0-rc.12
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:^
+        version: link:../eslint-config
+      '@rollup/plugin-commonjs':
+        specifier: ^26.0.1
+        version: 26.0.1(rollup@4.18.1)
+      '@rollup/plugin-node-resolve':
+        specifier: ^15.2.3
+        version: 15.2.3(rollup@4.18.1)
+      '@rollup/plugin-terser':
+        specifier: ^0.4.4
+        version: 0.4.4(rollup@4.18.1)
+      '@rollup/plugin-typescript':
+        specifier: ^11.1.6
+        version: 11.1.6(rollup@4.18.1)(typescript@5.5.4)
+      '@rollup/pluginutils':
+        specifier: ^5.1.0
+        version: 5.1.0(rollup@4.18.1)
+      '@types/node':
+        specifier: ^20.14.2
+        version: 20.14.11
+      acorn:
+        specifier: ^8.12.0
+        version: 8.12.1
+      acorn-jsx:
+        specifier: ^5.3.2
+        version: 5.3.2(acorn@8.12.1)
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
+      rollup:
+        specifier: ^4.18.0
+        version: 4.18.1
+      typescript:
+        specifier: ^5.5.2
+        version: 5.5.4
+      vite:
+        specifier: 5.3.1
+        version: 5.3.1(@types/node@20.14.11)
+      vitest:
+        specifier: ^1.6.0
+        version: 1.6.0(@types/node@20.14.11)
 
 packages:
 
@@ -2932,6 +2981,25 @@ packages:
       resolve: 1.22.8
       rollup: 4.18.1
       typescript: 5.5.3
+    dev: true
+
+  /@rollup/plugin-typescript@11.1.6(rollup@4.18.1)(typescript@5.5.4):
+    resolution: {integrity: sha512-R92yOmIACgYdJ7dJ97p4K69I8gg6IEHt8M7dUBxN3W6nrO8uUxX5ixl0yU/N3aZTi8WhPuICvOHXQvF6FaykAA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^2.14.0||^3.0.0||^4.0.0
+      tslib: '*'
+      typescript: '>=3.7.0'
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+      tslib:
+        optional: true
+    dependencies:
+      '@rollup/pluginutils': 5.1.0(rollup@4.18.1)
+      resolve: 1.22.8
+      rollup: 4.18.1
+      typescript: 5.5.4
     dev: true
 
   /@rollup/pluginutils@4.2.1:
@@ -11546,6 +11614,27 @@ packages:
       - terser
     dev: true
 
+  /vite-node@1.6.0(@types/node@20.14.11):
+    resolution: {integrity: sha512-de6HJgzC+TFzOu0NTC4RAIsyf/DY/ibWDYQUcuEA84EMHhcefTUGkjFHKKEJhQN4A+6I0u++kr3l36ZF2d7XRw==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    dependencies:
+      cac: 6.7.14
+      debug: 4.3.5
+      pathe: 1.1.2
+      picocolors: 1.0.1
+      vite: 5.3.4(@types/node@20.14.11)
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: true
+
   /vite-plugin-solid@2.10.2(solid-js@1.8.19)(vite@5.3.4):
     resolution: {integrity: sha512-AOEtwMe2baBSXMXdo+BUwECC8IFHcKS6WQV/1NEd+Q7vHPap5fmIhLcAzr+DUJ04/KHx/1UBU0l1/GWP+rMAPQ==}
     peerDependencies:
@@ -11713,6 +11802,42 @@ packages:
       fsevents: 2.3.3
     dev: true
 
+  /vite@5.3.1(@types/node@20.14.11):
+    resolution: {integrity: sha512-XBmSKRLXLxiaPYamLv3/hnP/KXDai1NDexN0FpkTaZXTfycHvkRHoenpgl/fvuK/kPbB6xAgoyiryAhQNxYmAQ==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^18.0.0 || >=20.0.0
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 20.14.11
+      esbuild: 0.21.5
+      postcss: 8.4.39
+      rollup: 4.18.1
+    optionalDependencies:
+      fsevents: 2.3.3
+    dev: true
+
   /vite@5.3.4(@types/node@20.14.10):
     resolution: {integrity: sha512-Cw+7zL3ZG9/NZBB8C+8QbQZmR54GwqIz+WMI4b3JgdYJvX+ny9AjJXqkGQlDXSXRP9rP0B4tbciRMOVEKulVOA==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -11742,6 +11867,42 @@ packages:
         optional: true
     dependencies:
       '@types/node': 20.14.10
+      esbuild: 0.21.5
+      postcss: 8.4.39
+      rollup: 4.18.1
+    optionalDependencies:
+      fsevents: 2.3.3
+    dev: true
+
+  /vite@5.3.4(@types/node@20.14.11):
+    resolution: {integrity: sha512-Cw+7zL3ZG9/NZBB8C+8QbQZmR54GwqIz+WMI4b3JgdYJvX+ny9AjJXqkGQlDXSXRP9rP0B4tbciRMOVEKulVOA==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^18.0.0 || >=20.0.0
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 20.14.11
       esbuild: 0.21.5
       postcss: 8.4.39
       rollup: 4.18.1
@@ -11805,6 +11966,62 @@ packages:
       tinypool: 0.8.4
       vite: 5.3.4(@types/node@20.14.10)
       vite-node: 1.6.0(@types/node@20.14.10)
+      why-is-node-running: 2.3.0
+    transitivePeerDependencies:
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: true
+
+  /vitest@1.6.0(@types/node@20.14.11):
+    resolution: {integrity: sha512-H5r/dN06swuFnzNFhq/dnz37bPXnq8xB2xB5JOVk8K09rUtoeNN+LHWkoQ0A/i3hvbUKKcCei9KpbxqHMLhLLA==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@edge-runtime/vm': '*'
+      '@types/node': ^18.0.0 || >=20.0.0
+      '@vitest/browser': 1.6.0
+      '@vitest/ui': 1.6.0
+      happy-dom: '*'
+      jsdom: '*'
+    peerDependenciesMeta:
+      '@edge-runtime/vm':
+        optional: true
+      '@types/node':
+        optional: true
+      '@vitest/browser':
+        optional: true
+      '@vitest/ui':
+        optional: true
+      happy-dom:
+        optional: true
+      jsdom:
+        optional: true
+    dependencies:
+      '@types/node': 20.14.11
+      '@vitest/expect': 1.6.0
+      '@vitest/runner': 1.6.0
+      '@vitest/snapshot': 1.6.0
+      '@vitest/spy': 1.6.0
+      '@vitest/utils': 1.6.0
+      acorn-walk: 8.3.3
+      chai: 4.4.1
+      debug: 4.3.5
+      execa: 8.0.1
+      local-pkg: 0.5.0
+      magic-string: 0.30.10
+      pathe: 1.1.2
+      picocolors: 1.0.1
+      std-env: 3.7.0
+      strip-literal: 2.1.0
+      tinybench: 2.8.0
+      tinypool: 0.8.4
+      vite: 5.3.4(@types/node@20.14.11)
+      vite-node: 1.6.0(@types/node@20.14.11)
       why-is-node-running: 2.3.0
     transitivePeerDependencies:
       - less

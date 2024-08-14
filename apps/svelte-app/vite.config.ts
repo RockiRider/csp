@@ -1,6 +1,6 @@
 import { defineConfig, PluginOption } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
-import csp from "vite-plugin-hash-csp";
+import csp from "vite-plugin-csp-guard";
 
 // https://vitejs.dev/config/
 export default defineConfig({

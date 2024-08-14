@@ -1,8 +1,8 @@
-# Vite-Plugin-Hash-CSP
+# Repo for all things CSP related
 
 ## Documentation
 
-[Available here](https://vite-csp.tsotne.co.uk)
+Vite Plugin CSP Guard - [Available here](https://vite-csp.tsotne.co.uk)
 
 ## Contributing
 
@@ -13,3 +13,5 @@
 This is a turborepo monorepo using pnpm.
 
 All the apps under `/apps` are used to test the plugin.
+
+All the packages under `/packages` include the packages im building, as well as some others.

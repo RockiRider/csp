@@ -29,7 +29,7 @@ Third party code like, Google Analytics, Hotjar, etc. are common in most website
 
 import { defineConfig, PluginOption } from "vite";
 import react from "@vitejs/plugin-react";
-import csp from "vite-plugin-hash-csp";
+import csp from "vite-plugin-csp-guard";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -56,7 +56,7 @@ Third party styles, that are injected at runtime are also common in most website
 
 import { defineConfig, PluginOption } from "vite";
 import react from "@vitejs/plugin-react";
-import csp from "vite-plugin-hash-csp";
+import csp from "vite-plugin-csp-guard";
 
 // https://vitejs.dev/config/
 export default defineConfig({
