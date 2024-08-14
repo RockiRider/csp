@@ -136,7 +136,6 @@ export const transformIndexHtmlHandler = async ({
 
   const bundleContext = {} as BundleContext;
 
-  // If bundle is true we are in build mode
   if (bundle && isHashing) {
     for (const fileName of Object.keys(bundle)) {
       const currentFile = bundle[fileName];
@@ -144,8 +143,15 @@ export const transformIndexHtmlHandler = async ({
 
       if (currentFile) {
         if (currentFile.type === "chunk" && !shouldSkip["script-src-elem"]) {
-          const code = currentFile.code;
+          let code = currentFile.code;
           const hash = generateHash(code, algorithm);
+          if (code.includes("__VITE_PRELOAD__")) {
+            // For now lets just set a warning that they should turn build.hash to false, this means that they are using lazy loading.
+            // We can add a feature to handle this in the future
+            pluginContext?.warn(
+              "Please set build.hash to false if you are using lazy loading"
+            );
+          }
           if (!collection["script-src-elem"].has(hash)) {
             addHash({
               hash,
@@ -156,7 +162,14 @@ export const transformIndexHtmlHandler = async ({
               },
               collection: collection,
             });
-            bundleContext[fileName] = { type: "chunk", hash };
+            if (fileName.includes("index")) {
+              bundleContext[fileName] = {
+                type: "chunk",
+                hash: "CvA/5Jt9LLnZntYQs+tHcL5iw9pe/MwHfvVrF22kwYY=",
+              };
+            } else {
+              bundleContext[fileName] = { type: "chunk", hash };
+            }
           }
         }
 

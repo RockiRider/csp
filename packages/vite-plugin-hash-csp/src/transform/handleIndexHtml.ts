@@ -137,5 +137,6 @@ export function handleIndexHtml({
   //           });
   //       });
   //   }
+  console.log($.html());
   return { HASH_COLLECTION, html: $.html() };
 }
