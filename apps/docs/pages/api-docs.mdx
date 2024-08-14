@@ -120,10 +120,10 @@ You can read our guide for creating a policy [here](/guides/policy)
   <Tabs.Tab>
     ### `hash`
     - **Type:** `boolean`
-    - **Default:** `true`
+    - **Default:** `false`
     - **Description:** Determines if the plugin should hash the applications code during the build process.
     <Callout type="info">
-      The reason this is set to true by default becausing hashing is good for security purposes. If you opt out we still include 'self' in the [default policy](/guides/policy#default-policies). 
+      The reason this is set to false by default is because you might not need to hash your applications JS code for production. Inline scripts inside your `index.html` are hashed regardless of this setting. 
      </Callout>
   </Tabs.Tab>
 </Tabs>
