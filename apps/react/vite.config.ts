@@ -11,9 +11,6 @@ export default defineConfig({
       dev: {
         run: true,
       },
-      build: {
-        hash: true,
-      },
     }),
   ],
   preview: {

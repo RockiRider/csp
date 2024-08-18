@@ -165,10 +165,8 @@ export const transformIndexHtmlHandler = async ({
             if (fileName.includes("index")) {
               bundleContext[fileName] = {
                 type: "chunk",
-                hash: "CvA/5Jt9LLnZntYQs+tHcL5iw9pe/MwHfvVrF22kwYY=",
+                hash,
               };
-            } else {
-              bundleContext[fileName] = { type: "chunk", hash };
             }
           }
         }

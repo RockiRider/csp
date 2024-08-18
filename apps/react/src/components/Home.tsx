@@ -3,7 +3,7 @@ import Injector from "./Injector";
 const Home = () => {
   return (
     <div>
-      <h1>Home</h1>
+      <h3>Home</h3>
       <Injector />
     </div>
   );

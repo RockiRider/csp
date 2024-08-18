@@ -70,7 +70,9 @@ test("Inline script is blocked by CSP", async ({ page }) => {
   });
 
   await page.goto("/");
-
+  await expect(page).toHaveTitle(TITLE);
+  // Assert that the h3 element is visible with the text "Home"
+  await expect(page.locator("h3").textContent()).resolves.toBe("Home");
   // Assert that the CSP violation was detected
   expect(cspViolationDetected).toBe(true);
   // Assert that the inline script log message was not detected
