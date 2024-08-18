@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "p:build": "turbo build --filter=vite-plugin-hash-csp",
-    "p:test": "turbo test --filter=vite-plugin-hash-csp",
+    "p:build": "turbo build --filter=vite-plugin-csp-guard",
+    "p:test": "turbo test --filter=vite-plugin-csp-guard",
     "dev": "turbo dev",
     "preview": "turbo preview",
     "r:dev": "turbo dev --filter=react-app",
@@ -52,7 +52,7 @@
     "test:ui": "pnpm exec playwright test --ui",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "release": "bash scripts/release.sh vite-plugin-hash-csp"
+    "release": "bash scripts/release.sh vite-plugin-csp-guard"
   },
   "devDependencies": {
     "@playwright/test": "^1.45.0",

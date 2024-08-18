@@ -57,6 +57,14 @@ export type DevOptions = {
   outlierSupport?: Array<Outlier>;
 };
 
+export type BuildOptions = {
+  /**
+   * Indicates whether to hash the application at build time.
+   * @default false
+   */
+  hash?: boolean;
+};
+
 export type MyPluginOptions = {
   /**
    * What hashing algorithm to use. Default is sha-256.
@@ -94,6 +102,10 @@ export type MyPluginOptions = {
    * Options that apply only when running `vite dev`.
    */
   dev?: DevOptions;
+  /**
+   * Options that apply only when running `vite build`.
+   */
+  build?: BuildOptions;
 };
 
 export type HashCache = {
@@ -130,3 +142,17 @@ export type WarnMissingPolicyProps = {
 };
 
 export type TransformationStatus = Map<string, boolean>;
+
+export type ShouldSkip = {
+  "style-src": boolean;
+  "style-src-elem": boolean;
+  "style-src-attr": boolean;
+  "script-src": boolean;
+  "script-src-attr": boolean;
+  "script-src-elem": boolean;
+};
+
+export type BundleContext = Record<
+  string,
+  { type: "chunk" | "asset"; hash: string }
+>;

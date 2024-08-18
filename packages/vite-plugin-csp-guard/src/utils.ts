@@ -74,3 +74,12 @@ export const parseOutliers = (outliers: Array<Outlier>) => {
 export const removeEscapedBacktick = (str: string) => {
   return str.replace(/\\`/g, "`");
 };
+
+export const extractAssetPath = (source: string): string | false => {
+  if (!source.startsWith("/")) {
+    //This is to ensure we are not looking at urls,etc
+    return false;
+  }
+  //Remove the first slash
+  return source.slice(1);
+};

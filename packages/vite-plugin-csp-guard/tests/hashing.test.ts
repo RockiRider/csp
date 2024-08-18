@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { generateHash } from "../src/policy/core";
-import { APP_CSS, INDEX_CSS, TAILWIND_CSS } from "../mocks/css";
+import { APP_CSS, CHUNK_CSS, INDEX_CSS, TAILWIND_CSS } from "../mocks/css";
 import { getCSS } from "../src/css/extraction";
 import { JSON_APP_CSS, JSON_INDEX_CSS } from "../mocks/post";
 
@@ -29,5 +29,11 @@ describe("Hashing Tests", () => {
     const TAILWIND_HASH = "mOVp/ihEwO3hk0cZbCG190/lUPdu8zDouI4u4xrtezc=";
     const tailwindHash = generateHash(TAILWIND_CSS, "sha256");
     expect(tailwindHash).toEqual(TAILWIND_HASH);
+  });
+
+  test("Chunk CSS Hashing", () => {
+    const CHUNK_HASH = "o22LaMaNL7OsoVecyuE7bIOCCdvBjkvxOCg2FJJMm5w=";
+    const calculatedHash = generateHash(CHUNK_CSS, "sha256");
+    expect(calculatedHash).toEqual(CHUNK_HASH);
   });
 });

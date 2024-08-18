@@ -2,7 +2,7 @@ import { Plugin, ViteDevServer } from "vite";
 import { PluginContext } from "rollup";
 import { MyPluginOptions, TransformationStatus } from "./types";
 import { DEFAULT_POLICY } from "./policy/constants";
-import { createNewCollection } from "./policy/core";
+import { calculateSkip, createNewCollection } from "./policy/core";
 import { transformHandler, transformIndexHtmlHandler } from "./transform";
 import {
   cssFilter,
@@ -23,9 +23,11 @@ export default function vitePluginCSP(
     policy = DEFAULT_POLICY,
     dev = {},
     features = FEATURE_FLAGS,
+    build = {},
   } = options;
 
   const { outlierSupport = [], run = false } = dev;
+  const { hash = false } = build;
 
   const CORE_COLLECTION = createNewCollection();
 
@@ -42,9 +44,10 @@ export default function vitePluginCSP(
   const isTransformationStatusEmpty = () => transformationStatus.size === 0;
 
   const requirements = parseOutliers(outlierSupport);
+  const shouldSkip = calculateSkip(policy);
 
   return {
-    name: "vite-plugin-hash-csp",
+    name: "vite-plugin-csp-guard",
     enforce: "post",
     buildStart() {
       pluginContext = this;
@@ -68,14 +71,13 @@ export default function vitePluginCSP(
 
       if (devCommand && !isUserDevOpt) {
         console.warn(
-          "You are running in development mode but runOnDev is set to false. This will not inject the default policy for development mode"
+          "You are running in development mode but dev.run is set to false. This will not inject the default policy for development mode"
         );
       }
 
       if (devCommand) {
         isDevMode = true;
       }
-      // TODO: Add a flag in the config instead of commenting out
       if (config.appType !== "spa" && !features.mpa) {
         throw new Error("Vite CSP Plugin only works with SPA apps for now");
       }
@@ -98,7 +100,6 @@ export default function vitePluginCSP(
     },
     transform: {
       order: requirements.postTransform ? "post" : "pre",
-      // order: "post",
       handler: async (code, id) => {
         if (features.mpa) {
           console.log(id);
@@ -133,12 +134,14 @@ export default function vitePluginCSP(
           pluginContext,
           canRunInDevMode: canRunInDevMode(),
           isTransformationStatusEmpty: isTransformationStatusEmpty(),
+          isHashing: hash,
+          shouldSkip,
         });
       },
     },
     onLog(_level, log) {
       if (
-        log.plugin === "vite-plugin-hash-csp" &&
+        log.plugin === "vite-plugin-csp-guard" &&
         log.pluginCode === "WARNING_CODE"
       ) {
         this.warn(log);

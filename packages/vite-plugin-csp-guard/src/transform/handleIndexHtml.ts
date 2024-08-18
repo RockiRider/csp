@@ -1,7 +1,17 @@
 import * as cheerio from "cheerio";
-import { CSPPolicy, HashAlgorithms, HashCollection } from "../types";
+import {
+  BundleContext,
+  CSPPolicy,
+  HashAlgorithms,
+  HashCollection,
+} from "../types";
 import { addHash, generateHash, warnMissingPolicy } from "../policy/core";
 import { PluginContext } from "rollup";
+import { extractAssetPath } from "../utils";
+
+/**
+ * TODO: Support correct warning logging of truly external scripts and styles.
+ */
 
 type handleIndexHtmlProps = {
   html: string;
@@ -9,6 +19,7 @@ type handleIndexHtmlProps = {
   collection: HashCollection;
   policy: CSPPolicy;
   context: PluginContext | undefined;
+  bundleContext?: BundleContext;
 };
 
 /**
@@ -22,6 +33,7 @@ export function handleIndexHtml({
   algorithm,
   collection: HASH_COLLECTION,
   policy,
+  bundleContext,
 }: handleIndexHtmlProps) {
   const $ = cheerio.load(html);
 
@@ -31,11 +43,23 @@ export function handleIndexHtml({
     if (Object.keys(el.attribs).length && el.attribs?.src?.length) {
       try {
         const scriptSrc = el.attribs.src;
+
         warnMissingPolicy({
           source: scriptSrc,
           currentPolicy: policy["script-src"] ?? [],
           sourceType: "script-src",
         });
+
+        if (bundleContext) {
+          const fileName = extractAssetPath(scriptSrc);
+          if (fileName) {
+            const found = bundleContext[fileName];
+            if (found) {
+              //If we have found this, we then ned to amend the script to add an integrity attribute
+              $(el).attr("integrity", `${algorithm}-${found.hash}`);
+            }
+          }
+        }
       } catch (e) {
         console.error("Error hashing script src", e);
       }
@@ -56,76 +80,37 @@ export function handleIndexHtml({
     }
   });
 
-  // $("style").each(function (i, el) {
-  //   // Inline styles
-  //   if (el.childNodes?.[0]?.type === "text") {
-  //     const txt = $.text([el.childNodes?.[0]]);
-  //     if (txt.length) {
-  //       const hash = generateHash(txt);
-  //       addHash(
-  //         hash,
-  //         "styleSrcHashes",
-  //         {
-  //           type: "sha256",
-  //           content: txt,
-  //         },
-  //         el
-  //       );
-  //     }
-  //   }
-  // });
+  // TODO: Maybe we don't need this if we are just using 'self' anyway in the policy?
+  // $("link").each(function (i, el) {
+  //   if (
+  //     Object.keys(el.attribs).length &&
+  //     el.attribs?.rel === "stylesheet" &&
+  //     el.attribs?.href?.length
+  //   ) {
+  //     try {
+  //       const styleSrc = el.attribs.href;
 
-  // $("[style]").each((i, el) => {
-  //   const inlineStyle = el.attribs?.style;
-  //   if (inlineStyle?.length) {
-  //     const hash = generateHash(inlineStyle);
-  //     addHash(
-  //       hash,
-  //       "styleAttrHashes",
-  //       {
-  //         type: "sha256",
-  //         content: inlineStyle,
-  //       },
-  //       el
-  //     );
-  //   }
-  // });
+  //       warnMissingPolicy({
+  //         source: styleSrc,
+  //         currentPolicy: policy["style-src"] ?? [],
+  //         sourceType: "style-src",
+  //       });
 
-  //Log out cheerio html
-
-  // All style tags
-  //   $("style").each(function (i, el) {
-  //     // Inline styles
-  //     if (el.childNodes?.[0]?.type === "text") {
-  //       const txt = $.text([el.childNodes?.[0]]);
-  //       if (txt.length) {
-  //         const cssImportUrls = getCssImportUrls(txt);
-  //         cssImportUrls.forEach((v) => {
-  //           if (v.length) {
-  //             const fileId = path.resolve(v);
-  //             if (idMap.has(fileId)) {
-  //               addHash(idMap.get(fileId)?.[hashingMethod], "styleSrcHashes");
-  //             }
+  //       if (bundleContext) {
+  //         const fileName = extractAssetPath(styleSrc);
+  //         if (fileName) {
+  //           const found = bundleContext[fileName];
+  //           if (found) {
+  //             //If we have found this, we then ned to amend the script to add an integrity attribute
+  //             $(el).attr("integrity", `${algorithm}-${found.hash}`);
   //           }
-  //         });
-  //         addHash(hash(hashingMethod, txt), "styleSrcHashes");
+  //         }
   //       }
+  //     } catch (e) {
+  //       console.error("Error hashing style src", e);
   //     }
-  //   });
-
-  // Styles linked in head
-  //   $("link").each(function (i, el) {
-  //     if (
-  //       Object.keys(el.attribs).length &&
-  //       el.attribs?.rel === "stylesheet" &&
-  //       el.attribs?.href?.length
-  //     ) {
-  //       const fileId = path.resolve(el.attribs?.href);
-  //       if (idMap.has(fileId)) {
-  //         addHash(idMap.get(fileId)?.[hashingMethod], "styleSrcHashes");
-  //       }
-  //     }
-  //   });
+  //   }
+  // });
 
   // Hash inline styles in `style=""` tags if enabled
   // if (hashEnabled["style-src-attr"]) {
@@ -152,5 +137,6 @@ export function handleIndexHtml({
   //           });
   //       });
   //   }
-  return HASH_COLLECTION;
+  console.log($.html());
+  return { HASH_COLLECTION, html: $.html() };
 }

@@ -127,9 +127,9 @@ importers:
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/less:
     dependencies:
@@ -176,9 +176,9 @@ importers:
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(less@4.2.0)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/mui:
     dependencies:
@@ -231,9 +231,9 @@ importers:
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/preact-app:
     dependencies:
@@ -250,9 +250,9 @@ importers:
       vite:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@20.14.10)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/react:
     dependencies:
@@ -299,9 +299,9 @@ importers:
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/remix:
     dependencies:
@@ -372,9 +372,9 @@ importers:
       vite:
         specifier: ^5.1.0
         version: 5.3.4(@types/node@20.14.10)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
       vite-tsconfig-paths:
         specifier: ^4.2.1
         version: 4.3.2(typescript@5.5.3)(vite@5.3.4)
@@ -448,9 +448,9 @@ importers:
       vite:
         specifier: ^5.1.0
         version: 5.3.4(@types/node@20.14.10)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
       vite-tsconfig-paths:
         specifier: ^4.2.1
         version: 4.3.2(typescript@5.5.4)(vite@5.3.4)
@@ -500,9 +500,9 @@ importers:
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(sass@1.77.8)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/solid-app:
     dependencies:
@@ -516,9 +516,9 @@ importers:
       vite:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@20.14.10)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
       vite-plugin-solid:
         specifier: ^2.10.2
         version: 2.10.2(solid-js@1.8.19)(vite@5.3.4)
@@ -571,9 +571,9 @@ importers:
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/svelte-app:
     devDependencies:
@@ -598,9 +598,9 @@ importers:
       vite:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@20.14.10)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/tailwind:
     dependencies:
@@ -656,9 +656,9 @@ importers:
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
 
   apps/vue-app:
     dependencies:
@@ -675,9 +675,9 @@ importers:
       vite:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@20.14.10)
-      vite-plugin-hash-csp:
+      vite-plugin-csp-guard:
         specifier: workspace:^
-        version: link:../../packages/vite-plugin-hash-csp
+        version: link:../../packages/vite-plugin-csp-guard
       vue-tsc:
         specifier: ^2.0.24
         version: 2.0.26(typescript@5.5.3)
@@ -708,7 +708,7 @@ importers:
 
   packages/typescript-config: {}
 
-  packages/vite-plugin-hash-csp:
+  packages/vite-plugin-csp-guard:
     dependencies:
       cheerio:
         specifier: ^1.0.0-rc.12

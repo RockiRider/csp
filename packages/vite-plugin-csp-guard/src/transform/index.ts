@@ -1,9 +1,11 @@
 import { IndexHtmlTransformContext, ViteDevServer } from "vite";
 import { addHash, generateHash } from "../policy/core";
 import {
+  BundleContext,
   CSPPolicy,
   HashAlgorithms,
   HashCollection,
+  ShouldSkip,
   TransformationStatus,
 } from "../types";
 import { handleIndexHtml } from "./handleIndexHtml";
@@ -111,6 +113,8 @@ export interface TransformIndexHtmlHandlerProps {
   pluginContext: PluginContext | undefined;
   canRunInDevMode: Boolean;
   isTransformationStatusEmpty: Boolean;
+  isHashing: Boolean;
+  shouldSkip: ShouldSkip;
 }
 
 export const transformIndexHtmlHandler = async ({
@@ -122,59 +126,83 @@ export const transformIndexHtmlHandler = async ({
   pluginContext,
   canRunInDevMode,
   isTransformationStatusEmpty,
+  isHashing,
+  shouldSkip,
 }: TransformIndexHtmlHandlerProps) => {
   if (isTransformationStatusEmpty && server) {
     //Return early if there are no transformations and we are in dev mode
     return;
   }
 
-  // This is commented out because it doesn't look like we need to actually hash the bundle, due to using just 'self' is enough in the policy.
-  // if (bundle) {
-  //   for (const fileName of Object.keys(bundle)) {
-  //     const currentFile = bundle[fileName];
-  //     const isCss = cssFilter(fileName);
+  const bundleContext = {} as BundleContext;
 
-  //     if (currentFile) {
-  //       if (currentFile.type === "chunk") {
-  //         const code = currentFile.code;
-  //         const hash = generateHash(code, algorithm);
-  //         if (!collection["script-src"].has(hash)) {
-  //           addHash({
-  //             hash,
-  //             key: "script-src",
-  //             data: {
-  //               algorithm,
-  //               content: code,
-  //             },
-  //             collection: collection,
-  //           });
-  //         }
-  //       }
+  if (bundle && isHashing) {
+    for (const fileName of Object.keys(bundle)) {
+      const currentFile = bundle[fileName];
+      const isCss = cssFilter(fileName);
 
-  //       if (currentFile.type === "asset" && isCss) {
-  //         const code = currentFile.source as string; // We know this is a string because of the cssFilter
-  //         const hash = generateHash(code, algorithm);
-  //         addHash({
-  //           hash,
-  //           key: "style-src",
-  //           data: {
-  //             algorithm,
-  //             content: code,
-  //           },
-  //           collection: collection,
-  //         });
-  //       }
-  //     }
-  //   }
-  // }
+      if (currentFile) {
+        if (currentFile.type === "chunk" && !shouldSkip["script-src-elem"]) {
+          let code = currentFile.code;
+          const hash = generateHash(code, algorithm);
+          if (code.includes("__VITE_PRELOAD__")) {
+            // For now lets just set a warning that they should turn build.hash to false, this means that they are using lazy loading.
+            // We can add a feature to handle this in the future
+            pluginContext?.warn(
+              "Please set build.hash to false if you are using lazy loading"
+            );
+          }
+          if (!collection["script-src-elem"].has(hash)) {
+            addHash({
+              hash,
+              key: "script-src-elem",
+              data: {
+                algorithm,
+                content: code,
+              },
+              collection: collection,
+            });
+            if (fileName.includes("index")) {
+              bundleContext[fileName] = {
+                type: "chunk",
+                hash,
+              };
+            }
+          }
+        }
 
-  const updatedCollection = handleIndexHtml({
-    html,
-    algorithm,
-    collection,
-    policy,
-    context: pluginContext,
-  });
+        if (
+          currentFile.type === "asset" &&
+          isCss &&
+          !shouldSkip["style-src-elem"]
+        ) {
+          const code = currentFile.source as string; // We know this is a string because of the cssFilter
+          const hash = generateHash(code, algorithm);
+          addHash({
+            hash,
+            key: "style-src-elem",
+            data: {
+              algorithm,
+              content: code,
+            },
+            collection: collection,
+          });
+          bundleContext[fileName] = { type: "asset", hash };
+        }
+      }
+    }
+  }
+
+  const { html: newHtml, HASH_COLLECTION: updatedCollection } = handleIndexHtml(
+    {
+      html,
+      algorithm,
+      collection,
+      policy,
+      context: pluginContext,
+      bundleContext: bundle ? bundleContext : undefined,
+    }
+  );
 
   const finalPolicy = { ...policy };
 
@@ -197,7 +225,7 @@ export const transformIndexHtmlHandler = async ({
   const InjectedHtmlTags = policyToTag(policyString);
 
   return {
-    html,
+    html: newHtml,
     tags: InjectedHtmlTags,
   };
 };

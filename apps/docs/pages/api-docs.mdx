@@ -11,7 +11,7 @@ This is the API documentation for this plugin.
 
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import csp from "vite-plugin-hash-csp";
+import csp from "vite-plugin-csp-guard";
 
 export default defineConfig({
   plugins: [
@@ -60,7 +60,7 @@ export default defineConfig({
     ### `run`
     - **Type:** `boolean`
     - **Default:** `false`
-    - **Description:** Determines whether the `vite-plugin-hash-csp` should run in development mode. When set to `true`, the plugin will generate and apply CSP hashes even during development, allowing you to test CSP policies before deployment.
+    - **Description:** Determines whether the `vite-plugin-csp-guard` should run in development mode. When set to `true`, the plugin will generate and apply CSP hashes even during development, allowing you to test CSP policies before deployment.
 
     <Callout type="info">
       Enabling `run` in development can help identify CSP violations early in the development process, making it easier to address them before production.
@@ -109,3 +109,21 @@ You can read our guide for creating a policy [here](/guides/policy)
     ],
     "font-src": ["'self'", "https://fonts.gstatic.com"],
 }
+```
+
+### build
+- Type: `object`
+- Default: `{hash: true}`
+- Description: Options that apply only when running `vite build`.
+
+<Tabs items={['hash']} defaultIndex="0">
+  <Tabs.Tab>
+    ### `hash`
+    - **Type:** `boolean`
+    - **Default:** `false`
+    - **Description:** Determines if the plugin should hash the applications code during the build process.
+    <Callout type="info">
+      The reason this is set to false by default is because you might not need to hash your applications JS code for production. Inline scripts inside your `index.html` are hashed regardless of this setting. 
+     </Callout>
+  </Tabs.Tab>
+</Tabs>

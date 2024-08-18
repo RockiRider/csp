@@ -22,7 +22,7 @@ jobs:
         with:
           name: package-dist
           retention-days: 30
-          path: packages/vite-plugin-hash-csp/dist
+          path: packages/vite-plugin-csp-guard/dist
       - name: Run Unit Tests
         run: pnpm p:test
 
@@ -55,13 +55,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: package-dist
-          path: packages/vite-plugin-hash-csp/dist
+          path: packages/vite-plugin-csp-guard/dist
 
       - uses: JS-DevTools/npm-publish@v3
         id: publish
         with:
           token: ${{ secrets.NPM_AUTH_TOKEN }}
-          package: packages/vite-plugin-hash-csp
+          package: packages/vite-plugin-csp-guard
 
       - name: Bump version and push tag
         if: ${{ steps.publish.outputs.type }}

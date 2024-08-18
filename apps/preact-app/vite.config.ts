@@ -1,6 +1,6 @@
 import { defineConfig, PluginOption } from "vite";
 import preact from "@preact/preset-vite";
-import csp from "vite-plugin-hash-csp";
+import csp from "vite-plugin-csp-guard";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,6 +9,9 @@ export default defineConfig({
     csp({
       dev: {
         run: true,
+      },
+      build: {
+        hash: true,
       },
     }) as PluginOption, //This is a type assertion due to a monorepo issue regarding stylus, this is not needed in a normal project
   ],

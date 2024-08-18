@@ -1,6 +1,6 @@
-# Vite Plugin Hash CSP
+# Vite Plugin CSP Guard
 
-## This package has **moved** to [vite-plugin-csp-guard](https://www.npmjs.com/package/vite-plugin-csp-guard)
+This is a well tested Vite Plugin that allows you to declare your Content Security Policy (CSP) for your Vite project. First class support for SPA's
 
 ## Documentation
 
@@ -9,11 +9,11 @@ Full documentation and helpful guides are available [here](https://vite-csp.tsot
 ## Installation
 
 ```bash
-npm install -D vite-plugin-hash-csp
+npm install -D vite-plugin-csp-guard
 # or
-yarn add -D vite-plugin-hash-csp
+yarn add -D vite-plugin-csp-guard
 # or
-pnpm add -D vite-plugin-hash-csp
+pnpm add -D vite-plugin-csp-guard
 ```
 
 ## Basic Usage
@@ -21,7 +21,7 @@ pnpm add -D vite-plugin-hash-csp
 ```ts
 // vite.config.ts
 import { defineConfig } from "vite";
-import csp from "vite-plugin-hash-csp";
+import csp from "vite-plugin-csp-guard";
 
 export default defineConfig({
   plugins: [

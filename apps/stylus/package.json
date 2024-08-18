@@ -27,6 +27,6 @@
     "stylus": "^0.63.0",
     "typescript": "^5.2.2",
     "vite": "5.3.1",
-    "vite-plugin-hash-csp": "workspace:^"
+    "vite-plugin-csp-guard": "workspace:^"
   }
 }

@@ -1,10 +1,10 @@
 {
-  "name": "vite-plugin-hash-csp",
-  "version": "0.6.3",
+  "name": "vite-plugin-csp-guard",
+  "version": "0.6.2",
   "author": {
     "name": "Tsotne Gvadzabia"
   },
-  "description": "A Vite plugin that lets SPA applications generate a Content Security Policy (CSP), relying on hashing for inline scripts and styles.",
+  "description": "A Vite plugin that lets SPA applications generate a Content Security Policy (CSP).",
   "scripts": {
     "build": "rollup -c",
     "test": "vitest"
@@ -13,7 +13,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RockiRider/csp",
-    "directory": "packages/vite-plugin-hash-csp"
+    "directory": "packages/vite-plugin-csp-guard"
   },
   "bugs": {
     "url": "https://github.com/RockiRider/csp/issues"

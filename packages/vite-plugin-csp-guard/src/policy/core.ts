@@ -1,8 +1,10 @@
 import {
+  CSPPolicy,
   HashAlgorithms,
   HashCollection,
   HashCollectionKey,
   HashDataCollection,
+  ShouldSkip,
   WarnMissingPolicyProps,
 } from "../types";
 import crypto from "crypto";
@@ -74,4 +76,28 @@ export const warnMissingPolicy = ({
         })
       : console.warn(`${source} is not in the current CSP policy`);
   }
+};
+
+export const calculateSkip = (policy: CSPPolicy): ShouldSkip => {
+  const defaultShouldSkip = {
+    "script-src": false,
+    "script-src-attr": false,
+    "script-src-elem": false,
+    "style-src": false,
+    "style-src-attr": false,
+    "style-src-elem": false,
+  };
+
+  const keysToCheck = Object.keys(defaultShouldSkip) as (keyof ShouldSkip)[];
+
+  keysToCheck.forEach((key) => {
+    if (
+      policy[key]?.includes("unsafe-inline") ||
+      policy[key]?.includes("unsafe-eval")
+    ) {
+      defaultShouldSkip[key] = true;
+    }
+  });
+
+  return defaultShouldSkip;
 };
