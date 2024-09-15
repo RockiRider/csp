@@ -9,7 +9,7 @@ const createPolicy = (policy: CSPPolicy): string => {
       .map((v) => {
         // Check if the value starts with "sha" and enclose it in single quotes if it does.
         // Also enclose in single quotes if it matches other specified conditions.
-        if (v.startsWith("sha") || v === "*" || v === "blob:") return `'${v}'`;
+        if (v.startsWith("sha") || v === "*") return `'${v}'`;
         else return v;
       })
       .join(" ");
