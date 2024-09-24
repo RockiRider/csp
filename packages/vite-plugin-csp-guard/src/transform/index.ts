@@ -111,10 +111,11 @@ export interface TransformIndexHtmlHandlerProps {
   collection: HashCollection;
   policy: CSPPolicy;
   pluginContext: PluginContext | undefined;
-  canRunInDevMode: Boolean;
-  isTransformationStatusEmpty: Boolean;
-  isHashing: Boolean;
+  canRunInDevMode: boolean;
+  isTransformationStatusEmpty: boolean;
+  isHashing: boolean;
   shouldSkip: ShouldSkip;
+  shouldOverride: boolean;
 }
 
 export const transformIndexHtmlHandler = async ({
@@ -128,6 +129,7 @@ export const transformIndexHtmlHandler = async ({
   isTransformationStatusEmpty,
   isHashing,
   shouldSkip,
+  shouldOverride,
 }: TransformIndexHtmlHandlerProps) => {
   if (isTransformationStatusEmpty && server) {
     //Return early if there are no transformations and we are in dev mode
@@ -205,8 +207,8 @@ export const transformIndexHtmlHandler = async ({
   );
 
   const finalPolicy = canRunInDevMode
-    ? { ...policy }
-    : mergePolicies(policy, DEFAULT_DEV_POLICY, false);
+    ? mergePolicies(policy, DEFAULT_DEV_POLICY, shouldOverride)
+    : { ...policy };
 
   const policyString = generatePolicyString({
     collection: updatedCollection,

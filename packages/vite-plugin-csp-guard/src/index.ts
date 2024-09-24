@@ -150,6 +150,7 @@ export default function vitePluginCSP(
           isTransformationStatusEmpty: isTransformationStatusEmpty(),
           isHashing: hash,
           shouldSkip,
+          shouldOverride: override,
         });
       },
     },
