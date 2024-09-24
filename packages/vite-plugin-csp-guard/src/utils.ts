@@ -38,9 +38,15 @@ export const htmlFilter = createFilter("**.html");
 
 export const mergePolicies = (
   defaultPolicy: CSPPolicy,
-  userPolicy: CSPPolicy | undefined
+  userPolicy: CSPPolicy | undefined,
+  shouldOverride: boolean
 ): CSPPolicy => {
-  if (!userPolicy) return defaultPolicy;
+  const userPolicyExists = userPolicy && Object.keys(userPolicy).length > 0;
+
+  if (shouldOverride) {
+    return userPolicy as CSPPolicy;
+  }
+  if (!userPolicyExists) return defaultPolicy;
 
   const mergedPolicy: CSPPolicy = { ...defaultPolicy };
 

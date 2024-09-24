@@ -11,6 +11,7 @@ export default defineConfig({
       dev: {
         run: true,
       },
+      override: true,
     }),
   ],
   preview: {

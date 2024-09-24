@@ -2,7 +2,11 @@ import { Plugin, ViteDevServer } from "vite";
 import { PluginContext } from "rollup";
 import { MyPluginOptions, TransformationStatus } from "./types";
 import { DEFAULT_POLICY } from "./policy/constants";
-import { calculateSkip, createNewCollection } from "./policy/core";
+import {
+  calculateSkip,
+  createNewCollection,
+  overrideChecker,
+} from "./policy/core";
 import { transformHandler, transformIndexHtmlHandler } from "./transform";
 import {
   cssFilter,
@@ -20,31 +24,41 @@ export default function vitePluginCSP(
 ): Plugin {
   const {
     algorithm = "sha256",
-    policy = DEFAULT_POLICY,
+    policy,
     dev = {},
     features = FEATURE_FLAGS,
     build = {},
+    override = false,
   } = options;
+  let pluginContext: PluginContext | undefined = undefined; //Needed for logging
+  let isDevMode = false; // This is a flag to check if we are in dev mode
+  let server: ViteDevServer | undefined = undefined;
 
   const { outlierSupport = [], run = false } = dev;
   const { hash = false } = build;
 
   const CORE_COLLECTION = createNewCollection();
 
-  const effectivePolicy = mergePolicies(DEFAULT_POLICY, policy);
+  const overrideIsFine = overrideChecker({
+    userPolicy: policy,
+    override,
+  });
+  if (!overrideIsFine) {
+    throw new Error(
+      "Override cannot be true when a csp policy is not provided"
+    );
+  }
 
-  let isDevMode = false; // This is a flag to check if we are in dev mode
+  const effectivePolicy = mergePolicies(DEFAULT_POLICY, policy, override);
+
   const isUserDevOpt = run; // This is a flag to check if the user wants to run in dev mode
   const canRunInDevMode = () => isDevMode && isUserDevOpt; // This is a function to check if we can run in dev mode
-  let pluginContext: PluginContext | undefined = undefined; //Needed for logging
-
-  let server: ViteDevServer | undefined = undefined;
 
   const transformationStatus: TransformationStatus = new Map<string, boolean>();
   const isTransformationStatusEmpty = () => transformationStatus.size === 0;
 
   const requirements = parseOutliers(outlierSupport);
-  const shouldSkip = calculateSkip(policy);
+  const shouldSkip = calculateSkip(effectivePolicy);
 
   return {
     name: "vite-plugin-csp-guard",
@@ -140,10 +154,7 @@ export default function vitePluginCSP(
       },
     },
     onLog(_level, log) {
-      if (
-        log.plugin === "vite-plugin-csp-guard" &&
-        log.pluginCode === "WARNING_CODE"
-      ) {
+      if (log.plugin === "vite-plugin-csp-guard") {
         this.warn(log);
       }
     },

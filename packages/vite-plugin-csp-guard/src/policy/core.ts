@@ -4,6 +4,7 @@ import {
   HashCollection,
   HashCollectionKey,
   HashDataCollection,
+  OverrideCheckerProps,
   ShouldSkip,
   WarnMissingPolicyProps,
 } from "../types";
@@ -57,6 +58,17 @@ export const addHash = ({ hash, key, data, collection }: AddHashProps) => {
       currentCollection.set(createdHash, { ...data });
     }
   }
+};
+
+export const overrideChecker = ({
+  userPolicy,
+  override,
+}: OverrideCheckerProps) => {
+  const userPolicyExists = userPolicy && Object.keys(userPolicy).length > 0;
+  if (override && !userPolicyExists) {
+    return false;
+  }
+  return true;
 };
 
 export const warnMissingPolicy = ({
