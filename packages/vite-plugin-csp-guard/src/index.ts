@@ -1,13 +1,17 @@
 import { Plugin, ViteDevServer } from "vite";
 import { PluginContext } from "rollup";
 import { MyPluginOptions, TransformationStatus } from "./types";
-import { DEFAULT_POLICY } from "./policy/constants";
-import { calculateSkip, createNewCollection } from "./policy/core";
+import { DEFAULT_DEV_POLICY, DEFAULT_POLICY } from "./policy/constants";
+import {
+  calculateSkip,
+  createNewCollection,
+  mergePolicies,
+  overrideChecker,
+} from "./policy/core";
 import { transformHandler, transformIndexHtmlHandler } from "./transform";
 import {
   cssFilter,
   jsFilter,
-  mergePolicies,
   parseOutliers,
   preCssFilter,
   tsFilter,
@@ -20,25 +24,32 @@ export default function vitePluginCSP(
 ): Plugin {
   const {
     algorithm = "sha256",
-    policy = DEFAULT_POLICY,
+    policy,
     dev = {},
     features = FEATURE_FLAGS,
     build = {},
+    override = false,
   } = options;
+  let pluginContext: PluginContext | undefined = undefined; //Needed for logging
+  let isDevMode = false; // This is a flag to check if we are in dev mode
+  let server: ViteDevServer | undefined = undefined;
 
   const { outlierSupport = [], run = false } = dev;
   const { hash = false } = build;
 
   const CORE_COLLECTION = createNewCollection();
 
-  const effectivePolicy = mergePolicies(DEFAULT_POLICY, policy);
-
-  let isDevMode = false; // This is a flag to check if we are in dev mode
+  const overrideIsFine = overrideChecker({
+    userPolicy: policy,
+    override,
+  });
+  if (!overrideIsFine) {
+    throw new Error(
+      "Override cannot be true when a csp policy is not provided"
+    );
+  }
   const isUserDevOpt = run; // This is a flag to check if the user wants to run in dev mode
-  const canRunInDevMode = () => isDevMode && isUserDevOpt; // This is a function to check if we can run in dev mode
-  let pluginContext: PluginContext | undefined = undefined; //Needed for logging
-
-  let server: ViteDevServer | undefined = undefined;
+  const isDevAndAllowed = () => isDevMode && isUserDevOpt; // This is a function to check if we can run in dev mode
 
   const transformationStatus: TransformationStatus = new Map<string, boolean>();
   const isTransformationStatusEmpty = () => transformationStatus.size === 0;
@@ -86,7 +97,7 @@ export default function vitePluginCSP(
       }
     },
     load(id) {
-      if (!canRunInDevMode()) return null; // Exit early if we are not in dev mode or if we are in dev mode but the user does not want to run in dev mode
+      if (!isDevAndAllowed()) return null; // Exit early if we are not in dev mode or if we are in dev mode but the user does not want to run in dev mode
 
       // Entry points to files that need to be transformed
       const isCss = cssFilter(id);
@@ -105,7 +116,7 @@ export default function vitePluginCSP(
           console.log(id);
         }
 
-        if (!canRunInDevMode()) return null; // Exit early if we are not in dev mode or if we are in dev mode but the user does not want to run in dev mode
+        if (!isDevAndAllowed()) return null; // Exit early if we are not in dev mode or if we are in dev mode but the user does not want to run in dev mode
 
         await transformHandler({
           code,
@@ -125,6 +136,13 @@ export default function vitePluginCSP(
         if (features.mpa) {
           console.log("transformIndexHtml");
         }
+
+        const defaultPolicy = isDevAndAllowed()
+          ? DEFAULT_DEV_POLICY
+          : DEFAULT_POLICY;
+
+        const effectivePolicy = mergePolicies(defaultPolicy, policy, override);
+
         return transformIndexHtmlHandler({
           html,
           context,
@@ -132,7 +150,6 @@ export default function vitePluginCSP(
           policy: effectivePolicy,
           collection: CORE_COLLECTION,
           pluginContext,
-          canRunInDevMode: canRunInDevMode(),
           isTransformationStatusEmpty: isTransformationStatusEmpty(),
           isHashing: hash,
           shouldSkip,
@@ -140,10 +157,7 @@ export default function vitePluginCSP(
       },
     },
     onLog(_level, log) {
-      if (
-        log.plugin === "vite-plugin-csp-guard" &&
-        log.pluginCode === "WARNING_CODE"
-      ) {
+      if (log.plugin === "vite-plugin-csp-guard") {
         this.warn(log);
       }
     },

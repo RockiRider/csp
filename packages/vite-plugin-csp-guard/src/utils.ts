@@ -1,5 +1,5 @@
 import { createFilter } from "vite";
-import { CSPPolicy, Outlier, WarnMissingPolicyProps } from "./types";
+import { Outlier, WarnMissingPolicyProps } from "./types";
 import { REQUIRE_POST_TRANSFORM } from "./transform/constants";
 
 export const extractBaseURL = (url: string): string | false => {
@@ -35,33 +35,6 @@ export const preCssFilter = createFilter(["**.scss", "**.less", "**.styl"]);
 export const jsFilter = createFilter(["**/*.js?(*)", "**/*.jsx?(*)"]);
 export const tsFilter = createFilter(["**/*.ts", "**/*.tsx"]);
 export const htmlFilter = createFilter("**.html");
-
-export const mergePolicies = (
-  defaultPolicy: CSPPolicy,
-  userPolicy: CSPPolicy | undefined
-): CSPPolicy => {
-  if (!userPolicy) return defaultPolicy;
-
-  const mergedPolicy: CSPPolicy = { ...defaultPolicy };
-
-  for (const key in userPolicy as CSPPolicy) {
-    const _key = key as keyof CSPPolicy;
-    if (userPolicy.hasOwnProperty(key)) {
-      const defaultValues = defaultPolicy[_key] || [];
-      const userValues = userPolicy[_key] || [];
-
-      if (Array.isArray(userValues)) {
-        mergedPolicy[_key] = Array.from(
-          new Set([...defaultValues, ...userValues])
-        );
-      } else {
-        mergedPolicy[_key] = userValues;
-      }
-    }
-  }
-
-  return mergedPolicy;
-};
 
 export const parseOutliers = (outliers: Array<Outlier>) => {
   return {

@@ -10,7 +10,6 @@ import {
 } from "../types";
 import { handleIndexHtml } from "./handleIndexHtml";
 import { PluginContext } from "rollup";
-import { DEFAULT_DEV_POLICY } from "../policy/constants";
 import { generatePolicyString, policyToTag } from "../policy/createPolicy";
 import { cssFilter, jsFilter, preCssFilter, tsFilter } from "../utils";
 import { getCSS } from "../css/extraction";
@@ -111,9 +110,8 @@ export interface TransformIndexHtmlHandlerProps {
   collection: HashCollection;
   policy: CSPPolicy;
   pluginContext: PluginContext | undefined;
-  canRunInDevMode: Boolean;
-  isTransformationStatusEmpty: Boolean;
-  isHashing: Boolean;
+  isTransformationStatusEmpty: boolean;
+  isHashing: boolean;
   shouldSkip: ShouldSkip;
 }
 
@@ -124,7 +122,6 @@ export const transformIndexHtmlHandler = async ({
   policy,
   collection,
   pluginContext,
-  canRunInDevMode,
   isTransformationStatusEmpty,
   isHashing,
   shouldSkip,
@@ -204,22 +201,9 @@ export const transformIndexHtmlHandler = async ({
     }
   );
 
-  const finalPolicy = { ...policy };
-
-  if (canRunInDevMode) {
-    const defaultDevPolicy = DEFAULT_DEV_POLICY;
-
-    for (const [key, defaultValues] of Object.entries(defaultDevPolicy)) {
-      const currentPolicy = finalPolicy[key as keyof CSPPolicy] ?? [];
-      finalPolicy[key as keyof CSPPolicy] = Array.from(
-        new Set([...currentPolicy, ...defaultValues])
-      );
-    }
-  }
-
   const policyString = generatePolicyString({
     collection: updatedCollection,
-    policy: finalPolicy,
+    policy: policy,
   });
 
   const InjectedHtmlTags = policyToTag(policyString);

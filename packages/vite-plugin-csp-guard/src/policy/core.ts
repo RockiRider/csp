@@ -4,6 +4,7 @@ import {
   HashCollection,
   HashCollectionKey,
   HashDataCollection,
+  OverrideCheckerProps,
   ShouldSkip,
   WarnMissingPolicyProps,
 } from "../types";
@@ -59,6 +60,50 @@ export const addHash = ({ hash, key, data, collection }: AddHashProps) => {
   }
 };
 
+export const overrideChecker = ({
+  userPolicy,
+  override,
+}: OverrideCheckerProps) => {
+  const userPolicyExists = userPolicy && Object.keys(userPolicy).length > 0;
+  if (override && !userPolicyExists) {
+    return false;
+  }
+  return true;
+};
+
+export const mergePolicies = (
+  basePolicy: CSPPolicy,
+  newPolicy: CSPPolicy | undefined,
+  shouldOverride: boolean
+): CSPPolicy => {
+  const newPolicyExists = newPolicy && Object.keys(newPolicy).length > 0;
+
+  if (shouldOverride) {
+    return newPolicy as CSPPolicy;
+  }
+  if (!newPolicyExists) return basePolicy;
+
+  const mergedPolicy: CSPPolicy = { ...basePolicy };
+
+  for (const key in newPolicy as CSPPolicy) {
+    const _key = key as keyof CSPPolicy;
+    if (newPolicy.hasOwnProperty(key)) {
+      const defaultValues = basePolicy[_key] || [];
+      const userValues = newPolicy[_key] || [];
+
+      if (Array.isArray(userValues)) {
+        mergedPolicy[_key] = Array.from(
+          new Set([...defaultValues, ...userValues])
+        );
+      } else {
+        mergedPolicy[_key] = userValues;
+      }
+    }
+  }
+
+  return mergedPolicy;
+};
+
 export const warnMissingPolicy = ({
   currentPolicy,
   source,
@@ -78,7 +123,7 @@ export const warnMissingPolicy = ({
   }
 };
 
-export const calculateSkip = (policy: CSPPolicy): ShouldSkip => {
+export const calculateSkip = (policy: CSPPolicy | undefined): ShouldSkip => {
   const defaultShouldSkip = {
     "script-src": false,
     "script-src-attr": false,
@@ -87,6 +132,7 @@ export const calculateSkip = (policy: CSPPolicy): ShouldSkip => {
     "style-src-attr": false,
     "style-src-elem": false,
   };
+  if (!policy) return defaultShouldSkip;
 
   const keysToCheck = Object.keys(defaultShouldSkip) as (keyof ShouldSkip)[];
 

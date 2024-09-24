@@ -99,6 +99,11 @@ export type MyPluginOptions = {
     cssInJs?: boolean;
   };
   /**
+   * This is a flag to override the default policy. When set to false, the plugin will merge the default policy (provided by the plugin) with your policy. When set to true, the plugin will **only** use your policy only.
+   * @default false
+   */
+  override?: boolean;
+  /**
    * Options that apply only when running `vite dev`.
    */
   dev?: DevOptions;
@@ -139,6 +144,11 @@ export type WarnMissingPolicyProps = {
   currentPolicy: string[];
   sourceType?: CSPKeys;
   context?: PluginContext;
+};
+
+export type OverrideCheckerProps = {
+  userPolicy: CSPPolicy | undefined;
+  override: boolean;
 };
 
 export type TransformationStatus = Map<string, boolean>;
