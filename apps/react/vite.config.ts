@@ -12,7 +12,8 @@ export default defineConfig({
         run: true,
       },
       policy: {
-        "font-src": ["'self'", "https://fonts.gstatic.com"],
+        "font-src": ["https://fonts.gstatic.com"],
+        "script-src-elem": ["'self'"],
       },
       override: true,
     }),

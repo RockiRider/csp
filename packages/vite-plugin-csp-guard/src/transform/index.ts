@@ -1,5 +1,5 @@
 import { IndexHtmlTransformContext, ViteDevServer } from "vite";
-import { addHash, generateHash } from "../policy/core";
+import { addHash, generateHash, mergePolicies } from "../policy/core";
 import {
   BundleContext,
   CSPPolicy,
@@ -204,18 +204,9 @@ export const transformIndexHtmlHandler = async ({
     }
   );
 
-  const finalPolicy = { ...policy };
-
-  if (canRunInDevMode) {
-    const defaultDevPolicy = DEFAULT_DEV_POLICY;
-
-    for (const [key, defaultValues] of Object.entries(defaultDevPolicy)) {
-      const currentPolicy = finalPolicy[key as keyof CSPPolicy] ?? [];
-      finalPolicy[key as keyof CSPPolicy] = Array.from(
-        new Set([...currentPolicy, ...defaultValues])
-      );
-    }
-  }
+  const finalPolicy = canRunInDevMode
+    ? { ...policy }
+    : mergePolicies(policy, DEFAULT_DEV_POLICY, false);
 
   const policyString = generatePolicyString({
     collection: updatedCollection,

@@ -5,13 +5,13 @@ import { DEFAULT_POLICY } from "./policy/constants";
 import {
   calculateSkip,
   createNewCollection,
+  mergePolicies,
   overrideChecker,
 } from "./policy/core";
 import { transformHandler, transformIndexHtmlHandler } from "./transform";
 import {
   cssFilter,
   jsFilter,
-  mergePolicies,
   parseOutliers,
   preCssFilter,
   tsFilter,

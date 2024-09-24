@@ -53,12 +53,14 @@ test("Override flag is working in plugin", async ({ page }) => {
   //Get the meta tag and read the  "font-src" attribute, which should contain the value "https://fonts.gstatic.com"
   //And it shouldn't contain "img-src" attribute at all.
 
-  const metaElement = await page.locator("meta");
-  const fontSrcContent = await metaElement.getAttribute("font-src");
-  const imgSrcContent = await metaElement.getAttribute("img-src");
+  const metaElement = page.locator(
+    'meta[http-equiv="Content-Security-Policy"]'
+  );
 
-  expect(fontSrcContent).toBe("https://fonts.gstatic.com");
-  expect(imgSrcContent).toBe(null);
+  const content = await metaElement.getAttribute("content");
+
+  expect(content).toContain("font-src https://fonts.gstatic.com");
+  expect(content).not.toContain("img-src");
 });
 
 test("Inline script is blocked by CSP", async ({ page }) => {
