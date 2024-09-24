@@ -201,10 +201,6 @@ export const transformIndexHtmlHandler = async ({
     }
   );
 
-  // const finalPolicy = isDevAndAllowed
-  //   ? mergePolicies(policy, DEFAULT_DEV_POLICY, shouldOverride)
-  //   : { ...policy };
-
   const policyString = generatePolicyString({
     collection: updatedCollection,
     policy: policy,
