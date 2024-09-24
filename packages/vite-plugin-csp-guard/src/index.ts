@@ -1,7 +1,7 @@
 import { Plugin, ViteDevServer } from "vite";
 import { PluginContext } from "rollup";
 import { MyPluginOptions, TransformationStatus } from "./types";
-import { DEFAULT_POLICY } from "./policy/constants";
+import { DEFAULT_DEV_POLICY, DEFAULT_POLICY } from "./policy/constants";
 import {
   calculateSkip,
   createNewCollection,
@@ -48,17 +48,14 @@ export default function vitePluginCSP(
       "Override cannot be true when a csp policy is not provided"
     );
   }
-
-  const effectivePolicy = mergePolicies(DEFAULT_POLICY, policy, override);
-
   const isUserDevOpt = run; // This is a flag to check if the user wants to run in dev mode
-  const canRunInDevMode = () => isDevMode && isUserDevOpt; // This is a function to check if we can run in dev mode
+  const isDevAndAllowed = () => isDevMode && isUserDevOpt; // This is a function to check if we can run in dev mode
 
   const transformationStatus: TransformationStatus = new Map<string, boolean>();
   const isTransformationStatusEmpty = () => transformationStatus.size === 0;
 
   const requirements = parseOutliers(outlierSupport);
-  const shouldSkip = calculateSkip(effectivePolicy);
+  const shouldSkip = calculateSkip(policy);
 
   return {
     name: "vite-plugin-csp-guard",
@@ -100,7 +97,7 @@ export default function vitePluginCSP(
       }
     },
     load(id) {
-      if (!canRunInDevMode()) return null; // Exit early if we are not in dev mode or if we are in dev mode but the user does not want to run in dev mode
+      if (!isDevAndAllowed()) return null; // Exit early if we are not in dev mode or if we are in dev mode but the user does not want to run in dev mode
 
       // Entry points to files that need to be transformed
       const isCss = cssFilter(id);
@@ -119,7 +116,7 @@ export default function vitePluginCSP(
           console.log(id);
         }
 
-        if (!canRunInDevMode()) return null; // Exit early if we are not in dev mode or if we are in dev mode but the user does not want to run in dev mode
+        if (!isDevAndAllowed()) return null; // Exit early if we are not in dev mode or if we are in dev mode but the user does not want to run in dev mode
 
         await transformHandler({
           code,
@@ -139,6 +136,13 @@ export default function vitePluginCSP(
         if (features.mpa) {
           console.log("transformIndexHtml");
         }
+
+        const defaultPolicy = isDevAndAllowed()
+          ? DEFAULT_DEV_POLICY
+          : DEFAULT_POLICY;
+
+        const effectivePolicy = mergePolicies(defaultPolicy, policy, override);
+
         return transformIndexHtmlHandler({
           html,
           context,
@@ -146,11 +150,9 @@ export default function vitePluginCSP(
           policy: effectivePolicy,
           collection: CORE_COLLECTION,
           pluginContext,
-          canRunInDevMode: canRunInDevMode(),
           isTransformationStatusEmpty: isTransformationStatusEmpty(),
           isHashing: hash,
           shouldSkip,
-          shouldOverride: override,
         });
       },
     },

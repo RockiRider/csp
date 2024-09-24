@@ -123,7 +123,7 @@ export const warnMissingPolicy = ({
   }
 };
 
-export const calculateSkip = (policy: CSPPolicy): ShouldSkip => {
+export const calculateSkip = (policy: CSPPolicy | undefined): ShouldSkip => {
   const defaultShouldSkip = {
     "script-src": false,
     "script-src-attr": false,
@@ -132,6 +132,7 @@ export const calculateSkip = (policy: CSPPolicy): ShouldSkip => {
     "style-src-attr": false,
     "style-src-elem": false,
   };
+  if (!policy) return defaultShouldSkip;
 
   const keysToCheck = Object.keys(defaultShouldSkip) as (keyof ShouldSkip)[];
 

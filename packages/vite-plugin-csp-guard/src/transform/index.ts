@@ -1,5 +1,5 @@
 import { IndexHtmlTransformContext, ViteDevServer } from "vite";
-import { addHash, generateHash, mergePolicies } from "../policy/core";
+import { addHash, generateHash } from "../policy/core";
 import {
   BundleContext,
   CSPPolicy,
@@ -10,7 +10,6 @@ import {
 } from "../types";
 import { handleIndexHtml } from "./handleIndexHtml";
 import { PluginContext } from "rollup";
-import { DEFAULT_DEV_POLICY } from "../policy/constants";
 import { generatePolicyString, policyToTag } from "../policy/createPolicy";
 import { cssFilter, jsFilter, preCssFilter, tsFilter } from "../utils";
 import { getCSS } from "../css/extraction";
@@ -111,11 +110,9 @@ export interface TransformIndexHtmlHandlerProps {
   collection: HashCollection;
   policy: CSPPolicy;
   pluginContext: PluginContext | undefined;
-  canRunInDevMode: boolean;
   isTransformationStatusEmpty: boolean;
   isHashing: boolean;
   shouldSkip: ShouldSkip;
-  shouldOverride: boolean;
 }
 
 export const transformIndexHtmlHandler = async ({
@@ -125,11 +122,9 @@ export const transformIndexHtmlHandler = async ({
   policy,
   collection,
   pluginContext,
-  canRunInDevMode,
   isTransformationStatusEmpty,
   isHashing,
   shouldSkip,
-  shouldOverride,
 }: TransformIndexHtmlHandlerProps) => {
   if (isTransformationStatusEmpty && server) {
     //Return early if there are no transformations and we are in dev mode
@@ -206,13 +201,13 @@ export const transformIndexHtmlHandler = async ({
     }
   );
 
-  const finalPolicy = canRunInDevMode
-    ? mergePolicies(policy, DEFAULT_DEV_POLICY, shouldOverride)
-    : { ...policy };
+  // const finalPolicy = isDevAndAllowed
+  //   ? mergePolicies(policy, DEFAULT_DEV_POLICY, shouldOverride)
+  //   : { ...policy };
 
   const policyString = generatePolicyString({
     collection: updatedCollection,
-    policy: finalPolicy,
+    policy: policy,
   });
 
   const InjectedHtmlTags = policyToTag(policyString);
