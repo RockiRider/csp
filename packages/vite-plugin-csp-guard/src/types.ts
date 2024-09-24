@@ -99,6 +99,11 @@ export type MyPluginOptions = {
     cssInJs?: boolean;
   };
   /**
+   * This is a flag to override the default policy. When set to false, the plugin will merge the default policy your policy. When set to true, the plugin will use your policy only.
+   * @default false
+   */
+  override?: boolean;
+  /**
    * Options that apply only when running `vite dev`.
    */
   dev?: DevOptions;
