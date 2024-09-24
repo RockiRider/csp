@@ -46,6 +46,21 @@ test("JQuery is blocked by CSP", async ({ page }) => {
   expect(cspViolationDetected).toBe(true);
 });
 
+test("Override flag is working in plugin", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(`text=${TITLE}`)).toBeVisible();
+
+  //Get the meta tag and read the  "font-src" attribute, which should contain the value "https://fonts.gstatic.com"
+  //And it shouldn't contain "img-src" attribute at all.
+
+  const metaElement = await page.locator("meta");
+  const fontSrcContent = await metaElement.getAttribute("font-src");
+  const imgSrcContent = await metaElement.getAttribute("img-src");
+
+  expect(fontSrcContent).toBe("https://fonts.gstatic.com");
+  expect(imgSrcContent).toBe(null);
+});
+
 test("Inline script is blocked by CSP", async ({ page }) => {
   let cspViolationDetected = false;
   let inlineScriptExecuted = false;
