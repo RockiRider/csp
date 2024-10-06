@@ -1,15 +1,14 @@
 import { HtmlTagDescriptor } from "vite";
 import { CSPPolicy, HashCollection } from "../types";
 
-const createPolicy = (policy: CSPPolicy): string => {
+export const createPolicy = (policy: CSPPolicy): string => {
   return Object.keys(policy).reduce((acc, key) => {
     const policyValue = policy[key as keyof CSPPolicy];
     if (!policyValue?.length) return acc;
     const policyValueStr = policyValue
       .map((v) => {
         // Check if the value starts with "sha" and enclose it in single quotes if it does.
-        // Also enclose in single quotes if it matches other specified conditions.
-        if (v.startsWith("sha") || v === "*") return `'${v}'`;
+        if (v.startsWith("sha")) return `'${v}'`;
         else return v;
       })
       .join(" ");
