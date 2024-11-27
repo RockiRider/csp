@@ -89,7 +89,7 @@ export default defineConfig({
 
 ### Caveats
 
-If you are using a library that dynamically injects CSS into the page (e.g., `styled-components`, `emotion`, or `MUI`), you will need to set your `style-elem-src` policy to include `'unsafe-inline'`.
+If you are using a library that dynamically injects CSS into the page (e.g., `styled-components`, `emotion`, or `MUI`), you will need to set your `style-src-elem` policy to include `'unsafe-inline'`.
 
 The only alternative is to move to a server and use nonce-based CSPs.
 
