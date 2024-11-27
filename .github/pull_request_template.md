@@ -1,5 +1,3 @@
-# PR Title
-
 ## Key Changes
 
 - Change 1
