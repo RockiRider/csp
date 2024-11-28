@@ -6,11 +6,18 @@ import terser from "@rollup/plugin-terser";
 
 export default defineConfig({
   input: "src/index.ts", // Your plugin's entry point
-  output: {
-    file: "dist/index.js",
-    format: "esm", // Output as ES Module
-    sourcemap: false,
-  },
+  output: [
+    {
+      file: "dist/index.esm.js",
+      format: "esm", // Output as ES Module
+      sourcemap: false,
+    },
+    {
+      file: "dist/index.cjs.js",
+      format: "cjs", // Output as CommonJS
+      sourcemap: false,
+    },
+  ],
   external: ["lightningcss", "fsevents", "vite", "cheerio"],
   plugins: [
     typescript({

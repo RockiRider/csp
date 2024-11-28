@@ -26,6 +26,9 @@ jobs:
       - name: Run Unit Tests
         run: pnpm p:test
 
+      - name: Build Apps
+        run: pnpm build
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
 
