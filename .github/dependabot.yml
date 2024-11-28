@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: "npm" # Using npm as pnpm is compatible with npm registry
+    directories:
+      - "/" # Root package.json
+      - "/apps/*" # All workspaces in the apps directory
+      - "/packages/*" # All workspaces in the packages directory
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    # Optionally, you can ignore certain dependencies if needed
+    ignore:
+      - dependency-name: "typescript"
