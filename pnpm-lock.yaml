@@ -69,9 +69,6 @@ importers:
       eslint-config-next:
         specifier: latest
         version: 14.2.5(eslint@8.57.0)(typescript@5.5.3)
-      typescript:
-        specifier: latest
-        version: 5.5.3
 
   apps/emotion:
     dependencies:
@@ -121,9 +118,6 @@ importers:
       eslint-plugin-react-refresh:
         specifier: ^0.4.6
         version: 0.4.8(eslint@8.57.0)
-      typescript:
-        specifier: ^5.2.2
-        version: 5.5.3
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
@@ -170,9 +164,6 @@ importers:
       less:
         specifier: ^4.2.0
         version: 4.2.0
-      typescript:
-        specifier: ^5.2.2
-        version: 5.5.3
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(less@4.2.0)
@@ -225,9 +216,6 @@ importers:
       eslint-plugin-react-refresh:
         specifier: ^0.4.6
         version: 0.4.8(eslint@8.57.0)
-      typescript:
-        specifier: ^5.2.2
-        version: 5.5.3
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
@@ -244,9 +232,6 @@ importers:
       '@preact/preset-vite':
         specifier: ^2.8.3
         version: 2.9.0(@babel/core@7.24.8)(preact@10.22.1)(vite@5.3.4)
-      typescript:
-        specifier: ^5.2.2
-        version: 5.5.3
       vite:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@20.14.10)
@@ -293,9 +278,6 @@ importers:
       eslint-plugin-react-refresh:
         specifier: ^0.4.6
         version: 0.4.8(eslint@8.57.0)
-      typescript:
-        specifier: ^5.2.2
-        version: 5.5.3
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
@@ -366,9 +348,6 @@ importers:
       tailwindcss:
         specifier: ^3.4.4
         version: 3.4.4
-      typescript:
-        specifier: ^5.1.6
-        version: 5.5.3
       vite:
         specifier: ^5.1.0
         version: 5.3.4(@types/node@20.14.10)
@@ -442,9 +421,6 @@ importers:
       tailwindcss:
         specifier: ^3.4.4
         version: 3.4.4
-      typescript:
-        specifier: ^5.1.6
-        version: 5.5.4
       vite:
         specifier: ^5.1.0
         version: 5.3.4(@types/node@20.14.10)
@@ -494,9 +470,6 @@ importers:
       sass:
         specifier: ^1.77.8
         version: 1.77.8
-      typescript:
-        specifier: ^5.2.2
-        version: 5.5.4
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(sass@1.77.8)
@@ -510,9 +483,6 @@ importers:
         specifier: ^1.8.18
         version: 1.8.19
     devDependencies:
-      typescript:
-        specifier: ^5.2.2
-        version: 5.5.4
       vite:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@20.14.10)
@@ -565,9 +535,6 @@ importers:
       stylus:
         specifier: ^0.63.0
         version: 0.63.0
-      typescript:
-        specifier: ^5.2.2
-        version: 5.5.3
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
@@ -592,9 +559,6 @@ importers:
       tslib:
         specifier: ^2.6.3
         version: 2.6.3
-      typescript:
-        specifier: ^5.2.2
-        version: 5.5.3
       vite:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@20.14.10)
@@ -650,9 +614,6 @@ importers:
       tailwindcss:
         specifier: ^3.4.4
         version: 3.4.4
-      typescript:
-        specifier: ^5.2.2
-        version: 5.5.3
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
@@ -669,9 +630,6 @@ importers:
       '@vitejs/plugin-vue':
         specifier: ^5.0.5
         version: 5.0.5(vite@5.3.4)(vue@3.4.33)
-      typescript:
-        specifier: ^5.2.2
-        version: 5.5.3
       vite:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@20.14.10)
@@ -702,9 +660,6 @@ importers:
       eslint-plugin-only-warn:
         specifier: ^1.1.0
         version: 1.1.0
-      typescript:
-        specifier: ^5.3.3
-        version: 5.5.3
 
   packages/typescript-config: {}
 
@@ -747,9 +702,6 @@ importers:
       rollup:
         specifier: ^4.18.0
         version: 4.18.1
-      typescript:
-        specifier: ^5.5.2
-        version: 5.5.3
       vite:
         specifier: 5.3.1
         version: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
@@ -4003,7 +3955,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.24.7(@babel/core@7.24.8)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.3.1(@types/node@20.14.10)(stylus@0.63.0)
+      vite: 5.3.1(@types/node@20.14.10)(less@4.2.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
