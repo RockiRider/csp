@@ -1,16 +1,35 @@
 version: 2
 updates:
-  - package-ecosystem: "npm" # Using npm as pnpm is compatible with npm registry
-    directories:
-      - "/" # Root package.json
-      - "/apps/*" # All workspaces in the apps directory
-      - "/packages/*" # All workspaces in the packages directory
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
     commit-message:
       include: scope
-      prefix: "chore(deps)"
-      prefix-development: "chore(dev-deps)"
+      prefix: "chore(root-deps)"
+      prefix-development: "chore"
+
+  - package-ecosystem: "npm"
+    directory: "/apps/*"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 2
+    commit-message:
+      include: scope
+      prefix: "chore(app-deps)"
+      prefix-development: "chore"
+    ignore:
+      - dependency-name: "typescript"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/*"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    commit-message:
+      include: scope
+      prefix: "chore(pkg-deps)"
+      prefix-development: "chore"
     ignore:
       - dependency-name: "typescript"
