@@ -11,7 +11,8 @@ updates:
       prefix-development: "chore"
 
   - package-ecosystem: "npm"
-    directory: "/apps/*"
+    directories:
+      - "/apps/*"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 2
@@ -23,7 +24,8 @@ updates:
       - dependency-name: "typescript"
 
   - package-ecosystem: "npm"
-    directory: "/packages/*"
+    directories:
+      - "/packages/*"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
