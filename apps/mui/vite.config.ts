@@ -1,4 +1,4 @@
-import { build, defineConfig, PluginOption } from "vite";
+import { defineConfig, PluginOption } from "vite";
 import react from "@vitejs/plugin-react";
 import csp from "vite-plugin-csp-guard";
 
