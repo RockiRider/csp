@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, PluginOption } from "vite";
 import react from "@vitejs/plugin-react";
 import csp from "vite-plugin-csp-guard";
 
@@ -18,7 +18,7 @@ export default defineConfig({
         "object-src": ["'none'"],
       },
       override: true,
-    }),
+    }) as PluginOption // Needed due to pnpm different dependency versions for Vite,
   ],
   preview: {
     port: 4000,

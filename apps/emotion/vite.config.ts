@@ -1,11 +1,11 @@
-import { defineConfig } from "vite";
+import { defineConfig, PluginOption } from "vite";
 import react from "@vitejs/plugin-react";
 import csp from "vite-plugin-csp-guard";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
+    react() as PluginOption,
     csp({
       algorithm: "sha256",
       dev: {

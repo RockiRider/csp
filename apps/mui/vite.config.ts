@@ -5,7 +5,7 @@ import csp from "vite-plugin-csp-guard";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
+    react() as PluginOption,
     csp({
       algorithm: "sha256",
       dev: {
