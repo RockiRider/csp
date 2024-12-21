@@ -1,5 +1,6 @@
-import { ModuleInfo, ProgramNode } from "rollup";
-import { Node, walk } from "estree-walker";
+import { ModuleInfo } from "rollup";
+import { walk } from "estree-walker";
+import { type Program, Node } from "estree";
 
 /**
  * There are 3 approaches to getting this CSS in JS detection to work:
@@ -15,7 +16,7 @@ export const unstable_handleModuleParsed = ({
   info,
 }: HandleModuleParsedProps) => {
   if (info.id.includes("@emotion+sheet")) {
-    const hasFoundStyles = findStyles(info.ast, info.id);
+    const hasFoundStyles = findStyles(info.ast as Program, info.id);
     console.log("Has found styles: ", hasFoundStyles);
   }
 };
@@ -39,7 +40,7 @@ export const extractCSSFromTaggedTemplate = (node: Node) => {
 
 // TODO: 1 Look for VariableDeclerations. Look at their names and their values. If the names include anything like "styles or css" and the values include any css like syntax, we have found our styles.
 //TODO: 2 Look at imports from elsewhere (other files, so we can catch out things like emotion, styled-components, etc)
-const findStyles = (ast: ProgramNode | null, fileId: string): boolean => {
+const findStyles = (ast: Program | Node, fileId: string): boolean => {
   if (!ast) return false;
   let foundStyles = false;
 
