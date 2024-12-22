@@ -12,10 +12,17 @@ export default {
   ],
   plugins: [
     nodeResolve(),
-    typescript(),
+    typescript(
+      {
+        tsconfig: "tsconfig.json",
+        declaration: true,
+        declarationDir: "dist",
+        include: ["src/**/*.ts"],
+        sourceMap: false,
+      }
+    ),
   ],
   external: [
-    // Externalize any dependencies that should not be bundled
     'react',
     'vite',
     "@playwright/test"
