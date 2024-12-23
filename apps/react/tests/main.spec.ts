@@ -1,5 +1,10 @@
-import { createTests } from '@repo/tests';
+import { genericTests, jQueryTest, overrideTest, inlineScriptBlockedTest  } from '@repo/tests';
 
-const APP_TITLE = "Vite + React"; // Dynamic value per app
+const APP_TITLE = "Vite + React"; 
+const COLOUR = "rgb(33, 53, 71)"
 
-createTests(APP_TITLE);
+genericTests(APP_TITLE, COLOUR)
+jQueryTest()
+overrideTest(APP_TITLE)
+inlineScriptBlockedTest(APP_TITLE)
+

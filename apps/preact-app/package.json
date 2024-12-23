@@ -13,6 +13,8 @@
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.8.3",
-    "vite-plugin-csp-guard": "workspace:^"
+    "vite-plugin-csp-guard": "workspace:^",
+    "@repo/tests": "workspace:^",
+    "@repo/typescript-config": "workspace:^"
   }
 }

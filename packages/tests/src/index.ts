@@ -1,28 +1,31 @@
 import { test, expect } from "@playwright/test";
 
-export function createTests(TITLE: string) {
+export const genericTests = (title: string, rgbColor: string) => {
   test("Index HTML Loaded", async ({ page }) => {
     await page.goto("/");
-    await expect(page).toHaveTitle(TITLE);
+    await expect(page).toHaveTitle(title);
   });
 
   test("Loaded main JS script", async ({ page }) => {
     await page.goto("/");
-    await expect(page.locator(`text=${TITLE}`)).toBeVisible();
+    await expect(page.locator(`text=${title}`)).toBeVisible();
   });
 
   test("Loaded CSS Styles", async ({ page }) => {
     await page.goto("/");
 
-    const element = page.getByRole("heading", { name: TITLE });
+    const element = page.getByRole("heading", { name: title });
     await expect(element).toBeVisible();
 
     const color = await element.evaluate(
       (el) => window.getComputedStyle(el).color
     );
 
-    expect(color).toBe("rgb(33, 53, 71)");
+    expect(color).toBe(rgbColor);
   });
+}
+
+export const jQueryTest = () => {
 
   test("JQuery is blocked by CSP", async ({ page }) => {
     let cspViolationDetected = false;
@@ -44,10 +47,13 @@ export function createTests(TITLE: string) {
     // Assert that the CSP violation was detected
     expect(cspViolationDetected).toBe(true);
   });
+}
+
+export const overrideTest = (title: string) => {
 
   test("Override flag is working in plugin", async ({ page }) => {
     await page.goto("/");
-    await expect(page.locator(`text=${TITLE}`)).toBeVisible();
+    await expect(page.locator(`text=${title}`)).toBeVisible();
 
     // Get the meta tag and read the "font-src" attribute, which should contain the value "https://fonts.gstatic.com"
     const metaElement = page.locator(
@@ -59,6 +65,11 @@ export function createTests(TITLE: string) {
     expect(content).toContain("font-src https://fonts.gstatic.com");
     expect(content).not.toContain("img-src");
   });
+
+}
+
+
+export const inlineScriptBlockedTest = (title: string) => {
 
   test("Inline script is blocked by CSP", async ({ page }) => {
     let cspViolationDetected = false;
@@ -84,7 +95,7 @@ export function createTests(TITLE: string) {
     });
 
     await page.goto("/");
-    await expect(page).toHaveTitle(TITLE);
+    await expect(page).toHaveTitle(title);
     await expect(page.locator("h3").textContent()).resolves.toBe("Home");
 
     // Assert that the CSP violation was detected
