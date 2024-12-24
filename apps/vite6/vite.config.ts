@@ -12,12 +12,15 @@ export default defineConfig({
         run: true,
       },
       policy: {
-        "font-src": ["https://fonts.gstatic.com"],
+        "font-src": ["'self'","https://fonts.gstatic.com"],
         "script-src-elem": ["'self'"],
         "connect-src": ["*"],
         "object-src": ["'none'"],
-        "img-src": ["https://placehold.co/600x400?text=Hello+World"]
+        "img-src": ["'self'","https://placehold.co/600x400", "data:"],
+        // "style-src": ["'self'", "'unsafe-inline'"],
+        // "script-src": ["'self'", "'unsafe-inline'"],
       },
+      override: true
     }) as PluginOption // Needed due to pnpm different dependency versions for Vite,
   ],
   preview: {
