@@ -1,4 +1,3 @@
-import { test, expect } from "@playwright/test";
 import { genericTests, jQueryTest } from '@repo/tests';
 
 const TITLE = "Vite + Emotion";

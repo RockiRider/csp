@@ -1,11 +1,11 @@
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, PropsWithChildren } from "react";
 import s from "./button.module.styl";
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = (props: ButtonProps) => {
+const Button = (props: PropsWithChildren<ButtonProps>) => {
   return (
     <button {...props} className={s.button}>
-      Click me
+      {props.children}
     </button>
   );
 };
