@@ -35,6 +35,16 @@ export const genericTests = (title: string, {headerColour, buttonColour}: Elemen
   });
 }
 
+export const viteLogoTest = () => {
+  test("Vite logo is loaded", async ({ page }) => {
+    await page.goto("/");
+    const viteLogo = page.locator('img[alt="Vite logo"]');
+    await expect(viteLogo).toBeVisible();
+    const naturalWidth = await viteLogo.evaluate((img) => (img as HTMLImageElement).naturalWidth);
+    expect(naturalWidth).toBeGreaterThan(1);
+  });
+}
+
 export const jQueryTest = () => {
 
   test("JQuery is blocked by CSP", async ({ page }) => {

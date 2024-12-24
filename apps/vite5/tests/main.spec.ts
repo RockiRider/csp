@@ -1,4 +1,4 @@
-import { genericTests, jQueryTest, overrideTest, inlineScriptBlockedTest  } from '@repo/tests';
+import { genericTests, jQueryTest, overrideTest, inlineScriptBlockedTest, viteLogoTest  } from '@repo/tests';
 
 const APP_TITLE = "Vite + React"; 
 const HEADER_COLOUR = "rgb(33, 53, 71)"
@@ -8,4 +8,4 @@ genericTests(APP_TITLE, {headerColour: HEADER_COLOUR, buttonColour: BTN_COLOUR})
 jQueryTest()
 overrideTest(APP_TITLE)
 inlineScriptBlockedTest(APP_TITLE)
-
+viteLogoTest()

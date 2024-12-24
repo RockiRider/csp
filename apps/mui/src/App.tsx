@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 import { useState } from "react";
-
+import viteLogo from "/vite.svg";
 
 export default function App() {
 
@@ -12,6 +12,7 @@ export default function App() {
   return (
     <Container maxWidth="sm">
       <Box sx={{ my: 4 }}>
+        <img src={viteLogo} className="logo" alt="Vite logo" />
         <Typography
           variant="h4"
           component="h1"
