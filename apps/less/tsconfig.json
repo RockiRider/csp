@@ -2,5 +2,8 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@repo/typescript-config/vite",
   "include": ["src"],
+  "compilerOptions": {  
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
+  },
   "references": [{ "path": "./tsconfig.node.json" }],
 }
