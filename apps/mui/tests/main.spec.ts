@@ -2,10 +2,10 @@ import { test, expect } from "@playwright/test";
 import { genericTests, jQueryTest } from '@repo/tests';
 
 const TITLE = "Vite + Material UI + TS";
-const COLOUR = "rgb(63, 80, 181)"
+const HEADER_COLOUR = "rgb(63, 80, 181)"
+const BTN_COLOUR = "rgb(0, 0, 255)"
 
-genericTests(TITLE, COLOUR)
-jQueryTest()
+genericTests(TITLE, {headerColour: HEADER_COLOUR, buttonColour: BTN_COLOUR})
 
 test("Roboto font is loaded", async ({ page }) => {
   await page.goto("/");

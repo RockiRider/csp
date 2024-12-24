@@ -1,28 +1,14 @@
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
-import ProTip from "./ProTip";
+import { Button } from "@mui/material";
+import { useState } from "react";
 
-function Copyright() {
-  return (
-    <Typography
-      variant="body2"
-      align="center"
-      sx={{
-        color: "text.secondary",
-      }}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}.
-    </Typography>
-  );
-}
 
 export default function App() {
+
+  const [count, setCount] = useState(0)
+
   return (
     <Container maxWidth="sm">
       <Box sx={{ my: 4 }}>
@@ -33,9 +19,8 @@ export default function App() {
         >
           Vite + Material UI + TS
         </Typography>
-        <ProTip />
-        <Copyright />
       </Box>
+      <Button variant="contained" sx={{backgroundColor: "blue"}} onClick={() => setCount(count + 1)}>Count is {count}</Button>
     </Container>
   );
 }

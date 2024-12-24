@@ -1,6 +1,11 @@
 import { test, expect } from "@playwright/test";
 
-export const genericTests = (title: string, rgbColor: string) => {
+
+type ElementColours = {
+  headerColour: string;
+  buttonColour: string;
+}
+export const genericTests = (title: string, {headerColour, buttonColour}: ElementColours) => {
   test("Index HTML Loaded", async ({ page }) => {
     await page.goto("/");
     await expect(page).toHaveTitle(title);
@@ -14,14 +19,19 @@ export const genericTests = (title: string, rgbColor: string) => {
   test("Loaded CSS Styles", async ({ page }) => {
     await page.goto("/");
 
-    const element = page.getByRole("heading", { name: title });
-    await expect(element).toBeVisible();
+    const header = page.getByRole("heading", { name: title });
+    const button = page.getByRole("button", {name: "count is"})
+    await expect(header).toBeVisible();
+    await expect(button).toBeVisible();
 
-    const color = await element.evaluate(
+    const headerCol = await header.evaluate(
       (el) => window.getComputedStyle(el).color
     );
 
-    expect(color).toBe(rgbColor);
+    const buttonCol = await button.evaluate(el => window.getComputedStyle(el).backgroundColor)
+
+    expect(headerCol).toBe(headerColour);
+    expect(buttonCol).toBe(buttonColour);
   });
 }
 
@@ -67,7 +77,6 @@ export const overrideTest = (title: string) => {
   });
 
 }
-
 
 export const inlineScriptBlockedTest = (title: string) => {
 

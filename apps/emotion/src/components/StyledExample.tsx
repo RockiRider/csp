@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
+import { PropsWithChildren } from "react";
 
 const Button = styled.button`
-  color: red;
+  color: white;
+  background-color: red;
   padding: 10px;
   border: 1px solid black;
   cursor: pointer;
@@ -9,9 +11,11 @@ const Button = styled.button`
     color: white;
   }
 `;
-
-const StyledExample = () => {
-  return <Button>Click Me</Button>;
+interface StyledExampleProps {
+  onClick?: () => void
+}
+const StyledExample = ({children, onClick}:PropsWithChildren<StyledExampleProps>) => {
+  return <Button onClick={onClick}>{children}</Button>;
 };
 
 export default StyledExample;

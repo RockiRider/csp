@@ -3,7 +3,7 @@ import { genericTests, jQueryTest, overrideTest, inlineScriptBlockedTest  } from
 const APP_TITLE = "Vite + React"; 
 const COLOUR = "rgb(33, 53, 71)"
 
-genericTests(APP_TITLE, COLOUR)
+genericTests(APP_TITLE, {headerColour: "", buttonColour: COLOUR})
 jQueryTest()
 overrideTest(APP_TITLE)
 inlineScriptBlockedTest(APP_TITLE)

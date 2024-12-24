@@ -5,5 +5,5 @@ const TITLE = "Vite + Solid";
 
 const COLOUR = "rgb(249, 249, 249)"
 
-genericTests(TITLE, COLOUR)
+genericTests(TITLE, {headerColour: "", buttonColour: COLOUR})
 
