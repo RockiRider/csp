@@ -16,14 +16,14 @@ export default defineConfig({
         "script-src-elem": ["'self'"],
         "connect-src": ["*"],
         "object-src": ["'none'"],
+        "img-src": ["https://placehold.co/600x400?text=Hello+World"]
       },
-      override: true,
     }) as PluginOption // Needed due to pnpm different dependency versions for Vite,
   ],
   preview: {
-    port: 4000,
+    port: 4013,
   },
   server: {
-    port: 3000,
+    port: 3013,
   },
 });
