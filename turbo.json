@@ -21,7 +21,8 @@
       "dependsOn": ["^build"]
     },
     "preview": {
-      "dependsOn": ["^build", "build"]
+      "dependsOn": ["^build", "build"],
+      "persistent": true
     }
   },
   "ui": "stream"
