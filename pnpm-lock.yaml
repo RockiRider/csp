@@ -814,6 +814,33 @@ importers:
         specifier: ^2.0.24
         version: 2.1.10(typescript@5.7.2)
 
+  packages/csp-toolkit:
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:^
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:^
+        version: link:../typescript-config
+      '@rollup/plugin-commonjs':
+        specifier: ^26.0.1
+        version: 26.0.1(rollup@4.18.1)
+      '@rollup/plugin-node-resolve':
+        specifier: ^15.2.3
+        version: 15.2.3(rollup@4.18.1)
+      '@rollup/plugin-terser':
+        specifier: ^0.4.4
+        version: 0.4.4(rollup@4.18.1)
+      '@rollup/plugin-typescript':
+        specifier: ^11.1.6
+        version: 11.1.6(rollup@4.18.1)(typescript@5.5.4)
+      '@types/node':
+        specifier: ^20.14.2
+        version: 20.14.11
+      rollup:
+        specifier: ^4.18.0
+        version: 4.18.1
+
   packages/eslint-config:
     devDependencies:
       '@typescript-eslint/eslint-plugin':
@@ -857,6 +884,9 @@ importers:
       cheerio:
         specifier: ^1.0.0
         version: 1.0.0
+      csp-toolkit:
+        specifier: workspace:^
+        version: link:../csp-toolkit
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:^
