@@ -143,37 +143,37 @@ const APPS = [
   {
     url: "http://localhost:3011",
     command: `pnpm v4:dev`,
-    testDir: "./apps/vite-4/tests",
+    testDir: "./apps/vite4/tests",
     name: "Vite4 - Dev",
   },
   {
     url: "http://localhost:4011",
     command: `pnpm v4:preview`,
-    testDir: "./apps/vite-4/tests",
+    testDir: "./apps/vite4/tests",
     name: "Vite4 - Build",
   },
   {
     url: "http://localhost:3012",
     command: `pnpm v5:dev`,
-    testDir: "./apps/vite-5/tests",
+    testDir: "./apps/vite5/tests",
     name: "Vite5 - Dev",
   },
   {
     url: "http://localhost:4012",
     command: `pnpm v5:preview`,
-    testDir: "./apps/vite-5/tests",
+    testDir: "./apps/vite5/tests",
     name: "Vite5 - Build",
   },
   {
     url: "http://localhost:3013",
     command: `pnpm v6:dev`,
-    testDir: "./apps/vite-6/tests",
+    testDir: "./apps/vite6/tests",
     name: "Vite6 - Dev",
   },
   {
     url: "http://localhost:4013",
     command: `pnpm v6:preview`,
-    testDir: "./apps/vite-6/tests",
+    testDir: "./apps/vite6/tests",
     name: "Vite6 - Build",
   },
 ];

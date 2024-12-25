@@ -13,7 +13,7 @@ describe("Policy Merging", () => {
 
     expect(mergedPolicy).toEqual({
       "default-src": ["'self'"],
-      "img-src": ["'self'", "data:"],
+      "img-src": ["'self'"],
       "script-src-elem": ["'self'"],
       "style-src-elem": ["'self'"],
       "frame-src": ["example.com"],
@@ -29,7 +29,7 @@ describe("Policy Merging", () => {
 
     expect(mergedPolicy).toEqual({
       "default-src": ["'self'"],
-      "img-src": ["'self'", "data:", "example.com"],
+      "img-src": ["'self'", "example.com"],
       "style-src-elem": ["'self'"],
       "script-src-elem": ["'self'"],
     });
