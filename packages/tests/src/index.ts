@@ -5,6 +5,12 @@ type ElementColours = {
   headerColour: string;
   buttonColour: string;
 }
+
+/**
+ * Generates a test suite to validate that HTML, JS and CSS are loaded in correctly
+ * @param {string} title - The title of the application.
+ * @param {ElementColours} colours - The colours of the header and button elements.
+ */
 export const genericTests = (title: string, {headerColour, buttonColour}: ElementColours) => {
   test("Index HTML Loaded", async ({ page }) => {
     await page.goto("/");
@@ -35,6 +41,36 @@ export const genericTests = (title: string, {headerColour, buttonColour}: Elemen
   });
 }
 
+/**
+ * Generates a test to validate CSP policy in the meta tag.
+ * @param {string} expectedPolicy - The expected CSP policy string to validate (ignoring SHA-256 hashes).
+ */
+export const cspGenerationTest = (expectedPolicy: string) => {
+  test(`CSP validation`, async ({ page }) => {
+    await page.goto("/");
+
+    // Get the CSP meta tag content
+    const metaTag = page.locator('meta[http-equiv="Content-Security-Policy"]');
+    const content = await metaTag.getAttribute('content');
+
+    // Remove all SHA-256 hashes from both the actual and expected policies
+    const normalizeCsp = (csp: string | null) =>
+      csp
+        ?.replace(/'sha256-[^']+'/g, '') // Remove SHA-256 hashes
+        .replace(/\s+/g, ' ') // Normalize whitespace
+        .trim();
+
+    const normalizedContent = normalizeCsp(content);
+    const normalizedExpectedPolicy = normalizeCsp(expectedPolicy);
+
+    // Validate that the normalized expected policy is part of the actual policy
+    expect(normalizedContent).toContain(normalizedExpectedPolicy);
+  });
+};
+
+/**
+ * Generates a test to validate that the Vite Logo is being loaded and not blocked by the CSP
+ */
 export const viteLogoTest = () => {
   test("Vite logo is loaded", async ({ page }) => {
     await page.goto("/");
@@ -45,6 +81,9 @@ export const viteLogoTest = () => {
   });
 }
 
+/**
+ * Generates a test to validate that JQuery is blocked by the CSP
+ */
 export const jQueryTest = () => {
 
   test("JQuery is blocked by CSP", async ({ page }) => {
@@ -69,6 +108,10 @@ export const jQueryTest = () => {
   });
 }
 
+/**
+ * Generates a test to validate that the override flag is working in the plugin
+ * @param title - The title of the application.
+ */
 export const overrideTest = (title: string) => {
 
   test("Override flag is working in plugin", async ({ page }) => {
@@ -88,6 +131,10 @@ export const overrideTest = (title: string) => {
 
 }
 
+/**
+ * Generate a test to validate that the inline script is blocked by the CSP
+ * @param title - The title of the application.
+ */
 export const inlineScriptBlockedTest = (title: string) => {
 
   test("Inline script is blocked by CSP", async ({ page }) => {

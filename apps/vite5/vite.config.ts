@@ -17,6 +17,7 @@ export default defineConfig({
         "connect-src": ["*"],
         "object-src": ["'none'"],
       },
+      override: true,
     }) as PluginOption // Needed due to pnpm different dependency versions for Vite,
   ],
   preview: {

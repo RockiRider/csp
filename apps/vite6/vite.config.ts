@@ -17,8 +17,6 @@ export default defineConfig({
         "connect-src": ["*"],
         "object-src": ["'none'"],
         "img-src": ["'self'","https://placehold.co/600x400", "data:"],
-        // "style-src": ["'self'", "'unsafe-inline'"],
-        // "script-src": ["'self'", "'unsafe-inline'"],
       },
       override: true
     }) as PluginOption // Needed due to pnpm different dependency versions for Vite,
