@@ -12,12 +12,12 @@
     "dependencies": {
         "copy-to-clipboard": "^3.3.3",
         "framer-motion": "^11.15.0",
-        "next": "latest",
+        "next": "^14.0.0",
         "next-sitemap": "^4.2.3",
         "nextra": "^2.13.3",
         "nextra-theme-docs": "^2.13.3",
-        "react": "latest",
-        "react-dom": "latest"
+        "react": "^18.0.2",
+        "react-dom": "^18.0.2"
     },
     "devDependencies": {
         "@types/node": "latest",

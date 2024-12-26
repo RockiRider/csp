@@ -12,8 +12,9 @@
     "vue": "^3.4.31"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.5",
-    "vite": "^5.3.4",
+    "@repo/eslint-config": "workspace:^",
+    "@repo/tests": "workspace:^",
+    "@vitejs/plugin-vue": "^5.2.1",
     "vue-tsc": "^2.0.24",
     "vite-plugin-csp-guard": "workspace:^"
   }

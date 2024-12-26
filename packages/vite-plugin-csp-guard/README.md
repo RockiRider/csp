@@ -1,5 +1,14 @@
 # Vite Plugin CSP Guard
 
+<!-- BEGIN BADGES -->
+[![npm version](https://img.shields.io/npm/v/vite-plugin-csp-guard)](https://www.npmjs.com/package/vite-plugin-csp-guard)
+[![npm downloads](https://img.shields.io/npm/dt/vite-plugin-csp-guard)](https://www.npmjs.com/package/vite-plugin-csp-guard)
+[![npm weekly downloads](https://img.shields.io/npm/dw/vite-plugin-csp-guard)](https://www.npmjs.com/package/vite-plugin-csp-guard)
+[![License](https://img.shields.io/npm/l/vite-plugin-csp-guard)](https://github.com/yourusername/vite-plugin-csp-guard/blob/main/LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/RockiRider/csp/ci.yml)](https://github.com/RockiRider/csp/actions)
+[![GitHub stars](https://img.shields.io/github/stars/RockiRider/csp?style=social)](https://github.com/RockiRider/csp)
+<!-- END BADGES -->
+
 This is a well tested Vite Plugin that allows you to declare your Content Security Policy (CSP) for your Vite project. First class support for SPA's
 
 ## Documentation

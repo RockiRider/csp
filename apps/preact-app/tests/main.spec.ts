@@ -1,27 +1,8 @@
-import { test, expect } from "@playwright/test";
+import { genericTests, viteLogoTest } from '@repo/tests';
 
 const TITLE = "Vite + Preact";
+const HEADER_COLOUR = "rgb(33, 53, 71)"
+const BTN_COLOUR = "rgb(103, 58, 184)"
 
-test("Index HTML Loaded", async ({ page }) => {
-  await page.goto("/");
-  await expect(page).toHaveTitle(TITLE);
-});
-
-test("Loaded main JS script", async ({ page }) => {
-  await page.goto("/");
-  await expect(page.locator(`text=${TITLE}`)).toBeVisible();
-});
-
-test("Loaded CSS Styles", async ({ page }) => {
-  await page.goto("/");
-
-  const element = page.getByRole("heading", { name: TITLE });
-  const button = page.getByRole("button", { name: "count is" });
-  await expect(element).toBeVisible();
-
-  const color = await button.evaluate(
-    (el) => window.getComputedStyle(el).backgroundColor
-  );
-
-  expect(color).toBe("rgb(103, 58, 184)");
-});
+genericTests(TITLE, {headerColour: HEADER_COLOUR, buttonColour: BTN_COLOUR})
+viteLogoTest();

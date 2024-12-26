@@ -1,28 +1,9 @@
-import { test, expect } from "@playwright/test";
+import { genericTests, viteLogoTest, } from '@repo/tests';
 
 const TITLE = "Vite + Vue";
 
-test("Index HTML Loaded", async ({ page }) => {
-  await page.goto("/");
-  await expect(page).toHaveTitle(TITLE);
-});
+const BTN_COLOUR = "rgb(66, 184, 131)"
+const HEADER_COLOR = "rgb(33, 53, 71)"
 
-test("Loaded main JS script", async ({ page }) => {
-  await page.goto("/");
-  await expect(page.locator(`text=${TITLE}`)).toBeVisible();
-});
-
-test("Loaded CSS Styles", async ({ page }) => {
-  await page.goto("/");
-
-  const element = page.getByRole("heading", { name: TITLE });
-
-  const button = page.getByRole("button", { name: "count is" });
-  await expect(element).toBeVisible();
-
-  const color = await button.evaluate(
-    (el) => window.getComputedStyle(el).backgroundColor
-  );
-
-  expect(color).toBe("rgb(66, 184, 131)");
-});
+genericTests(TITLE, {headerColour: HEADER_COLOR, buttonColour: BTN_COLOUR})
+viteLogoTest()

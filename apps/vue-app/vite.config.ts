@@ -5,11 +5,11 @@ import csp from "vite-plugin-csp-guard";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
+    vue() as PluginOption,
     csp({
       dev: { run: true, outlierSupport: ["vue"] },
       build: { hash: true },
-    }) as PluginOption, //This is a type assertion due to a monorepo issue regarding stylus, this is not needed in a normal project
+    }),
   ],
   preview: {
     port: 4007,

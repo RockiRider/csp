@@ -4,7 +4,7 @@ import csp from "vite-plugin-csp-guard";
 
 export default defineConfig({
   plugins: [
-    solid(),
+    solid() as PluginOption,
     csp({ dev: { run: true }, build: { hash: true } }) as PluginOption,
   ],
   preview: {
