@@ -17,8 +17,7 @@ jobs:
         run: |
           chmod +x ./scripts/packages-to-release.sh
           packages=$(./scripts/packages-to-release.sh)
-          echo "packages=$packages" >> $GITHUB_ENV
-          echo "::set-output name=packages::$(echo $packages)"
+          echo "packages=$packages" >> $GITHUB_OUTPUT
 
   build_and_test:
     name: "Build and Test"
@@ -41,7 +40,7 @@ jobs:
         id: get_package_path
         run: |
           package_path=$(./scripts/get-package-path.sh ${{ matrix.package }})
-          echo "PACKAGE_PATH=$package_path" >> $GITHUB_ENV
+          echo "PACKAGE_PATH=$package_path" >> $GITHUB_OUTPUT
 
       - name: Build package
         run: pnpm p:build # Builds all packages
@@ -96,7 +95,7 @@ jobs:
         id: get_package_path
         run: |
           package_path=$(./scripts/get-package-path.sh ${{ matrix.package }})
-          echo "PACKAGE_PATH=$package_path" >> $GITHUB_ENV
+          echo "PACKAGE_PATH=$package_path" >> $GITHUB_OUTPUT
 
       - name: Download production artifacts
         uses: actions/download-artifact@v4
