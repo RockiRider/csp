@@ -13,6 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Debug directory structure
+        run: ls -R .github
+
       - name: Set up environment
         uses: ./.github/actions/setup-env
         with:
@@ -89,7 +92,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Set up environment
         uses: ./.github/actions/setup-env
         with:
