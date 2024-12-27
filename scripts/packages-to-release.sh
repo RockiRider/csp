@@ -4,7 +4,7 @@
 DISALLOWED_PACKAGES=("@repo/eslint-config" "@repo/tests" "@repo/typescript-config")
 
 # Get changed packages using Turbo
-CHANGED_PACKAGES=$(turbo build \
+CHANGED_PACKAGES=$(pnpm exec turbo build \
   --filter="./packages/*" \
   --filter='!./apps/*' \
   --filter='[HEAD^1]' \
