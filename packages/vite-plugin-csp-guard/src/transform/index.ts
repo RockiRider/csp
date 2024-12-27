@@ -2,7 +2,6 @@ import { IndexHtmlTransformContext, ViteDevServer } from "vite";
 import { addHash, generateHash } from "../policy/core";
 import {
   BundleContext,
-  CSPPolicy,
   HashAlgorithms,
   HashCollection,
   ShouldSkip,
@@ -13,6 +12,7 @@ import { PluginContext } from "rollup";
 import { generatePolicyString, policyToTag } from "../policy/createPolicy";
 import { cssFilter, jsFilter, preCssFilter, tsFilter } from "../utils";
 import { getCSS } from "../css/extraction";
+import { CSPPolicy } from "csp-toolkit";
 
 export interface TransformHandlerProps {
   code: string;

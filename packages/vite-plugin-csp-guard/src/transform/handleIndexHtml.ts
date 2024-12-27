@@ -1,13 +1,13 @@
 import * as cheerio from "cheerio";
 import {
   BundleContext,
-  CSPPolicy,
   HashAlgorithms,
   HashCollection,
 } from "../types";
 import { addHash, generateHash, warnMissingPolicy } from "../policy/core";
 import { PluginContext } from "rollup";
 import { extractAssetPath } from "../utils";
+import { CSPPolicy } from "csp-toolkit";
 
 /**
  * TODO: Support correct warning logging of truly external scripts and styles.

@@ -6,7 +6,8 @@
     },
     "description": "",
     "scripts": {
-      "build": "rollup -c"
+      "build": "rollup -c",
+      "test": "vitest"
     },
     "repository": {
       "type": "git",
@@ -34,17 +35,19 @@
       "@rollup/plugin-terser": "^0.4.4",
       "@rollup/plugin-typescript": "^11.1.6",
       "@types/node": "^20.14.2",
-      "rollup": "^4.18.0"
+      "rollup": "^4.18.0",
+      "vitest": "^1.6.0"
     },
     "files": [
       "dist",
       "LICENSE"
     ],
     "keywords": [
-      "frontend",
       "csp",
       "security",
-      "content-security-policy"
+      "content-security-policy",
+      "types",
+      "toolkit"
     ]
   }
   

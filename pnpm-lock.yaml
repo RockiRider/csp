@@ -840,6 +840,9 @@ importers:
       rollup:
         specifier: ^4.18.0
         version: 4.18.1
+      vitest:
+        specifier: ^1.6.0
+        version: 1.6.0(@types/node@20.14.11)
 
   packages/eslint-config:
     devDependencies:

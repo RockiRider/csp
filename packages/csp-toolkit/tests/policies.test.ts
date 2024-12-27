@@ -1,8 +1,13 @@
 import { describe, expect, test } from "vitest";
 import { CSPPolicy } from "../src/types";
-import { DEFAULT_POLICY } from "../src/policy/constants";
-import { mergePolicies } from "../src/policy/core";
-import { createPolicy } from "../src/policy/createPolicy";
+import { mergePolicies, policyToString } from "../src/core";
+
+export const DEFAULT_POLICY: CSPPolicy = {
+  "default-src": ["'self'"],
+  "img-src": ["'self'", "data:"],
+  "script-src-elem": ["'self'"],
+  "style-src-elem": ["'self'"],
+};
 
 describe("Policy Merging", () => {
   test("Simple Policy Merge", () => {
@@ -51,7 +56,7 @@ describe("Policy Merging", () => {
 describe("Policy Creation", () => {
   test("Empty Policy", () => {
     const policy: CSPPolicy = {};
-    const result = createPolicy(policy);
+    const result = policyToString(policy);
     expect(result).toBe("");
   });
 
@@ -59,7 +64,7 @@ describe("Policy Creation", () => {
     const policy: CSPPolicy = {
       "default-src": ["'self'"],
     };
-    const result = createPolicy(policy);
+    const result = policyToString(policy);
     expect(result).toBe(" default-src 'self';");
   });
 
@@ -67,7 +72,7 @@ describe("Policy Creation", () => {
     const policy: CSPPolicy = {
       "script-src": ["'self'", "sha256-abc123"],
     };
-    const result = createPolicy(policy);
+    const result = policyToString(policy);
     expect(result).toBe(" script-src 'self' 'sha256-abc123';");
   });
 
@@ -75,7 +80,7 @@ describe("Policy Creation", () => {
     const policy: CSPPolicy = {
       "default-src": ["*"],
     };
-    const result = createPolicy(policy);
+    const result = policyToString(policy);
     expect(result).toBe(" default-src *;");
   });
 
@@ -83,7 +88,7 @@ describe("Policy Creation", () => {
     const policy: CSPPolicy = {
       "img-src": ["data:"],
     };
-    const result = createPolicy(policy);
+    const result = policyToString(policy);
     expect(result).toBe(" img-src data:;");
   });
 
@@ -92,7 +97,7 @@ describe("Policy Creation", () => {
       "default-src": ["'self'", "*"],
       "img-src": ["'self'", "data:"],
     };
-    const result = createPolicy(policy);
+    const result = policyToString(policy);
     expect(result).toBe(" default-src 'self' *; img-src 'self' data:;");
   });
 });

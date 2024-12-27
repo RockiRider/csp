@@ -1,5 +1,4 @@
 import {
-  CSPPolicy,
   HashAlgorithms,
   HashCollection,
   HashCollectionKey,
@@ -10,6 +9,7 @@ import {
 } from "../types";
 import crypto from "crypto";
 import { isExternalSource, isSourceInPolicy } from "../utils";
+import { CSPPolicy } from "csp-toolkit";
 
 /**
  * Used for hash data storage
@@ -71,38 +71,6 @@ export const overrideChecker = ({
   return true;
 };
 
-export const mergePolicies = (
-  basePolicy: CSPPolicy,
-  newPolicy: CSPPolicy | undefined,
-  shouldOverride: boolean
-): CSPPolicy => {
-  const newPolicyExists = newPolicy && Object.keys(newPolicy).length > 0;
-
-  if (shouldOverride) {
-    return newPolicy as CSPPolicy;
-  }
-  if (!newPolicyExists) return basePolicy;
-
-  const mergedPolicy: CSPPolicy = { ...basePolicy };
-
-  for (const key in newPolicy as CSPPolicy) {
-    const _key = key as keyof CSPPolicy;
-    if (newPolicy.hasOwnProperty(key)) {
-      const defaultValues = basePolicy[_key] || [];
-      const userValues = newPolicy[_key] || [];
-
-      if (Array.isArray(userValues)) {
-        mergedPolicy[_key] = Array.from(
-          new Set([...defaultValues, ...userValues])
-        );
-      } else {
-        mergedPolicy[_key] = userValues;
-      }
-    }
-  }
-
-  return mergedPolicy;
-};
 
 export const warnMissingPolicy = ({
   currentPolicy,

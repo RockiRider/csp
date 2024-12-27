@@ -1,20 +1,6 @@
 import { HtmlTagDescriptor } from "vite";
-import { CSPPolicy, HashCollection } from "../types";
-
-export const createPolicy = (policy: CSPPolicy): string => {
-  return Object.keys(policy).reduce((acc, key) => {
-    const policyValue = policy[key as keyof CSPPolicy];
-    if (!policyValue?.length) return acc;
-    const policyValueStr = policyValue
-      .map((v) => {
-        // Check if the value starts with "sha" and enclose it in single quotes if it does.
-        if (v.startsWith("sha")) return `'${v}'`;
-        else return v;
-      })
-      .join(" ");
-    return `${acc} ${key} ${policyValueStr};`;
-  }, "");
-};
+import { HashCollection } from "../types";
+import { policyToString, CSPPolicy} from "csp-toolkit";
 
 type GeneratePolicyProps = {
   policy: CSPPolicy;
@@ -44,7 +30,7 @@ export const generatePolicyString = ({
     }
   }
   // Create the policy string
-  const policyString = createPolicy(finalPolicy);
+  const policyString = policyToString(finalPolicy);
 
   return policyString;
 };
