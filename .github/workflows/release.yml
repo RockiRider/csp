@@ -12,9 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Debug directory structure
-        run: ls -R .github
+        with:
+          fetch-depth: 0  # Fetch the full history to ensure HEAD^1 is available
 
       - name: Set up environment
         uses: ./.github/actions/setup-env
@@ -38,6 +37,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch the full history to ensure HEAD^1 is available
 
       - name: Set up environment
         uses: ./.github/actions/setup-env
@@ -92,6 +93,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch the full history to ensure HEAD^1 is available
 
       - name: Set up environment
         uses: ./.github/actions/setup-env
