@@ -3,7 +3,11 @@
 # Inputs
 from=$1
 to=$2
-packages=$3
+packages_input=$3
+
+# Parse the input string into a JSON array using jq
+# The input should already be a valid JSON string representing an array
+packages=$(echo "$packages_input" | jq -r '.[]')
 
 # Filter changed packages
 changed_packages=()
@@ -15,8 +19,9 @@ for package in $packages; do
   # Check if the path exists
   if [[ -d "$PACKAGE_PATH" ]]; then
     # Check for version changes in the package.json
-    diff_output=$(git diff --unified=0 --no-prefix --color=never --output-indicator-new=~ "$from".."$to" -- "$PACKAGE_PATH/package.json" | grep "^[~]" || true)
-
+    diff_output=$(git diff "$from".."$to" -- "$PACKAGE_PATH/package.json" || true)
+    
+    # Check if the diff contains a version change
     if [[ $diff_output == *"\"version\":"* ]]; then
       changed_packages+=("$package")
     fi
@@ -24,4 +29,4 @@ for package in $packages; do
 done
 
 # Output the changed packages as a JSON array
-printf '%s\n' "${changed_packages[@]}" | jq -R -s 'split("\n") | map(select(. != ""))'
+echo "${changed_packages[@]}" | jq -R 'split(" ") | map(select(length > 0)) | @json' | jq -r .
