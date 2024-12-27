@@ -1,45 +1,27 @@
 #!/bin/bash
 
 select_package() {
-  echo "Select a package to release:"
-  options=("vite-plugin-csp-guard" "csp-toolkit" "Quit")
-  select package in "${options[@]}"; do
-    case $package in
-      "vite-plugin-csp-guard"|"csp-toolkit")
-        echo "Selected package: $package"
-        PACKAGE_NAME=$package
-        break
-        ;;
-      "Quit")
-        echo "Exiting."
-        exit 0
-        ;;
-      *)
-        echo "Invalid option. Try again."
-        ;;
-    esac
-  done
+  echo "Enter the package to release (e.g., vite-plugin-csp-guard or csp-toolkit):"
+  read -r PACKAGE_NAME
+  if [[ "$PACKAGE_NAME" != "vite-plugin-csp-guard" && "$PACKAGE_NAME" != "csp-toolkit" ]]; then
+    echo "Invalid package. Exiting."
+    exit 1
+  fi
+  echo "Selected package: $PACKAGE_NAME"
 }
 
 select_version() {
-  echo "Select version type:"
-  options=("major" "minor" "patch" "beta" "alpha" "Quit")
-  select version in "${options[@]}"; do
-    case $version in
-      "major"|"minor"|"patch"|"beta"|"alpha")
-        echo "Selected version: $version"
-        SEMVER=$version
-        break
-        ;;
-      "Quit")
-        echo "Exiting."
-        exit 0
-        ;;
-      *)
-        echo "Invalid option. Try again."
-        ;;
-    esac
-  done
+  echo "Enter the version type (major, minor, patch, beta, alpha):"
+  read -r SEMVER
+  case $SEMVER in
+    "major"|"minor"|"patch"|"beta"|"alpha")
+      echo "Selected version: $SEMVER"
+      ;;
+    *)
+      echo "Invalid version type. Exiting."
+      exit 1
+      ;;
+  esac
 }
 
 check_branch() {
@@ -103,6 +85,7 @@ run_deploy() {
 }
 
 main() {
+  check_branch
   select_package
   select_version
   run_deploy
