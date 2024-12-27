@@ -1,0 +1,31 @@
+name: "Setup Environment"
+description: "Sets up Node.js, PNPM, JQ, and TurboRepo"
+
+inputs:
+  node-version:
+    description: "Node.js version"
+    required: true
+    default: "20"
+
+runs:
+  using: "composite"
+  steps:
+    # - name: Checkout code
+    #   uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Enable Corepack
+      run: corepack enable
+      shell: bash
+
+    - name: Install PNPM
+      run: pnpm install
+      shell: bash
+
+    - name: Install JQ
+      run: sudo apt-get install -y jq
+      shell: bash

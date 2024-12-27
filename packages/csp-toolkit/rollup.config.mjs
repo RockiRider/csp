@@ -18,7 +18,6 @@ export default defineConfig({
       sourcemap: false,
     },
   ],
-  external: ["lightningcss", "fsevents", "vite", "cheerio", "csp-toolkit"],
   plugins: [
     typescript({
       tsconfig: "tsconfig.json",

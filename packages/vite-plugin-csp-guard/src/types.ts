@@ -1,44 +1,5 @@
+import { CSPKeys, CSPPolicy } from "csp-toolkit";
 import { PluginContext } from "rollup";
-
-export type CSPKeys =
-  //Fetch directives
-  | "default-src"
-  | "script-src"
-  | "style-src"
-  | "connect-src"
-  | "object-src"
-  | "img-src"
-  | "frame-src"
-  | "child-src"
-  | "font-src"
-  | "manifest-src"
-  | "media-src"
-  | "object-src"
-  | "report-to"
-  | "sandbox"
-  | "script-src-attr"
-  | "script-src-elem"
-  | "style-src-attr"
-  | "style-src-elem"
-  | "upgrade-insecure-requests"
-  | "worker-src"
-  | "fenced-frame-src"
-  //Document directives
-  | "base-uri"
-  | "sandbox"
-  //Navigation directives
-  | "form-action"
-  | "frame-ancestors"
-  //Reporting directives
-  | "report-to"
-  //Other directives
-  | "require-trusted-types-for"
-  | "trusted-types"
-  | "upgrade-insecure-requests";
-
-export type CSPPolicy = Partial<{
-  [n in CSPKeys]: string[];
-}>;
 
 export type HashAlgorithms = "sha256" | "sha384" | "sha512";
 

@@ -5,7 +5,6 @@ import { DEFAULT_DEV_POLICY, DEFAULT_POLICY } from "./policy/constants";
 import {
   calculateSkip,
   createNewCollection,
-  mergePolicies,
   overrideChecker,
 } from "./policy/core";
 import { transformHandler, transformIndexHtmlHandler } from "./transform";
@@ -18,6 +17,7 @@ import {
 } from "./utils";
 import { unstable_handleModuleParsed } from "./css";
 import { FEATURE_FLAGS } from "./constants";
+import { mergePolicies } from "csp-toolkit";
 
 export default function vitePluginCSP(
   options: MyPluginOptions | undefined = {}

@@ -1,0 +1,53 @@
+{
+    "name": "csp-toolkit",
+    "version": "1.0.1",
+    "author": {
+      "name": "Tsotne Gvadzabia"
+    },
+    "description": "A comprehensive toolkit for working with Content Security Policy (CSP) directives in TypeScript.",
+    "scripts": {
+      "build": "rollup -c",
+      "test": "vitest"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/RockiRider/csp",
+      "directory": "packages/csp-toolkit"
+    },
+    "license": "GPL-3.0-only",
+    "main": "dist/index.cjs.js",
+    "module": "dist/index.esm.js",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "require": "./dist/index.cjs.js",
+        "import": "./dist/index.esm.js"
+      }
+    },
+    "types": "dist/index.d.ts",
+    "typings": "dist/index.d.ts",
+    "type": "module",
+    "devDependencies": {
+      "@repo/eslint-config": "workspace:^",
+      "@repo/typescript-config": "workspace:^",
+      "@rollup/plugin-commonjs": "^26.0.1",
+      "@rollup/plugin-node-resolve": "^15.2.3",
+      "@rollup/plugin-terser": "^0.4.4",
+      "@rollup/plugin-typescript": "^11.1.6",
+      "@types/node": "^20.14.2",
+      "rollup": "^4.18.0",
+      "vitest": "^1.6.0"
+    },
+    "files": [
+      "dist",
+      "LICENSE"
+    ],
+    "keywords": [
+      "csp",
+      "security",
+      "content-security-policy",
+      "types",
+      "toolkit"
+    ]
+  }
+  

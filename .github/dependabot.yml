@@ -22,6 +22,7 @@ updates:
       prefix-development: "chore"
     ignore:
       - dependency-name: "typescript"
+      - dependency-name: "vite"
 
   - package-ecosystem: "npm"
     directories:
