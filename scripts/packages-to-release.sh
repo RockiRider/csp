@@ -19,4 +19,4 @@ for package in $CHANGED_PACKAGES; do
 done
 
 # Join the array into a space-separated string, then use jq to create a JSON array
-echo "${ALLOWED_CHANGED_PACKAGES[@]}" | jq -R 'split(" ") | map(select(length > 0))'
+echo "${ALLOWED_CHANGED_PACKAGES[@]}" | jq -R 'split(" ") | map(select(length > 0)) | @json' | jq -r .
