@@ -10,7 +10,10 @@ jobs:
     outputs:
       packages: ${{ steps.get_packages.outputs.packages }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Set up environment
+        uses: ./.github/actions/setup-environment
+        with:
+          node-version: "20"   # Specify the Node.js version
 
       - name: Get list of packages
         id: get_packages
@@ -27,14 +30,10 @@ jobs:
       matrix:
         package: ${{ fromJson(needs.get_packages.outputs.packages) }}
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - name: Set up environment
+        uses: ./.github/actions/setup-environment
         with:
-          node-version: "20"
-
-      - run: corepack enable
-      - run: pnpm install
+          node-version: "20"   # Specify the Node.js version
 
       - name: Get package path
         id: get_package_path
@@ -82,15 +81,11 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - name: Set up environment
+        uses: ./.github/actions/setup-environment
         with:
-          node-version: "20"
-
-      - run: corepack enable
-      - run: pnpm install
-
+          node-version: "20"   # Specify the Node.js version
+          
       - name: Get package path
         id: get_package_path
         run: |
