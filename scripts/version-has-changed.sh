@@ -9,13 +9,13 @@ packages=$3
 changed_packages=()
 
 for package in $packages; do
-  # Get the package path (assumes get-package-path.sh returns the path)
-  path=$(./scripts/get-package-path.sh "$package")
+  # Get the package path using pnpm
+  PACKAGE_PATH=$(pnpm list --depth=-1 --json -r | jq -r --arg PACKAGE_NAME "$package" '.[] | select(.name == $PACKAGE_NAME) | .path')
 
   # Check if the path exists
-  if [[ -d "$path" ]]; then
+  if [[ -d "$PACKAGE_PATH" ]]; then
     # Check for version changes in the package.json
-    diff_output=$(git diff --unified=0 --no-prefix --color=never --output-indicator-new=~ "$from".."$to" -- "$path/package.json" | grep "^[~]" || true)
+    diff_output=$(git diff --unified=0 --no-prefix --color=never --output-indicator-new=~ "$from".."$to" -- "$PACKAGE_PATH/package.json" | grep "^[~]" || true)
 
     if [[ $diff_output == *"\"version\":"* ]]; then
       changed_packages+=("$package")

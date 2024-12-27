@@ -1,7 +1,7 @@
 name: "Release"
 on:
   push:
-    branches: [main]
+    branches: [fix/release-get-packages]
 
 jobs:
   get_packages:
@@ -25,7 +25,6 @@ jobs:
         run: |
           chmod +x ./scripts/version-has-changed.sh
           chmod +x ./scripts/packages-to-release.sh
-          chmod +x ./scripts/get-package-path.sh
           packages=$(./scripts/packages-to-release.sh)
           changed_packages=$(./scripts/version-has-changed.sh HEAD^1 HEAD "$packages")
           echo "changed_packages=$changed_packages" >> $GITHUB_OUTPUT
