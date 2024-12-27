@@ -1,30 +1,60 @@
 name: "Release"
 on:
   push:
-    branches: [main]
+    branches: [feat/csp-toolkit]
 
 jobs:
+  get_packages:
+    name: "Get Packages to Release"
+    runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.get_packages.outputs.packages }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get list of packages
+        id: get_packages
+        run: |
+          packages=$(./scripts/packages-to-release.sh)
+          echo "packages=$packages" >> $GITHUB_ENV
+          echo "::set-output name=packages::$(echo $packages)"
+
   build_and_test:
     name: "Build and Test"
     runs-on: ubuntu-latest
+    needs: get_packages  # Ensures this job runs after get_packages
+    strategy:
+      matrix:
+        package: ${{ fromJson(needs.get_packages.outputs.packages) }}
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+
       - run: corepack enable
       - run: pnpm install
-      - name: Build Vite-Plugin-CSP-Guard
-        run: pnpm p:build
+
+      - name: Get package path
+        id: get_package_path
+        run: |
+          package_path=$(./scripts/get-package-path.sh ${{ matrix.package }})
+          echo "PACKAGE_PATH=$package_path" >> $GITHUB_ENV
+
+      - name: Build package
+        run: pnpm --filter ${{ matrix.package }} p:build
+
       - name: Archive production artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: package-dist
+          name: package-dist-${{ matrix.package }}
           retention-days: 30
-          path: packages/vite-plugin-csp-guard/dist
+          path: ${{ steps.get_package_path.outputs.PACKAGE_PATH }}/dist
+
       - name: Run Unit Tests
-        run: pnpm p:test
+        run: pnpm --filter ${{ matrix.package }} p:test
 
       - name: Build Apps
         run: pnpm build
@@ -34,37 +64,51 @@ jobs:
 
       - name: Run tests
         run: pnpm test
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.package }}
           path: playwright-report/
           retention-days: 5
 
   publish:
     runs-on: ubuntu-latest
-    needs: build_and_test
+    needs: [get_packages, build_and_test]
+    strategy:
+      matrix:
+        package: ${{ fromJson(needs.get_packages.outputs.packages) }}
     name: "Publish"
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+
       - run: corepack enable
       - run: pnpm install
+
+      - name: Get package path
+        id: get_package_path
+        run: |
+          package_path=$(./scripts/get-package-path.sh ${{ matrix.package }})
+          echo "PACKAGE_PATH=$package_path" >> $GITHUB_ENV
+
       - name: Download production artifacts
         uses: actions/download-artifact@v4
         with:
-          name: package-dist
-          path: packages/vite-plugin-csp-guard/dist
+          name: package-dist-${{ matrix.package }}
+          path: ${{ steps.get_package_path.outputs.PACKAGE_PATH }}/dist
 
       - uses: JS-DevTools/npm-publish@v3
         id: publish
         with:
           token: ${{ secrets.NPM_AUTH_TOKEN }}
-          package: packages/vite-plugin-csp-guard
+          package: ${{ steps.get_package_path.outputs.PACKAGE_PATH }}
+          dry-run: true
 
       - name: Bump version and push tag
         if: ${{ steps.publish.outputs.type }}
@@ -72,8 +116,8 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          custom_tag: v${{steps.publish.outputs.version}}
-          tag_prefix: vite-plugin-csp-guard_
+          custom_tag: v${{ steps.publish.outputs.version }}
+          tag_prefix: ${{ matrix.package }}_
 
       - name: Create a GitHub release
         if: ${{ steps.publish.outputs.type }}
