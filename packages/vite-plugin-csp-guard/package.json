@@ -48,7 +48,7 @@
     "estree-walker": "^3.0.3",
     "rollup": "^4.28.1",
     "vite": "6.0.4",
-    "vitest": "^1.6.0"
+    "vitest": "^2.1.8"
   },
   "dependencies": {
     "cheerio": "^1.0.0",
