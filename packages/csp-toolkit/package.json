@@ -1,10 +1,10 @@
 {
     "name": "csp-toolkit",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": {
       "name": "Tsotne Gvadzabia"
     },
-    "description": "",
+    "description": "A comprehensive toolkit for working with Content Security Policy (CSP) directives in TypeScript.",
     "scripts": {
       "build": "rollup -c",
       "test": "vitest"
