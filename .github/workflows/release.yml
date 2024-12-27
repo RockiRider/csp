@@ -121,7 +121,6 @@ jobs:
         with:
           token: ${{ secrets.NPM_AUTH_TOKEN }}
           package: ${{ steps.get_package_path.outputs.PACKAGE_PATH }}
-          dry-run: true
 
       - name: Bump version and push tag
         if: ${{ steps.publish.outputs.type }}
