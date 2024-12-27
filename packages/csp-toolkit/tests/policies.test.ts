@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { CSPPolicy } from "../src/types";
-import { mergePolicies, policyToString } from "../src/core";
+import { mergePolicies, policyToString } from "../src/";
 
 export const DEFAULT_POLICY: CSPPolicy = {
   "default-src": ["'self'"],

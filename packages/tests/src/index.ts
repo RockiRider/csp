@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-
+import {CSPPolicy, policyToString} from "csp-toolkit"
 
 type ElementColours = {
   headerColour: string;
@@ -43,9 +43,9 @@ export const genericTests = (title: string, {headerColour, buttonColour}: Elemen
 
 /**
  * Generates a test to validate CSP policy in the meta tag.
- * @param {string} expectedPolicy - The expected CSP policy string to validate (ignoring SHA-256 hashes).
+ * @param {CSPPolicy} expectedPolicy - The expected CSP policy string to validate (ignoring SHA-256 hashes).
  */
-export const cspGenerationTest = (expectedPolicy: string) => {
+export const cspGenerationTest = (expectedPolicy: CSPPolicy) => {
   test(`CSP validation`, async ({ page }) => {
     await page.goto("/");
 
@@ -60,8 +60,10 @@ export const cspGenerationTest = (expectedPolicy: string) => {
         .replace(/\s+/g, ' ') // Normalize whitespace
         .trim();
 
+    const policyString = policyToString(expectedPolicy)
+
     const normalizedContent = normalizeCsp(content);
-    const normalizedExpectedPolicy = normalizeCsp(expectedPolicy);
+    const normalizedExpectedPolicy = normalizeCsp(policyString);
 
     // Validate that the normalized expected policy is part of the actual policy
     expect(normalizedContent).toContain(normalizedExpectedPolicy);

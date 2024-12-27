@@ -866,6 +866,10 @@ importers:
         version: 1.1.0
 
   packages/tests:
+    dependencies:
+      csp-toolkit:
+        specifier: workspace:^
+        version: link:../csp-toolkit
     devDependencies:
       '@repo/typescript-config':
         specifier: workspace:^

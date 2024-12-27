@@ -25,6 +25,7 @@ export default {
   external: [
     'react',
     'vite',
-    "@playwright/test"
+    "@playwright/test",
+    "csp-toolkit"
   ],
 };
