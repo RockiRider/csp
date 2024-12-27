@@ -10,9 +10,6 @@ jobs:
     outputs:
       packages: ${{ steps.get_packages.outputs.packages }}
     steps:
-      - name: Debug directory structure
-        run: ls -R ./.github/actions
-
       - name: Set up environment
         uses: ./.github/actions/setup-env
         with:
