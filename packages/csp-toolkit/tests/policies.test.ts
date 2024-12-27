@@ -4,7 +4,7 @@ import { mergePolicies, policyToString } from "../src/core";
 
 export const DEFAULT_POLICY: CSPPolicy = {
   "default-src": ["'self'"],
-  "img-src": ["'self'", "data:"],
+  "img-src": ["'self'"],
   "script-src-elem": ["'self'"],
   "style-src-elem": ["'self'"],
 };
