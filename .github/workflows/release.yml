@@ -12,9 +12,9 @@ jobs:
     steps:
       - name: Debug directory structure
         run: ls -R ./.github/actions
-        
+
       - name: Set up environment
-        uses: ./.github/actions/setup-environment
+        uses: ./.github/actions/setup-env
         with:
           node-version: "20"   # Specify the Node.js version
 
@@ -34,7 +34,7 @@ jobs:
         package: ${{ fromJson(needs.get_packages.outputs.packages) }}
     steps:
       - name: Set up environment
-        uses: ./.github/actions/setup-environment
+        uses: ./.github/actions/setup-env
         with:
           node-version: "20"   # Specify the Node.js version
 
@@ -85,7 +85,7 @@ jobs:
       contents: write
     steps:
       - name: Set up environment
-        uses: ./.github/actions/setup-environment
+        uses: ./.github/actions/setup-env
         with:
           node-version: "20"   # Specify the Node.js version
 
