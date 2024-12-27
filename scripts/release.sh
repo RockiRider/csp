@@ -1,44 +1,71 @@
 #!/bin/bash
 
+# Dry-run flag (set to true for testing)
+DRY_RUN=false
+
 select_package() {
-  echo "Enter the package to release (e.g., vite-plugin-csp-guard or csp-toolkit):"
-  read -r PACKAGE_NAME
-  if [[ "$PACKAGE_NAME" != "vite-plugin-csp-guard" && "$PACKAGE_NAME" != "csp-toolkit" ]]; then
-    echo "Invalid package. Exiting."
-    exit 1
-  fi
-  echo "Selected package: $PACKAGE_NAME"
+  echo "Select a package to release:"
+  options=("vite-plugin-csp-guard" "csp-toolkit" "Quit")
+  PS3="Enter the number of your choice: "  # Prompt for the selection
+  select package in "${options[@]}"; do
+    case $package in
+      "vite-plugin-csp-guard"|"csp-toolkit")
+        echo "Selected package: $package"
+        PACKAGE_NAME=$package
+        break
+        ;;
+      "Quit")
+        echo "Exiting."
+        exit 0
+        ;;
+      *)
+        echo "Invalid option. Please try again."
+        ;;
+    esac
+  done
 }
 
 select_version() {
-  echo "Enter the version type (major, minor, patch, beta, alpha):"
-  read -r SEMVER
-  case $SEMVER in
-    "major"|"minor"|"patch"|"beta"|"alpha")
-      echo "Selected version: $SEMVER"
-      ;;
-    *)
-      echo "Invalid version type. Exiting."
-      exit 1
-      ;;
-  esac
+  echo "Select version type:"
+  options=("major" "minor" "patch" "beta" "alpha" "Quit")
+  PS3="Enter the number of your choice: "  # Prompt for the selection
+  select version in "${options[@]}"; do
+    case $version in
+      "major"|"minor"|"patch"|"beta"|"alpha")
+        echo "Selected version: $version"
+        SEMVER=$version
+        break
+        ;;
+      "Quit")
+        echo "Exiting."
+        exit 0
+        ;;
+      *)
+        echo "Invalid option. Please try again."
+        ;;
+    esac
+  done
 }
 
 check_branch() {
-  CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-  if [[ "$CURRENT_BRANCH" != "main" ]]; then
-    echo "Error: not on 'main' branch."
-    exit 1
-  fi
+  if [[ "$DRY_RUN" == false ]]; then
+    CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    if [[ "$CURRENT_BRANCH" != "main" ]]; then
+      echo "Error: not on 'main' branch."
+      exit 1
+    fi
 
-  if ! git diff-index --quiet HEAD --; then
-    echo "Error: There are uncommitted changes."
-    exit 1
-  fi
+    if ! git diff-index --quiet HEAD --; then
+      echo "Error: There are uncommitted changes."
+      exit 1
+    fi
 
-  if [ "$(git log origin/$CURRENT_BRANCH..HEAD)" != "" ]; then
-    echo "Error: There are unpushed commits."
-    exit 1
+    if [ "$(git log origin/$CURRENT_BRANCH..HEAD)" != "" ]; then
+      echo "Error: There are unpushed commits."
+      exit 1
+    fi
+  else
+    echo "Dry-run mode: Skipping Git checks."
   fi
 }
 
@@ -72,20 +99,40 @@ get_new_version() {
   echo "$VERSION"
 }
 
+create_release_branch() {
+  VERSION=$(get_new_version)
+  BRANCH_NAME="release/${PACKAGE_NAME}_${VERSION}"
+  
+  # Create a new branch and push it to remote
+  git checkout -b "$BRANCH_NAME"
+  git push origin "$BRANCH_NAME"
+  echo "Created new release branch: $BRANCH_NAME"
+}
+
 publish_package() {
-  cd "./packages/$PACKAGE_NAME" || exit
-  pnpm publish --access public
-  cd - || exit
+  if [[ "$DRY_RUN" == false ]]; then
+    if [[ "$SEMVER" == "beta" || "$SEMVER" == "alpha" ]]; then
+      # For pre-releases (beta/alpha), publish the package
+      cd "./packages/$PACKAGE_NAME" || exit
+      pnpm publish --access public
+      cd - || exit
+      echo "Package published."
+    else
+      # For stable versions, create a release branch and push it
+      create_release_branch
+    fi
+  else
+    echo "Dry-run mode: Skipping package publish and branch creation."
+  fi
 }
 
 run_deploy() {
-  check_branch
+  check_branch  # Skip this check if DRY_RUN is true
   update_version
   publish_package
 }
 
 main() {
-  check_branch
   select_package
   select_version
   run_deploy
