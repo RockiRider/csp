@@ -48,6 +48,7 @@ jobs:
       - name: Get package path
         id: get_package_path
         run: |
+          chmod +x ./scripts/get-package-path.sh  # Ensure the script is executable
           package_path=$(./scripts/get-package-path.sh ${{ matrix.package }})
           echo "PACKAGE_PATH=$package_path" >> $GITHUB_OUTPUT
 
@@ -104,6 +105,7 @@ jobs:
       - name: Get package path
         id: get_package_path
         run: |
+          chmod +x ./scripts/get-package-path.sh  # Ensure the script is executable
           package_path=$(./scripts/get-package-path.sh ${{ matrix.package }})
           echo "PACKAGE_PATH=$package_path" >> $GITHUB_OUTPUT
 
