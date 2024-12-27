@@ -12,11 +12,14 @@ for package in $packages; do
   # Get the package path (assumes get-package-path.sh returns the path)
   path=$(./scripts/get-package-path.sh "$package")
 
-  # Check for version changes in the package.json
-  diff_output=$(git diff --unified=0 --no-prefix --color=never --output-indicator-new=~ "$from".."$to" -- "$path/package.json" | grep "^[~]" || true)
+  # Check if the path exists
+  if [[ -d "$path" ]]; then
+    # Check for version changes in the package.json
+    diff_output=$(git diff --unified=0 --no-prefix --color=never --output-indicator-new=~ "$from".."$to" -- "$path/package.json" | grep "^[~]" || true)
 
-  if [[ $diff_output == *"\"version\":"* ]]; then
-    changed_packages+=("$package")
+    if [[ $diff_output == *"\"version\":"* ]]; then
+      changed_packages+=("$package")
+    fi
   fi
 done
 
