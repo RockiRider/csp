@@ -1,5 +1,12 @@
 import { CSPPolicy } from "../types";
 
+/**
+ * 
+ * @param basePolicy - Base Policy, used as a starting point
+ * @param newPolicy - New Policy, will be merged to the Base Policy
+ * @param shouldOverride - New Policy overrides the Base Policy
+ * @returns 
+ */
 export const mergePolicies = (
     basePolicy: CSPPolicy,
     newPolicy: CSPPolicy | undefined,
@@ -33,6 +40,12 @@ export const mergePolicies = (
     return mergedPolicy;
   };
 
+
+/**
+ * Transforms your policy into a csp string to be used in a meta tag or header
+ * @param policy
+ * @returns 
+ */
 export const policyToString = (policy: CSPPolicy): string => {
     return Object.keys(policy).reduce((acc, key) => {
         const policyValue = policy[key as keyof CSPPolicy];

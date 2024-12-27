@@ -15,3 +15,11 @@ A comprehensive toolkit for working with Content Security Policy (CSP) directive
 - Typed CSP Directives: Access categorized CSP directive types, including experimental, official, and navigation directives.
 - Utility Functions: Easily generate CSP key-value maps and convert them into string policies.
 - Extensible: Designed for flexibility and future expansion.
+
+## Usage
+
+```ts
+
+import {mergePolicies, CSPPolicy, policyToString} from "csp-toolkit"
+
+```
