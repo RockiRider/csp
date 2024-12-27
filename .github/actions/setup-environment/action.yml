@@ -1,5 +1,5 @@
 name: "Setup Environment"
-description: "Sets up Node.js, PNPM, JQ, and Turborepo"
+description: "Sets up Node.js, PNPM, JQ, and TurboRepo"
 
 inputs:
   node-version:
