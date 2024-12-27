@@ -34,5 +34,6 @@ runs:
       run: |
         # Set PNPM_HOME to a fixed directory to avoid interactive prompts
         export PNPM_HOME="$HOME/.pnpm-global"
+        export PATH="$PNPM_HOME/bin:$PATH"  # Add the global bin directory to PATH
         pnpm add -g turbo
       shell: bash
