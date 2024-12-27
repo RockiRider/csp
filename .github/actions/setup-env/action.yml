@@ -36,4 +36,6 @@ runs:
         export PNPM_HOME="$HOME/.pnpm-global"
         export PATH="$PNPM_HOME/bin:$PATH"  # Add the global bin directory to PATH
         pnpm add -g turbo
+        # Verify that turbo was installed correctly
+        turbo --version
       shell: bash
