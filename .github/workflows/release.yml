@@ -23,9 +23,9 @@ jobs:
       - name: Filter changed packages
         id: filter_packages
         run: |
-          chmod +x ./scripts/filter-changed-packages.sh
+          chmod +x ./scripts/version-has-changed.sh
           packages=$(./scripts/packages-to-release.sh)
-          changed_packages=$(./scripts/filter-changed-packages.sh HEAD^1 HEAD "$packages")
+          changed_packages=$(./scripts/version-has-changed.sh HEAD^1 HEAD "$packages")
           echo "changed_packages=$changed_packages" >> $GITHUB_OUTPUT
 
   build_and_test:
