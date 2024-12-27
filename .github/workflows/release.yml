@@ -15,6 +15,7 @@ jobs:
       - name: Get list of packages
         id: get_packages
         run: |
+          chmod +x ./scripts/packages-to-release.sh
           packages=$(./scripts/packages-to-release.sh)
           echo "packages=$packages" >> $GITHUB_ENV
           echo "::set-output name=packages::$(echo $packages)"
@@ -43,7 +44,7 @@ jobs:
           echo "PACKAGE_PATH=$package_path" >> $GITHUB_ENV
 
       - name: Build package
-        run: pnpm --filter ${{ matrix.package }} p:build
+        run: pnpm p:build # Builds all packages
 
       - name: Archive production artifacts
         if: always()
@@ -54,7 +55,7 @@ jobs:
           path: ${{ steps.get_package_path.outputs.PACKAGE_PATH }}/dist
 
       - name: Run Unit Tests
-        run: pnpm --filter ${{ matrix.package }} p:test
+        run: pnpm p:test # Tests all packages
 
       - name: Build Apps
         run: pnpm build
@@ -128,35 +129,35 @@ jobs:
           body: ${{ steps.tag_version.outputs.changelog }}
           generateReleaseNotes: true
 
-  build_docs:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-      - run: corepack enable
-      - run: pnpm install --filter docs
-      - name: Build Documentation Site
-        run: pnpm docs:build
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./apps/docs/out
+  # build_docs:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: "20"
+  #     - run: corepack enable
+  #     - run: pnpm install --filter docs
+  #     - name: Build Documentation Site
+  #       run: pnpm docs:build
+  #     - name: Upload artifact
+  #       uses: actions/upload-pages-artifact@v3
+  #       with:
+  #         path: ./apps/docs/out
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build_docs
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: build_docs
+  #   permissions:
+  #     contents: read
+  #     pages: write
+  #     id-token: write
+  #   environment:
+  #     name: github-pages
+  #     url: ${{ steps.deployment.outputs.page_url }}
+  #   steps:
+  #     - name: Deploy to GitHub Pages
+  #       id: deployment
+  #       uses: actions/deploy-pages@v4
