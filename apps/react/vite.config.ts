@@ -19,7 +19,6 @@ export default defineConfig({
       build: {
         sri: true
       },
-      override: true,
     }),
   ],
   preview: {
