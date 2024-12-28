@@ -13,6 +13,7 @@ import { generatePolicyString, policyToTag } from "../policy/createPolicy";
 import { cssFilter, jsFilter, preCssFilter, tsFilter } from "../utils";
 import { getCSS } from "../css/extraction";
 import { CSPPolicy } from "csp-toolkit";
+import { replaceVitePreload } from "./lazy";
 
 export interface TransformHandlerProps {
   code: string;
@@ -141,14 +142,12 @@ export const transformIndexHtmlHandler = async ({
       if (currentFile) {
         if (currentFile.type === "chunk" && !shouldSkip["script-src-elem"]) {
           let code = currentFile.code;
-          const hash = generateHash(code, algorithm);
-          if (code.includes("__VITE_PRELOAD__")) {
-            // For now lets just set a warning that they should turn build.hash to false, this means that they are using lazy loading.
-            // We can add a feature to handle this in the future
-            pluginContext?.warn(
-              "Please set build.hash to false if you are using lazy loading"
-            );
+          
+          if(code.includes("__VITE_PRELOAD__")) {
+            // If we have lazy loading, we need to replace the __VITE_PRELOAD__ with an empty array
+            code = replaceVitePreload(code);
           }
+          const hash = generateHash(code, algorithm);
           if (!collection["script-src-elem"].has(hash)) {
             addHash({
               hash,

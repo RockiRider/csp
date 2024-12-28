@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0",
-    "csp-toolkit": "workspace:^"
+    "csp-toolkit": "^1.1.0"
   },
   "files": [
     "dist",

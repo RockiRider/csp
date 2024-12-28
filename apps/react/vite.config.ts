@@ -17,7 +17,10 @@ export default defineConfig({
         "connect-src": ["*"],
         "object-src": ["'none'"],
       },
-      override: true,
+      build: {
+        hash: true
+      },
+      // override: true,
     }),
   ],
   preview: {
