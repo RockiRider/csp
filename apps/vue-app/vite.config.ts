@@ -8,7 +8,7 @@ export default defineConfig({
     vue() as PluginOption,
     csp({
       dev: { run: true, outlierSupport: ["vue"] },
-      build: { hash: true },
+      build: { sri: true },
     }),
   ],
   preview: {

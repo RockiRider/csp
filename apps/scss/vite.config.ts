@@ -12,7 +12,7 @@ export default defineConfig({
         outlierSupport: ["sass"],
       },
       build: {
-        hash: true,
+        sri: true,
       },
     })
   ],

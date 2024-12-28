@@ -71,6 +71,22 @@ export const cspGenerationTest = (expectedPolicy: CSPPolicy) => {
 };
 
 /**
+ * Generates a test to validate that SRI is enabled and working
+ */
+export const sriTest = () => {
+  test("SRI is enabled and working", async ({ page }) => {
+    await page.goto("/");
+
+    // Update the selector to match the actual script tag
+    const script = page.locator('script[src^="/assets/index-"]'); // Match script src that starts with "/assets/index-"
+    const integrity = await script.getAttribute("integrity");
+
+    // Check if the integrity attribute is not null, ensuring SRI is enabled
+    expect(integrity).not.toBe(null);
+  });
+};
+
+/**
  * Generates a test to validate that the Vite Logo is being loaded and not blocked by the CSP
  */
 export const viteLogoTest = () => {

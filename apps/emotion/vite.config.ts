@@ -15,7 +15,7 @@ export default defineConfig({
         "style-src-elem": ["'self'", "'unsafe-inline'"],
       },
       build: {
-        hash: true,
+        sri: true,
       },
     }),
   ],

@@ -18,7 +18,7 @@ export default {
         declaration: true,
         declarationDir: "dist",
         include: ["src/**/*.ts"],
-        sourceMap: false,
+        sourceMap: true,
       }
     ),
   ],
