@@ -18,7 +18,7 @@ export default defineConfig({
         "object-src": ["'none'"],
       },
       build: {
-        hash: true
+        sri: true
       },
       // override: true,
     }),

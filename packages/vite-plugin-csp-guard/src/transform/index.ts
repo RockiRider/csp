@@ -112,7 +112,7 @@ export interface TransformIndexHtmlHandlerProps {
   policy: CSPPolicy;
   pluginContext: PluginContext | undefined;
   isTransformationStatusEmpty: boolean;
-  isHashing: boolean;
+  sri: boolean;
   shouldSkip: ShouldSkip;
 }
 
@@ -124,7 +124,7 @@ export const transformIndexHtmlHandler = async ({
   collection,
   pluginContext,
   isTransformationStatusEmpty,
-  isHashing,
+  sri,
   shouldSkip,
 }: TransformIndexHtmlHandlerProps) => {
   if (isTransformationStatusEmpty && server) {
@@ -134,10 +134,9 @@ export const transformIndexHtmlHandler = async ({
 
   const bundleContext = {} as BundleContext;
 
-  if (bundle && isHashing) {
+  if (bundle && sri) {
     for (const fileName of Object.keys(bundle)) {
       const currentFile = bundle[fileName];
-      const isCss = cssFilter(fileName);
 
       if (currentFile) {
         if (currentFile.type === "chunk" && !shouldSkip["script-src-elem"]) {
@@ -165,25 +164,6 @@ export const transformIndexHtmlHandler = async ({
               };
             }
           }
-        }
-
-        if (
-          currentFile.type === "asset" &&
-          isCss &&
-          !shouldSkip["style-src-elem"]
-        ) {
-          const code = currentFile.source as string; // We know this is a string because of the cssFilter
-          const hash = generateHash(code, algorithm);
-          addHash({
-            hash,
-            key: "style-src-elem",
-            data: {
-              algorithm,
-              content: code,
-            },
-            collection: collection,
-          });
-          bundleContext[fileName] = { type: "asset", hash };
         }
       }
     }

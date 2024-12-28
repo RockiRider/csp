@@ -23,7 +23,7 @@ export type BuildOptions = {
    * Indicates whether to hash the application at build time.
    * @default false
    */
-  hash?: boolean;
+  sri?: boolean;
 };
 
 export type MyPluginOptions = {
