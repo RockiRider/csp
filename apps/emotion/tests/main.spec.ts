@@ -1,4 +1,4 @@
-import { genericTests, jQueryTest, viteLogoTest } from '@repo/tests';
+import { genericTests, jQueryTest, viteLogoTest } from '@repo/testing';
 
 const TITLE = "Vite + Emotion";
 const BTN_COLOUR = "rgb(255, 0, 0)"

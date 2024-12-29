@@ -13,6 +13,7 @@ import { generatePolicyString, policyToTag } from "../policy/createPolicy";
 import { cssFilter, jsFilter, preCssFilter, tsFilter } from "../utils";
 import { getCSS } from "../css/extraction";
 import { CSPPolicy } from "csp-toolkit";
+import { replaceVitePreload } from "./lazy";
 
 export interface TransformHandlerProps {
   code: string;
@@ -111,7 +112,7 @@ export interface TransformIndexHtmlHandlerProps {
   policy: CSPPolicy;
   pluginContext: PluginContext | undefined;
   isTransformationStatusEmpty: boolean;
-  isHashing: boolean;
+  sri: boolean;
   shouldSkip: ShouldSkip;
 }
 
@@ -123,7 +124,7 @@ export const transformIndexHtmlHandler = async ({
   collection,
   pluginContext,
   isTransformationStatusEmpty,
-  isHashing,
+  sri,
   shouldSkip,
 }: TransformIndexHtmlHandlerProps) => {
   if (isTransformationStatusEmpty && server) {
@@ -133,22 +134,19 @@ export const transformIndexHtmlHandler = async ({
 
   const bundleContext = {} as BundleContext;
 
-  if (bundle && isHashing) {
+  if (bundle && sri) {
     for (const fileName of Object.keys(bundle)) {
       const currentFile = bundle[fileName];
-      const isCss = cssFilter(fileName);
 
       if (currentFile) {
         if (currentFile.type === "chunk" && !shouldSkip["script-src-elem"]) {
           let code = currentFile.code;
-          const hash = generateHash(code, algorithm);
-          if (code.includes("__VITE_PRELOAD__")) {
-            // For now lets just set a warning that they should turn build.hash to false, this means that they are using lazy loading.
-            // We can add a feature to handle this in the future
-            pluginContext?.warn(
-              "Please set build.hash to false if you are using lazy loading"
-            );
+          
+          if(code.includes("__VITE_PRELOAD__")) {
+            // If we have lazy loading, we need to replace the __VITE_PRELOAD__ with an empty array
+            code = replaceVitePreload(code);
           }
+          const hash = generateHash(code, algorithm);
           if (!collection["script-src-elem"].has(hash)) {
             addHash({
               hash,
@@ -166,25 +164,6 @@ export const transformIndexHtmlHandler = async ({
               };
             }
           }
-        }
-
-        if (
-          currentFile.type === "asset" &&
-          isCss &&
-          !shouldSkip["style-src-elem"]
-        ) {
-          const code = currentFile.source as string; // We know this is a string because of the cssFilter
-          const hash = generateHash(code, algorithm);
-          addHash({
-            hash,
-            key: "style-src-elem",
-            data: {
-              algorithm,
-              content: code,
-            },
-            collection: collection,
-          });
-          bundleContext[fileName] = { type: "asset", hash };
         }
       }
     }

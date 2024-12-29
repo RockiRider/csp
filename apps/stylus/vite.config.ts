@@ -12,7 +12,7 @@ export default defineConfig({
         outlierSupport: ["stylus"],
       },
       build: {
-        hash: true,
+        sri: true,
       },
     }),
   ],

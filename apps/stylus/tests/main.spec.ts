@@ -1,4 +1,4 @@
-import { genericTests, viteLogoTest } from '@repo/tests';
+import { genericTests, viteLogoTest } from '@repo/testing';
 
 const TITLE = "Vite + Stylus";
 const BTN_COLOUR = "rgb(0, 123, 255)"

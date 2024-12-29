@@ -1,0 +1,12 @@
+# Upgrade to V2
+
+## Key changes:
+
+- Support for Vite 6
+- Full support for [SRI](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
+
+
+## Required changes
+
+Stop using `build.hash` inside your `vite.config.ts` this has been removed.
+Its instead been replaced by `build.sri`

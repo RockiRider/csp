@@ -13,11 +13,12 @@ export default defineConfig({
       },
       policy: {
         "font-src": ["https://fonts.gstatic.com"],
-        "script-src-elem": ["'self'"],
         "connect-src": ["*"],
         "object-src": ["'none'"],
       },
-      override: true,
+      build: {
+        sri: true
+      },
     }),
   ],
   preview: {

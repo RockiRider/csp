@@ -94,9 +94,9 @@ importers:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
     devDependencies:
-      '@repo/tests':
+      '@repo/testing':
         specifier: workspace:^
-        version: link:../../packages/tests
+        version: link:../../packages/testing
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
@@ -140,9 +140,9 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:^
         version: link:../../packages/eslint-config
-      '@repo/tests':
+      '@repo/testing':
         specifier: workspace:^
-        version: link:../../packages/tests
+        version: link:../../packages/testing
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
@@ -201,9 +201,9 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:^
         version: link:../../packages/eslint-config
-      '@repo/tests':
+      '@repo/testing':
         specifier: workspace:^
-        version: link:../../packages/tests
+        version: link:../../packages/testing
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
@@ -238,9 +238,9 @@ importers:
       '@preact/preset-vite':
         specifier: ^2.8.3
         version: 2.9.3(@babel/core@7.26.0)(preact@10.25.3)(vite@6.0.5(@types/node@22.10.2)(jiti@1.21.7)(less@4.2.1)(sass@1.83.0)(stylus@0.63.0)(terser@5.37.0)(yaml@2.6.1))
-      '@repo/tests':
+      '@repo/testing':
         specifier: workspace:^
-        version: link:../../packages/tests
+        version: link:../../packages/testing
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
@@ -260,9 +260,9 @@ importers:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
     devDependencies:
-      '@repo/tests':
+      '@repo/testing':
         specifier: workspace:^
-        version: link:../../packages/tests
+        version: link:../../packages/testing
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
@@ -391,9 +391,9 @@ importers:
       '@remix-run/dev':
         specifier: ^2.10.3
         version: 2.15.2(@remix-run/react@2.15.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2))(@remix-run/serve@2.15.2(typescript@5.7.2))(@types/node@22.10.2)(babel-plugin-macros@3.1.0)(less@4.2.1)(sass@1.83.0)(stylus@0.63.0)(terser@5.37.0)(typescript@5.7.2)(vite@5.3.1(@types/node@22.10.2)(less@4.2.1)(sass@1.83.0)(stylus@0.63.0)(terser@5.37.0))
-      '@repo/tests':
+      '@repo/testing':
         specifier: workspace:^
-        version: link:../../packages/tests
+        version: link:../../packages/testing
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
@@ -455,9 +455,9 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
     devDependencies:
-      '@repo/tests':
+      '@repo/testing':
         specifier: workspace:^
-        version: link:../../packages/tests
+        version: link:../../packages/testing
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
@@ -498,9 +498,9 @@ importers:
         specifier: ^1.8.18
         version: 1.9.3
     devDependencies:
-      '@repo/tests':
+      '@repo/testing':
         specifier: workspace:^
-        version: link:../../packages/tests
+        version: link:../../packages/testing
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
@@ -523,9 +523,9 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
     devDependencies:
-      '@repo/tests':
+      '@repo/testing':
         specifier: workspace:^
-        version: link:../../packages/tests
+        version: link:../../packages/testing
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
@@ -562,9 +562,9 @@ importers:
 
   apps/svelte-app:
     devDependencies:
-      '@repo/tests':
+      '@repo/testing':
         specifier: workspace:^
-        version: link:../../packages/tests
+        version: link:../../packages/testing
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
@@ -602,9 +602,9 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
     devDependencies:
-      '@repo/tests':
+      '@repo/testing':
         specifier: workspace:^
-        version: link:../../packages/tests
+        version: link:../../packages/testing
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
@@ -657,9 +657,9 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:^
         version: link:../../packages/eslint-config
-      '@repo/tests':
+      '@repo/testing':
         specifier: workspace:^
-        version: link:../../packages/tests
+        version: link:../../packages/testing
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
@@ -706,9 +706,9 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:^
         version: link:../../packages/eslint-config
-      '@repo/tests':
+      '@repo/testing':
         specifier: workspace:^
-        version: link:../../packages/tests
+        version: link:../../packages/testing
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
@@ -755,9 +755,9 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:^
         version: link:../../packages/eslint-config
-      '@repo/tests':
+      '@repo/testing':
         specifier: workspace:^
-        version: link:../../packages/tests
+        version: link:../../packages/testing
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../../packages/typescript-config
@@ -801,9 +801,9 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:^
         version: link:../../packages/eslint-config
-      '@repo/tests':
+      '@repo/testing':
         specifier: workspace:^
-        version: link:../../packages/tests
+        version: link:../../packages/testing
       '@vitejs/plugin-vue':
         specifier: ^5.2.1
         version: 5.2.1(vite@6.0.5(@types/node@22.10.2)(jiti@1.21.7)(less@4.2.1)(sass@1.83.0)(stylus@0.63.0)(terser@5.37.0)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))
@@ -865,7 +865,7 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
 
-  packages/tests:
+  packages/testing:
     dependencies:
       csp-toolkit:
         specifier: workspace:^
@@ -892,8 +892,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       csp-toolkit:
-        specifier: workspace:^
-        version: link:../csp-toolkit
+        specifier: ^1.1.0
+        version: 1.1.0
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:^
@@ -3467,6 +3467,9 @@ packages:
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
+
+  csp-toolkit@1.1.0:
+    resolution: {integrity: sha512-ZjOP40TSoYTZazXYTM3hZ3NzOqfAGByoQBB+DGIm24dnsvF347ZrFrZCp9c9d6Hcez0hGad2sv/mjX7zJMNzCA==}
 
   css-select@5.1.0:
     resolution: {integrity: sha512-nwoRF1rvRRnnCqqY7updORDsuqKzqYJ28+oSMaJMMgOauh3fvwHqMS7EZpIPqK8GL+g9mKxF1vP/ZjSeNjEVHg==}
@@ -9807,6 +9810,8 @@ snapshots:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  csp-toolkit@1.1.0: {}
 
   css-select@5.1.0:
     dependencies:

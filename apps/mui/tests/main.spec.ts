@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { genericTests, jQueryTest, viteLogoTest } from '@repo/tests';
+import { genericTests, jQueryTest, viteLogoTest } from '@repo/testing';
 
 const TITLE = "Vite + Material UI + TS";
 const HEADER_COLOUR = "rgb(63, 80, 181)"

@@ -1,4 +1,4 @@
-import { genericTests, jQueryTest, inlineScriptBlockedTest, viteLogoTest  } from '@repo/tests';
+import { genericTests, jQueryTest, inlineScriptBlockedTest, viteLogoTest  } from '@repo/testing';
 
 const APP_TITLE = "Vite + React"; 
 const HEADER_COLOUR = "rgb(33, 53, 71)"

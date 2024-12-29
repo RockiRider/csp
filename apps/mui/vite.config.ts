@@ -20,7 +20,7 @@ export default defineConfig({
         "font-src": ["'self'", "https://fonts.gstatic.com"],
       },
       build: {
-        hash: true,
+        sri: true,
       },
     }),
   ],

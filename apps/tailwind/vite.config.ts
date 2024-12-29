@@ -12,7 +12,7 @@ export default defineConfig({
         outlierSupport: ["tailwind"],
       },
       build: {
-        hash: true,
+        sri: true,
       },
     }),
   ],

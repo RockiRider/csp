@@ -35,7 +35,7 @@ export default function vitePluginCSP(
   let server: ViteDevServer | undefined = undefined;
 
   const { outlierSupport = [], run = false } = dev;
-  const { hash = false } = build;
+  const { sri = false } = build;
 
   const CORE_COLLECTION = createNewCollection();
 
@@ -151,7 +151,7 @@ export default function vitePluginCSP(
           collection: CORE_COLLECTION,
           pluginContext,
           isTransformationStatusEmpty: isTransformationStatusEmpty(),
-          isHashing: hash,
+          sri,
           shouldSkip,
         });
       },

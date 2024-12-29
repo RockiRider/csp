@@ -7,6 +7,10 @@
     "title": "Guides",
     "href": "/guides"
   },
+  "migrations": {
+    "title": "Migrations",
+    "href": "/migrations"
+  },
   "api-docs": {
     "title": "API",
     "href": "/api-docs"

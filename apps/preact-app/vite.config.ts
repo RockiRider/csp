@@ -11,7 +11,7 @@ export default defineConfig({
         run: true,
       },
       build: {
-        hash: true,
+        sri: true,
       },
     })
   ],

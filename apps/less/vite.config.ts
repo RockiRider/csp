@@ -12,7 +12,7 @@ export default defineConfig({
         outlierSupport: ["less"],
       },
       build: {
-        hash: true,
+        sri: true,
       },
     })
   ],

@@ -20,10 +20,10 @@ export type DevOptions = {
 
 export type BuildOptions = {
   /**
-   * Indicates whether to hash the application at build time.
+   * Indicates whether to use [SRI](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) at build time.
    * @default false
    */
-  hash?: boolean;
+  sri?: boolean;
 };
 
 export type MyPluginOptions = {

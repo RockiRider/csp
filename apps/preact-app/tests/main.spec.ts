@@ -1,4 +1,4 @@
-import { genericTests, viteLogoTest } from '@repo/tests';
+import { genericTests, viteLogoTest } from '@repo/testing';
 
 const TITLE = "Vite + Preact";
 const HEADER_COLOUR = "rgb(33, 53, 71)"
